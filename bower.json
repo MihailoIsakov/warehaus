@@ -1,0 +1,18 @@
+{
+  "name": "Warehaus",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Zieghailo/Warehaus",
+  "authors": [
+    "Zieghailo <isakov.m@gmail.com>"
+  ],
+  "description": "Final project in the eight semester.",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
