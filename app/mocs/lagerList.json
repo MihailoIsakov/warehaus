@@ -1,0 +1,128 @@
+[
+  {
+    "sifraArtikla": "123",
+    "nazivArtikla": "artikal 1",
+    "pakovanje" : 324.00,
+    "jedinicaMere" : "kg",
+    "kolicina" : 3.00,
+    "prosecnaCena" : 100.00,
+    "vrednostPoCeni" : 300.00
+  },
+  {
+    "sifraArtikla": "124",
+    "nazivArtikla": "artikal 2",
+    "pakovanje" : 324.00,
+    "jedinicaMere" : "kom",
+    "kolicina" : 3.00,
+    "prosecnaCena" : 200.00,
+    "vrednostPoCeni" : 600.00
+  },
+ {
+    "sifraArtikla": "143",
+    "nazivArtikla": "artikal 3",
+    "pakovanje" : 324.00,
+    "jedinicaMere" : "kom",
+    "kolicina" : 3.00,
+    "prosecnaCena" : 100.00,
+    "vrednostPoCeni" : 300.00
+  },
+  {
+    "sifraArtikla": "523",
+    "nazivArtikla": "artikal 3",
+    "pakovanje" : 324.00,
+    "jedinicaMere" : "kom",
+    "kolicina" : 3.00,
+    "prosecnaCena" : 100.00,
+    "vrednostPoCeni" : 300.00
+  },
+  {
+    "sifraArtikla": "153",
+    "nazivArtikla": "artikal 4",
+    "pakovanje" : 324.00,
+    "jedinicaMere" : "kg",
+    "kolicina" : 3.00,
+    "prosecnaCena" : 100.00,
+    "vrednostPoCeni" : 300.00
+  },
+  {
+    "sifraArtikla": "193",
+    "nazivArtikla": "artikal 5",
+    "pakovanje" : 324.00,
+    "jedinicaMere" : "kg",
+    "kolicina" : 3.00,
+    "prosecnaCena" : 200.00,
+    "vrednostPoCeni" : 600.00
+  },
+  {
+    "sifraArtikla": "923",
+    "nazivArtikla": "artikal 6",
+    "pakovanje" : 324.00,
+    "jedinicaMere" : "kg",
+    "kolicina" : 3.00,
+    "prosecnaCena" : 300.00,
+    "vrednostPoCeni" : 900.00
+  },
+  {
+    "sifraArtikla": "723",
+    "nazivArtikla": "artikal 7",
+    "pakovanje" : 324.00,
+    "jedinicaMere" : "kg",
+    "kolicina" : 6.00,
+    "prosecnaCena" : 100.00,
+    "vrednostPoCeni" : 600.00
+  },
+  {
+    "sifraArtikla": "173",
+    "nazivArtikla": "artikal 8",
+    "pakovanje" : 324.00,
+    "jedinicaMere" : "kg",
+    "kolicina" : 3.00,
+    "prosecnaCena" : 100.00,
+    "vrednostPoCeni" : 300.00
+  },
+  {
+    "sifraArtikla": "177",
+    "nazivArtikla": "artikal 9",
+    "pakovanje" : 324.00,
+    "jedinicaMere" : "kg",
+    "kolicina" : 3.00,
+    "prosecnaCena" : 100.00,
+    "vrednostPoCeni" : 300.00
+  },
+  {
+    "sifraArtikla": "883",
+    "nazivArtikla": "artikal 10",
+    "pakovanje" : 324.00,
+    "jedinicaMere" : "kg",
+    "kolicina" : 3.00,
+    "prosecnaCena" : 100.00,
+    "vrednostPoCeni" : 300.00
+  },
+  {
+    "sifraArtikla": "893",
+    "nazivArtikla": "artikal 11",
+    "pakovanje" : 324.00,
+    "jedinicaMere" : "kg",
+    "kolicina" : 3.00,
+    "prosecnaCena" : 100.00,
+    "vrednostPoCeni" : 300.00
+  },
+  {
+    "sifraArtikla": "133",
+    "nazivArtikla": "artikal 12",
+    "pakovanje" : 324.00,
+    "jedinicaMere" : "kg",
+    "kolicina" : 3.00,
+    "prosecnaCena" : 100.00,
+    "vrednostPoCeni" : 300.00
+  },
+  {
+    "sifraArtikla": "423",
+    "nazivArtikla": "artikal 13",
+    "pakovanje" : 324.00,
+    "jedinicaMere" : "kom",
+    "kolicina" : 3.00,
+    "prosecnaCena" : 100.00,
+    "vrednostPoCeni" : 300.00
+  }
+  ]

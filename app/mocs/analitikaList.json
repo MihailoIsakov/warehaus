@@ -1,0 +1,72 @@
+[
+  {
+    "sifraDokumenta": "443",
+    "redniBroj": 1,
+    "datumPromene" : "2012-04-23T18:25:43.511Z",
+    "vrstaDok" : "OT",
+    "kolicina" : 123.00,
+    "cena" : 343.23,
+    "vrednost" : 23.12,
+    "smer" : "OT"
+  },
+  {
+    "sifraDokumenta": "553",
+    "redniBroj": 2,
+    "datumPromene" : "2012-04-23T18:25:43.511Z",
+    "vrstaDok" : "OT",
+    "kolicina" : 123.00,
+    "cena" : 343.23,
+    "vrednost" : 23.12,
+    "smer" : "OT"
+  },
+    {
+    "sifraDokumenta": "543",
+    "redniBroj": 3,
+    "datumPromene" : "2012-04-23T18:25:43.511Z",
+    "vrstaDok" : "OT",
+    "kolicina" : 123.00,
+    "cena" : 343.23,
+    "vrednost" : 23.12,
+    "smer" : "OT"
+  },
+    {
+    "sifraDokumenta": "545",
+    "redniBroj": 4,
+    "datumPromene" : "2012-04-23T18:25:43.511Z",
+    "vrstaDok" : "OT",
+    "kolicina" : 123.00,
+    "cena" : 343.23,
+    "vrednost" : 23.12,
+    "smer" : "OT"
+  },
+    {
+    "sifraDokumenta": "222",
+    "redniBroj": 5,
+    "datumPromene" : "2012-04-23T18:25:43.511Z",
+    "vrstaDok" : "OT",
+    "kolicina" : 123.00,
+    "cena" : 343.23,
+    "vrednost" : 23.12,
+    "smer" : "OT"
+  },
+    {
+    "sifraDokumenta": "113",
+    "redniBroj": 6,
+    "datumPromene" : "2012-04-23T18:25:43.511Z",
+    "vrstaDok" : "OT",
+    "kolicina" : 123.00,
+    "cena" : 343.23,
+    "vrednost" : 23.12,
+    "smer" : "OT"
+  },
+  {
+    "sifraDokumenta": "127",
+    "redniBroj": 7,
+    "datumPromene" : "2012-04-23T18:25:43.511Z",
+    "vrstaDok" : "OT",
+    "kolicina" : 123.00,
+    "cena" : 343.23,
+    "vrednost" : 23.12,
+    "smer" : "OT"
+  }
+  ]
