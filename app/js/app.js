@@ -16,7 +16,11 @@ warehouseApp.config(['$routeProvider',
         templateUrl: 'partials/lager-list.html',
         controller: 'LagerCtrl'
       }).
+      when('/analyticsReport', {
+        templateUrl: 'partials/analytics-report.html',
+        controller: 'AnalyticsReportCtrl'
+      }).
       otherwise({
-        redirectTo: '/lagerList'
+        redirectTo: '/analyticsReport'
       });
   }]);

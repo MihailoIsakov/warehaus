@@ -1,0 +1,31 @@
+<div class="col-sm-9">
+    
+   <h3><i class="glyphicon glyphicon-dashboard"></i> Izvestaj Analitike </h3>  
+   <hr>
+  
+  <table class="lagerLista table table-striped">
+    <thead>
+      <tr>
+          <th> <a ng-click = "orderProp = 'sifraDokumenta'; reverseSort = !reverseSort">Sifra</th> 
+          <th> <a ng-click = "orderProp = 'redniBroj'; reverseSort = !reverseSort">Redni Broj</th> 
+          <th> <a ng-click = "orderProp = 'datumPromene'; reverseSort = !reverseSort">Datum Promene</th> 
+          <th> <a ng-click = "orderProp = 'vrstaDok'; reverseSort = !reverseSort">Vrsta Dok.</th> 
+          <th> <a ng-click = "orderProp = 'kolicina'; reverseSort = !reverseSort">Kolicina</th> 
+          <th> <a ng-click = "orderProp = 'cena'; reverseSort = !reverseSort">Cena</th> 
+          <th> <a ng-click = "orderProp = 'vrednost'; reverseSort = !reverseSort">Vrednost</th> 
+          <th> <a ng-click = "orderProp = 'smer'; reverseSort = !reverseSort">Smer</th> 
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="article in analytics | filter:query | orderBy:orderProp : reverseSort">
+          <td>{{article.sifraDokumenta}}</td>
+          <td>{{article.redniBroj}}</td>
+          <td>{{article.datumPromene | date:'dd.MM.yyyy HH:mm:ss'}}</td>
+          <td>{{article.vrstaDok}}</td>
+          <td>{{article.kolicina}}</td>
+          <td>{{article.cena}}</td>
+          <td>{{article.vrednost}}</td>
+          <td>{{article.smer}}</td>
+      </tr>
+    </tbody>
+</div>

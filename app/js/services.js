@@ -10,3 +10,10 @@ warehouseServices.factory('Article', ['$resource',
       query: {method:'GET', params:{articleId:'lagerList'}, isArray:true}
     });
   }]);
+
+warehouseServices.factory('Analytics', ['$resource',
+  function($resource){
+    return $resource('mocs/:analyticsId.json', {}, {
+      query: {method:'GET', params:{analyticsId:'analyticsReportList'}, isArray:true}
+    });
+  }]);
