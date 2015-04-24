@@ -19,7 +19,7 @@
 	</head>
     
 
-<body ng-controller="LagerCtrl">
+<body >
 <!-- Header -->
 <div id="top-nav" class="navbar navbar-inverse navbar-static-top">
   <div class="container">
@@ -68,43 +68,13 @@
       </ul>
       
       <hr>
-      
-  	</div><!-- /span-3 -->
 
-    <div class="col-sm-9">
-      	
-       <h3><i class="glyphicon glyphicon-dashboard"></i> Stanje magacina </h3>  
-            
-       <hr>
-      
-          <table class="lagerLista table table-striped">
-            <thead>
-              <tr>
-                  <th> <a href="#" ng-click = "orderProp = 'sifraArtikla'; reverseSort = !reverseSort">Sifra</th> 
-                  <th> <a href="#" ng-click = "orderProp = 'nazivArtikla'; reverseSort = !reverseSort">Naziv</th> 
-                  <th> <a href="#" ng-click = "orderProp = 'pakovanje'; reverseSort = !reverseSort">Pakovanje</th> 
-                  <th> <a href="#" ng-click = "orderProp = 'jedinicaMere'; reverseSort = !reverseSort">Jedinica</th> 
-                  <th> <a href="#" ng-click = "orderProp = 'kolicina'; reverseSort = !reverseSort">Kolicina</th> 
-                  <th> <a href="#" ng-click = "orderProp = 'prosecnaCena'; reverseSort = !reverseSort">Cena</th> 
-                  <th> <a href="#" ng-click = "orderProp = 'vrednostPoCeni'; reverseSort = !reverseSort">Vrednost</th> 
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat="article in articles | filter:query | orderBy:orderProp : reverseSort">
-                  <td>{{article.sifraArtikla}}</td>
-                  <td>{{article.nazivArtikla}}</td>
-                  <td>{{article.pakovanje}}</td>
-                  <td>{{article.jedinicaMere}}</td>
-                  <td>{{article.kolicina}}</td>
-                  <td>{{article.prosecnaCena}}</td>
-                  <td>{{article.vrednostPoCeni}}</td>
-              </tr>
-            </tbody>
+    </div><!-- /span-3 -->
 
-          </table>
-       </div><!--/row-->
-  	</div><!--/col-span-9-->
-    
+
+  <div ng-view></div> <!-- include view. depends on route-->
+
+
   </div><!--/row-->
   <!-- /upper section -->
   
