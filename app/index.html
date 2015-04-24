@@ -80,16 +80,22 @@
           <table class="lagerLista table table-striped">
             <thead>
               <tr>
-                  <th>Sifra</th> <th>Naziv</th> <th>Pakovanje</th> <th>Jedinica</th> <th>Kolicina</th> <th>Cena</th> <th>Vrednost</th>
+                  <th> <a href="#" ng-click = "orderProp = 'sifraArtikla'; reverseSort = !reverseSort">Sifra</th> 
+                  <th> <a href="#" ng-click = "orderProp = 'nazivArtikla'; reverseSort = !reverseSort">Naziv</th> 
+                  <th> <a href="#" ng-click = "orderProp = 'pakovanje'; reverseSort = !reverseSort">Pakovanje</th> 
+                  <th> <a href="#" ng-click = "orderProp = 'jedinicaMere'; reverseSort = !reverseSort">Jedinica</th> 
+                  <th> <a href="#" ng-click = "orderProp = 'kolicina'; reverseSort = !reverseSort">Kolicina</th> 
+                  <th> <a href="#" ng-click = "orderProp = 'prosecnaCena'; reverseSort = !reverseSort">Cena</th> 
+                  <th> <a href="#" ng-click = "orderProp = 'vrednostPoCeni'; reverseSort = !reverseSort">Vrednost</th> 
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="article in articles | filter:query | orderBy:orderProp">
+              <tr ng-repeat="article in articles | filter:query | orderBy:orderProp : reverseSort">
                   <td>{{article.sifraArtikla}}</td>
                   <td>{{article.nazivArtikla}}</td>
                   <td>{{article.pakovanje}}</td>
                   <td>{{article.jedinicaMere}}</td>
-                  <td>{{article.koicina}}</td>
+                  <td>{{article.kolicina}}</td>
                   <td>{{article.prosecnaCena}}</td>
                   <td>{{article.vrednostPoCeni}}</td>
               </tr>
