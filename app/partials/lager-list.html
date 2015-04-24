@@ -1,0 +1,31 @@
+      
+    </div><!-- /span-3 -->
+
+    <div class="col-sm-9">
+        
+       <h3><i class="glyphicon glyphicon-dashboard"></i> Stanje magacina </h3>  
+            
+       <hr>
+      
+          <table class="lagerLista table table-striped">
+            <thead>
+              <tr>
+                  <th>Sifra</th> <th>Naziv</th> <th>Pakovanje</th> <th>Jedinica</th> <th>Kolicina</th> <th>Cena</th> <th>Vrednost</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="article in articles | filter:query | orderBy:orderProp">
+                  <td>{{article.sifraArtikla}}</td>
+                  <td>{{article.nazivArtikla}}</td>
+                  <td>{{article.pakovanje}}</td>
+                  <td>{{article.jedinicaMere}}</td>
+                  <td>{{article.kolicina}}</td>
+                  <td>{{article.prosecnaCena}}</td>
+                  <td>{{article.vrednostPoCeni}}</td>
+              </tr>
+            </tbody>
+
+          </table>
+       </div><!--/row-->
+    </div><!--/col-span-9-->
+    

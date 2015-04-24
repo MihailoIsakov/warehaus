@@ -8,3 +8,15 @@ var warehouseApp = angular.module('warehouseApp', [
   'warehouseServices'
 ]);
 
+
+warehouseApp.config(['$routeProvider',
+  function($routeProvider) {
+    $routeProvider.
+      when('/lagerList', {
+        templateUrl: 'partials/lager-list.html',
+        controller: 'LagerCtrl'
+      }).
+      otherwise({
+        redirectTo: '/lagerList'
+      });
+  }]);
