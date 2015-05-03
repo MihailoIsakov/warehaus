@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="Nalog_za_placanje" xmlns="Nalog_za_placanje">
 
     <xs:element name="Nalog_Za_Placanje">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="Placanje"/>
+                <xs:element name="Datum_valute" type="xs:date"/>
+                <xs:element name="Hitno" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Placanje">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="ID_poruke">
@@ -12,9 +22,6 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element ref="Uplata"/>
-                <xs:element name="Datum_valute" type="xs:date"/>
-                <xs:element name="Hitno" type="xs:boolean"/>
                 <xs:element name="Sifra_valute">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
@@ -41,6 +48,7 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
+                <xs:element ref="Uplata"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

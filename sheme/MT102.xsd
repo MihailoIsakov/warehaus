@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="MT102" xmlns="MT102" xmlns:np="Nalog_za_placanje">
+
+    <xs:element name="MT102">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ID_poruke">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:length value="50"/>
+                            <xs:whiteSpace value="preserve"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="SWIFT_kod_banke_duznika">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:length value="8"/>
+                            <xs:pattern value=""/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="racun_banke_duznika">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:length value="18"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="SWIFT_kod_banke_poverioca">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:length value="8"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="racun_banke_poverioca" type="TBroj_racuna"/>
+                <xs:element name="ukupan_iznos">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:decimal">
+                            <xs:minExclusive value="0"/>
+                            <xs:totalDigits value="15"/>
+                            <xs:fractionDigits value="2"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="sifra_valute">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:length value="3"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="datum_valute" type="xs:date"/>
+                <xs:element name="datum" type="xs:date"/>
+                <xs:element name="placanja">
+                    <xs:complexType>
+                        <xs:sequence/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="TBroj_racuna">
+        <xs:restriction base="xs:string">
+            <xs:length value="18"/>
+            <xs:pattern value="\d{2}-\d{13}-\d{2}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TSWIFT_kod">
+        <xs:restriction base="xs:string">
+            <xs:length value="8"/>
+            <xs:pattern value="(A-Z){6}(A-Z0-9){2}((A-Z0-9){3})?"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
