@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="xws">
+		<class>rs.ac.uns.ftn.xws.entities.payments.Invoice</class>
+		<class>rs.ac.uns.ftn.xws.entities.payments.InvoiceItem</class>
+		<class>rs.ac.uns.ftn.xws.entities.users.User</class>
+		<class>model.AnalitikaMagacinskeKartice</class>
+		<class>model.Artikal</class>
+		<class>model.Drzava</class>
+		<class>model.GrupaArtikala</class>
+		<class>model.JedinicaMere</class>
+		<class>model.Magacin</class>
+		<class>model.MagacinskaKartica</class>
+		<class>model.Mesto</class>
+		<class>model.PopisnaKomisija</class>
+		<class>model.PopisniDokument</class>
+		<class>model.PoslovnaGodina</class>
+		<class>model.PoslovniPartner</class>
+		<class>model.Preduzece</class>
+		<class>model.PrometniDokument</class>
+		<class>model.RadnoMesto</class>
+		<class>model.Sektor</class>
+		<class>model.StavkaPopisa</class>
+		<class>model.StavkaPrometnogDokumenta</class>
+		<class>model.VrstaDokumenta</class>
+		<class>model.Zaposleni</class>
+	</persistence-unit>
+</persistence>
