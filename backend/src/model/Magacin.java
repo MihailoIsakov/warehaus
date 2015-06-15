@@ -1,8 +1,10 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
-import java.util.List;
+
+import java.util.Set;
 
 
 /**
@@ -38,20 +40,28 @@ public class Magacin implements Serializable {
 	private Sektor sektor;
 
 	//bi-directional many-to-one association to MagacinskaKartica
-	@OneToMany(mappedBy="magacin")
-	private List<MagacinskaKartica> magacinskaKarticas;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="magacin")
+
+	private Set<MagacinskaKartica> magacinskaKarticas;
 
 	//bi-directional many-to-one association to PopisniDokument
-	@OneToMany(mappedBy="magacin")
-	private List<PopisniDokument> popisniDokuments;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="magacin")
+
+
+	private Set<PopisniDokument> popisniDokuments;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="magacin1")
+
+
+	private Set<PrometniDokument> prometniDokuments1;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="magacin2")
 
 	//bi-directional many-to-one association to PrometniDokument
-	@OneToMany(mappedBy="magacin1")
-	private List<PrometniDokument> prometniDokuments1;
 
-	//bi-directional many-to-one association to PrometniDokument
-	@OneToMany(mappedBy="magacin2")
-	private List<PrometniDokument> prometniDokuments2;
+	private Set<PrometniDokument> prometniDokuments2;
 
 	public Magacin() {
 	}
@@ -104,11 +114,11 @@ public class Magacin implements Serializable {
 		this.sektor = sektor;
 	}
 
-	public List<MagacinskaKartica> getMagacinskaKarticas() {
+	public Set<MagacinskaKartica> getMagacinskaKarticas() {
 		return this.magacinskaKarticas;
 	}
 
-	public void setMagacinskaKarticas(List<MagacinskaKartica> magacinskaKarticas) {
+	public void setMagacinskaKarticas(Set<MagacinskaKartica> magacinskaKarticas) {
 		this.magacinskaKarticas = magacinskaKarticas;
 	}
 
@@ -126,11 +136,11 @@ public class Magacin implements Serializable {
 		return magacinskaKartica;
 	}
 
-	public List<PopisniDokument> getPopisniDokuments() {
+	public Set<PopisniDokument> getPopisniDokuments() {
 		return this.popisniDokuments;
 	}
 
-	public void setPopisniDokuments(List<PopisniDokument> popisniDokuments) {
+	public void setPopisniDokuments(Set<PopisniDokument> popisniDokuments) {
 		this.popisniDokuments = popisniDokuments;
 	}
 
@@ -148,11 +158,11 @@ public class Magacin implements Serializable {
 		return popisniDokument;
 	}
 
-	public List<PrometniDokument> getPrometniDokuments1() {
+	public Set<PrometniDokument> getPrometniDokuments1() {
 		return this.prometniDokuments1;
 	}
 
-	public void setPrometniDokuments1(List<PrometniDokument> prometniDokuments1) {
+	public void setPrometniDokuments1(Set<PrometniDokument> prometniDokuments1) {
 		this.prometniDokuments1 = prometniDokuments1;
 	}
 
@@ -170,11 +180,11 @@ public class Magacin implements Serializable {
 		return prometniDokuments1;
 	}
 
-	public List<PrometniDokument> getPrometniDokuments2() {
+	public Set<PrometniDokument> getPrometniDokuments2() {
 		return this.prometniDokuments2;
 	}
 
-	public void setPrometniDokuments2(List<PrometniDokument> prometniDokuments2) {
+	public void setPrometniDokuments2(Set<PrometniDokument> prometniDokuments2) {
 		this.prometniDokuments2 = prometniDokuments2;
 	}
 

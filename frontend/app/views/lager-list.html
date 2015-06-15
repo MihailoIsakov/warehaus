@@ -1,0 +1,26 @@
+<div class="col-sm-9">
+    
+   <h3><i class="glyphicon glyphicon-dashboard"></i> Stanje magacina </h3>  
+   <hr>
+  
+  <table class="table table-striped">
+    <thead>
+      <tr>
+          <th> <a ng-click = "orderProp = 'sifraArtikla'; reverseSort = !reverseSort">Sifra</th> 
+          <th> <a ng-click = "orderProp = 'nazivArtikla'; reverseSort = !reverseSort">Naziv</th> 
+          <th> <a ng-click = "orderProp = 'pakovanje'; reverseSort = !reverseSort">Pakovanje</th> 
+          <th> <a ng-click = "orderProp = 'jedinicaMere'; reverseSort = !reverseSort">Jedinica Mere</th> 
+          <th> <a ng-click = "orderProp = 'grupaArtikla'; reverseSort = !reverseSort">Grupa Artikala</th> 
+          
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="article in articles | filter:query | orderBy:orderProp : reverseSort">
+          <td>{{article.sifraArtikla}}</td>
+          <td>{{article.nazivArtikla}}</td>
+          <td>{{article.pakovanje}}</td>
+          <td>{{article.jedinicaMere.nazivJediniceMere}}</td>
+          <td>{{article.grupaArtikala.nazivGrupe}}</td>
+      </tr>
+    </tbody>
+</div>

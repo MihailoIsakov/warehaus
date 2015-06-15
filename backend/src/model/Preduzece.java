@@ -1,8 +1,10 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
-import java.util.List;
+
+import java.util.Set;
 
 
 /**
@@ -29,27 +31,35 @@ public class Preduzece implements Serializable {
 	private String sifraPreduzeca;
 
 	private String telefon;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="preduzece")
 
 	//bi-directional many-to-one association to GrupaArtikala
-	@OneToMany(mappedBy="preduzece")
-	private List<GrupaArtikala> grupaArtikalas;
+	
+	private Set<GrupaArtikala> grupaArtikalas;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="preduzece")
 
 	//bi-directional many-to-one association to PoslovnaGodina
-	@OneToMany(mappedBy="preduzece")
-	private List<PoslovnaGodina> poslovnaGodinas;
+	
+	private Set<PoslovnaGodina> poslovnaGodinas;
 
 	//bi-directional many-to-one association to Mesto
 	@ManyToOne
 	@JoinColumn(name="ID_MESTO")
 	private Mesto mesto;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="preduzece")
 
 	//bi-directional many-to-one association to Sektor
-	@OneToMany(mappedBy="preduzece")
-	private List<Sektor> sektors;
+	
+	private Set<Sektor> sektors;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="preduzece")
 
 	//bi-directional many-to-one association to Zaposleni
-	@OneToMany(mappedBy="preduzece")
-	private List<Zaposleni> zaposlenis;
+	
+	private Set<Zaposleni> zaposlenis;
 
 	public Preduzece() {
 	}
@@ -102,11 +112,11 @@ public class Preduzece implements Serializable {
 		this.telefon = telefon;
 	}
 
-	public List<GrupaArtikala> getGrupaArtikalas() {
+	public Set<GrupaArtikala> getGrupaArtikalas() {
 		return this.grupaArtikalas;
 	}
 
-	public void setGrupaArtikalas(List<GrupaArtikala> grupaArtikalas) {
+	public void setGrupaArtikalas(Set<GrupaArtikala> grupaArtikalas) {
 		this.grupaArtikalas = grupaArtikalas;
 	}
 
@@ -124,11 +134,11 @@ public class Preduzece implements Serializable {
 		return grupaArtikala;
 	}
 
-	public List<PoslovnaGodina> getPoslovnaGodinas() {
+	public Set<PoslovnaGodina> getPoslovnaGodinas() {
 		return this.poslovnaGodinas;
 	}
 
-	public void setPoslovnaGodinas(List<PoslovnaGodina> poslovnaGodinas) {
+	public void setPoslovnaGodinas(Set<PoslovnaGodina> poslovnaGodinas) {
 		this.poslovnaGodinas = poslovnaGodinas;
 	}
 
@@ -154,11 +164,11 @@ public class Preduzece implements Serializable {
 		this.mesto = mesto;
 	}
 
-	public List<Sektor> getSektors() {
+	public Set<Sektor> getSektors() {
 		return this.sektors;
 	}
 
-	public void setSektors(List<Sektor> sektors) {
+	public void setSektors(Set<Sektor> sektors) {
 		this.sektors = sektors;
 	}
 
@@ -176,11 +186,11 @@ public class Preduzece implements Serializable {
 		return sektor;
 	}
 
-	public List<Zaposleni> getZaposlenis() {
+	public Set<Zaposleni> getZaposlenis() {
 		return this.zaposlenis;
 	}
 
-	public void setZaposlenis(List<Zaposleni> zaposlenis) {
+	public void setZaposlenis(Set<Zaposleni> zaposlenis) {
 		this.zaposlenis = zaposlenis;
 	}
 

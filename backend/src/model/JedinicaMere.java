@@ -1,8 +1,13 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
-import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import java.util.Set;
 
 
 /**
@@ -12,6 +17,7 @@ import java.util.List;
 @Entity
 @Table(name="jedinica_mere")
 @NamedQuery(name="JedinicaMere.findAll", query="SELECT j FROM JedinicaMere j")
+@JsonInclude(Include.NON_NULL)
 public class JedinicaMere implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -26,8 +32,10 @@ public class JedinicaMere implements Serializable {
 	private String sifraJediniceMere;
 
 	//bi-directional many-to-one association to Artikal
-	@OneToMany(mappedBy="jedinicaMere")
-	private List<Artikal> artikals;
+	
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @JoinColumn(name="jedinicaMere")
+	private Set<Artikal> artikals;
 
 	public JedinicaMere() {
 	}
@@ -56,11 +64,11 @@ public class JedinicaMere implements Serializable {
 		this.sifraJediniceMere = sifraJediniceMere;
 	}
 
-	public List<Artikal> getArtikals() {
+	public Set<Artikal> getArtikals() {
 		return this.artikals;
 	}
 
-	public void setArtikals(List<Artikal> artikals) {
+	public void setArtikals(Set<Artikal> artikals) {
 		this.artikals = artikals;
 	}
 

@@ -1,8 +1,10 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
-import java.util.List;
+
+import java.util.Set;
 
 
 /**
@@ -23,10 +25,12 @@ public class Sektor implements Serializable {
 
 	@Column(name="SIFRA_SEKTORA")
 	private String sifraSektora;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="sektor")
 
 	//bi-directional many-to-one association to Magacin
-	@OneToMany(mappedBy="sektor")
-	private List<Magacin> magacins;
+
+	private Set<Magacin> magacins;
 
 	//bi-directional many-to-one association to Preduzece
 	@ManyToOne
@@ -60,11 +64,11 @@ public class Sektor implements Serializable {
 		this.sifraSektora = sifraSektora;
 	}
 
-	public List<Magacin> getMagacins() {
+	public Set<Magacin> getMagacins() {
 		return this.magacins;
 	}
 
-	public void setMagacins(List<Magacin> magacins) {
+	public void setMagacins(Set<Magacin> magacins) {
 		this.magacins = magacins;
 	}
 

@@ -1,8 +1,10 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
-import java.util.List;
+
+import java.util.Set;
 
 
 /**
@@ -25,8 +27,10 @@ public class Drzava implements Serializable {
 	private String sifraDrzave;
 
 	//bi-directional many-to-one association to Mesto
-	@OneToMany(mappedBy="drzava")
-	private List<Mesto> mestos;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="drzava")
+	
+	private Set<Mesto> mestos;
 
 	public Drzava() {
 	}
@@ -55,11 +59,11 @@ public class Drzava implements Serializable {
 		this.sifraDrzave = sifraDrzave;
 	}
 
-	public List<Mesto> getMestos() {
+	public Set<Mesto> getMestos() {
 		return this.mestos;
 	}
 
-	public void setMestos(List<Mesto> mestos) {
+	public void setMestos(Set<Mesto> mestos) {
 		this.mestos = mestos;
 	}
 

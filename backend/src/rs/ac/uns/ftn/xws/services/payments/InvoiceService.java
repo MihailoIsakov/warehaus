@@ -2,6 +2,7 @@ package rs.ac.uns.ftn.xws.services.payments;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -15,11 +16,14 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import model.Artikal;
+
 import org.apache.log4j.Logger;
 
 import rs.ac.uns.ftn.xws.entities.payments.Invoice;
 import rs.ac.uns.ftn.xws.sessionbeans.payments.InvoiceDaoLocal;
 import rs.ac.uns.ftn.xws.util.Authenticate;
+import daoBean.ArtikalDaoLocal;
 
 @Path("/invoice")
 public class InvoiceService {
@@ -28,14 +32,22 @@ public class InvoiceService {
 
 	@EJB
 	private InvoiceDaoLocal invoiceDao;
-
+	@EJB
+	private ArtikalDaoLocal artikalDao;
 	@GET 
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-	public List<Invoice> findByAll() {
-		List<Invoice> retVal = null;
+	public List<Artikal> findByAll() {
+		List<Artikal> retVal = new ArrayList<Artikal>();
+		Artikal a = new Artikal();
+		a.setNazivArtikla("nazivAksksks");
+		
+		
 		try {
-			retVal = invoiceDao.findAll();
+			log.error("usao");
+		
+		retVal =  artikalDao.findAll();
+		log.error("poruka"+retVal.get(0).getGrupaArtikala().getIdGrupaArtikala());
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -47,6 +59,7 @@ public class InvoiceService {
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
     public Invoice findById(@PathParam("id") String id) {
+		Artikal a = new Artikal();
 		Invoice retVal = null;
 		try {
 			retVal = invoiceDao.findById(Long.parseLong(id));
@@ -62,6 +75,7 @@ public class InvoiceService {
 	@Authenticate
     public Invoice create(Invoice entity) {
 		log.info("POST");
+		Artikal a = new Artikal();
     	Invoice retVal = null;
 		try {
 			System.out.println("entity: "+entity);
@@ -79,6 +93,7 @@ public class InvoiceService {
 	@Authenticate
     public Invoice update(Invoice entity) {
     	log.info("PUT");
+    	Artikal a = new Artikal();
     	Invoice retVal = null;
         try {
         	retVal = invoiceDao.merge(entity);
@@ -93,6 +108,7 @@ public class InvoiceService {
     @Produces(MediaType.TEXT_HTML)
 	@Authenticate
     public String remove(@PathParam("id") Long id) {
+    	Artikal a = new Artikal();
     	try {
         	invoiceDao.remove(id);
         } catch (Exception e) {

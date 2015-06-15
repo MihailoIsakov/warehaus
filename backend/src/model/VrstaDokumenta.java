@@ -1,8 +1,10 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
-import java.util.List;
+
+import java.util.Set;
 
 
 /**
@@ -24,10 +26,12 @@ public class VrstaDokumenta implements Serializable {
 
 	@Column(name="SIFRA_VRSTE")
 	private String sifraVrste;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="vrstaDokumenta")
 
 	//bi-directional many-to-one association to AnalitikaMagacinskeKartice
-	@OneToMany(mappedBy="vrstaDokumenta")
-	private List<AnalitikaMagacinskeKartice> analitikaMagacinskeKartices;
+
+	private Set<AnalitikaMagacinskeKartice> analitikaMagacinskeKartices;
 
 	public VrstaDokumenta() {
 	}
@@ -56,11 +60,11 @@ public class VrstaDokumenta implements Serializable {
 		this.sifraVrste = sifraVrste;
 	}
 
-	public List<AnalitikaMagacinskeKartice> getAnalitikaMagacinskeKartices() {
+	public Set<AnalitikaMagacinskeKartice> getAnalitikaMagacinskeKartices() {
 		return this.analitikaMagacinskeKartices;
 	}
 
-	public void setAnalitikaMagacinskeKartices(List<AnalitikaMagacinskeKartice> analitikaMagacinskeKartices) {
+	public void setAnalitikaMagacinskeKartices(Set<AnalitikaMagacinskeKartice> analitikaMagacinskeKartices) {
 		this.analitikaMagacinskeKartices = analitikaMagacinskeKartices;
 	}
 

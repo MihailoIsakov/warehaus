@@ -1,9 +1,14 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -12,6 +17,7 @@ import java.util.List;
  */
 @Entity
 @NamedQuery(name="Artikal.findAll", query="SELECT a FROM Artikal a")
+@JsonInclude(Include.NON_NULL)
 public class Artikal implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -38,16 +44,22 @@ public class Artikal implements Serializable {
 	private JedinicaMere jedinicaMere;
 
 	//bi-directional many-to-one association to MagacinskaKartica
-	@OneToMany(mappedBy="artikal")
-	private List<MagacinskaKartica> magacinskaKarticas;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="artikal")
+	
+	private Set<MagacinskaKartica> magacinskaKarticas;
 
 	//bi-directional many-to-one association to StavkaPopisa
-	@OneToMany(mappedBy="artikal")
-	private List<StavkaPopisa> stavkaPopisas;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="artikal")
+	
+	private Set<StavkaPopisa> stavkaPopisas;
 
 	//bi-directional many-to-one association to StavkaPrometnogDokumenta
-	@OneToMany(mappedBy="artikal")
-	private List<StavkaPrometnogDokumenta> stavkaPrometnogDokumentas;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="artikal")
+	
+	private Set<StavkaPrometnogDokumenta> stavkaPrometnogDokumentas;
 
 	public Artikal() {
 	}
@@ -100,11 +112,11 @@ public class Artikal implements Serializable {
 		this.jedinicaMere = jedinicaMere;
 	}
 
-	public List<MagacinskaKartica> getMagacinskaKarticas() {
+	public Set<MagacinskaKartica> getMagacinskaKarticas() {
 		return this.magacinskaKarticas;
 	}
 
-	public void setMagacinskaKarticas(List<MagacinskaKartica> magacinskaKarticas) {
+	public void setMagacinskaKarticas(Set<MagacinskaKartica> magacinskaKarticas) {
 		this.magacinskaKarticas = magacinskaKarticas;
 	}
 
@@ -122,11 +134,11 @@ public class Artikal implements Serializable {
 		return magacinskaKartica;
 	}
 
-	public List<StavkaPopisa> getStavkaPopisas() {
+	public Set<StavkaPopisa> getStavkaPopisas() {
 		return this.stavkaPopisas;
 	}
 
-	public void setStavkaPopisas(List<StavkaPopisa> stavkaPopisas) {
+	public void setStavkaPopisas(Set<StavkaPopisa> stavkaPopisas) {
 		this.stavkaPopisas = stavkaPopisas;
 	}
 
@@ -144,11 +156,11 @@ public class Artikal implements Serializable {
 		return stavkaPopisa;
 	}
 
-	public List<StavkaPrometnogDokumenta> getStavkaPrometnogDokumentas() {
+	public Set<StavkaPrometnogDokumenta> getStavkaPrometnogDokumentas() {
 		return this.stavkaPrometnogDokumentas;
 	}
 
-	public void setStavkaPrometnogDokumentas(List<StavkaPrometnogDokumenta> stavkaPrometnogDokumentas) {
+	public void setStavkaPrometnogDokumentas(Set<StavkaPrometnogDokumenta> stavkaPrometnogDokumentas) {
 		this.stavkaPrometnogDokumentas = stavkaPrometnogDokumentas;
 	}
 

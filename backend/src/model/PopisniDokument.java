@@ -1,9 +1,11 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -32,10 +34,12 @@ public class PopisniDokument implements Serializable {
 
 	@Column(name="STATUS_PREDAJE")
 	private String statusPredaje;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="popisniDokument")
 
 	//bi-directional many-to-one association to PopisnaKomisija
-	@OneToMany(mappedBy="popisniDokument")
-	private List<PopisnaKomisija> popisnaKomisijas;
+
+	private Set<PopisnaKomisija> popisnaKomisijas;
 
 	//bi-directional many-to-one association to Magacin
 	@ManyToOne
@@ -46,10 +50,12 @@ public class PopisniDokument implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="ID_POSLOVNA_GODINA")
 	private PoslovnaGodina poslovnaGodina;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="popisniDokument")
 
 	//bi-directional many-to-one association to StavkaPopisa
-	@OneToMany(mappedBy="popisniDokument")
-	private List<StavkaPopisa> stavkaPopisas;
+	
+	private Set<StavkaPopisa> stavkaPopisas;
 
 	public PopisniDokument() {
 	}
@@ -94,11 +100,11 @@ public class PopisniDokument implements Serializable {
 		this.statusPredaje = statusPredaje;
 	}
 
-	public List<PopisnaKomisija> getPopisnaKomisijas() {
+	public Set<PopisnaKomisija> getPopisnaKomisijas() {
 		return this.popisnaKomisijas;
 	}
 
-	public void setPopisnaKomisijas(List<PopisnaKomisija> popisnaKomisijas) {
+	public void setPopisnaKomisijas(Set<PopisnaKomisija> popisnaKomisijas) {
 		this.popisnaKomisijas = popisnaKomisijas;
 	}
 
@@ -132,11 +138,11 @@ public class PopisniDokument implements Serializable {
 		this.poslovnaGodina = poslovnaGodina;
 	}
 
-	public List<StavkaPopisa> getStavkaPopisas() {
+	public Set<StavkaPopisa> getStavkaPopisas() {
 		return this.stavkaPopisas;
 	}
 
-	public void setStavkaPopisas(List<StavkaPopisa> stavkaPopisas) {
+	public void setStavkaPopisas(Set<StavkaPopisa> stavkaPopisas) {
 		this.stavkaPopisas = stavkaPopisas;
 	}
 

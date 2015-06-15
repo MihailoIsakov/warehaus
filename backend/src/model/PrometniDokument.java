@@ -1,9 +1,11 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -52,10 +54,12 @@ public class PrometniDokument implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="ID_POSLOVNI_PARTNER")
 	private PoslovniPartner poslovniPartner;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="prometniDokument")
 
 	//bi-directional many-to-one association to StavkaPrometnogDokumenta
-	@OneToMany(mappedBy="prometniDokument")
-	private List<StavkaPrometnogDokumenta> stavkaPrometnogDokumentas;
+	
+	private Set<StavkaPrometnogDokumenta> stavkaPrometnogDokumentas;
 
 	public PrometniDokument() {
 	}
@@ -132,11 +136,11 @@ public class PrometniDokument implements Serializable {
 		this.poslovniPartner = poslovniPartner;
 	}
 
-	public List<StavkaPrometnogDokumenta> getStavkaPrometnogDokumentas() {
+	public Set<StavkaPrometnogDokumenta> getStavkaPrometnogDokumentas() {
 		return this.stavkaPrometnogDokumentas;
 	}
 
-	public void setStavkaPrometnogDokumentas(List<StavkaPrometnogDokumenta> stavkaPrometnogDokumentas) {
+	public void setStavkaPrometnogDokumentas(Set<StavkaPrometnogDokumenta> stavkaPrometnogDokumentas) {
 		this.stavkaPrometnogDokumentas = stavkaPrometnogDokumentas;
 	}
 

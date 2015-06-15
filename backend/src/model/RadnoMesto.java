@@ -1,8 +1,10 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
-import java.util.List;
+
+import java.util.Set;
 
 
 /**
@@ -24,10 +26,12 @@ public class RadnoMesto implements Serializable {
 
 	@Column(name="SIFRA_RADNOG_MESTA")
 	private String sifraRadnogMesta;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="radnoMesto")
 
 	//bi-directional many-to-one association to Zaposleni
-	@OneToMany(mappedBy="radnoMesto")
-	private List<Zaposleni> zaposlenis;
+	
+	private Set<Zaposleni> zaposlenis;
 
 	public RadnoMesto() {
 	}
@@ -56,11 +60,11 @@ public class RadnoMesto implements Serializable {
 		this.sifraRadnogMesta = sifraRadnogMesta;
 	}
 
-	public List<Zaposleni> getZaposlenis() {
+	public Set<Zaposleni> getZaposlenis() {
 		return this.zaposlenis;
 	}
 
-	public void setZaposlenis(List<Zaposleni> zaposlenis) {
+	public void setZaposlenis(Set<Zaposleni> zaposlenis) {
 		this.zaposlenis = zaposlenis;
 	}
 

@@ -1,9 +1,11 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -43,10 +45,12 @@ public class MagacinskaKartica implements Serializable {
 
 	@Column(name="VR__ULAZA")
 	private BigDecimal vrUlaza;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="magacinskaKartica")
 
 	//bi-directional many-to-one association to AnalitikaMagacinskeKartice
-	@OneToMany(mappedBy="magacinskaKartica")
-	private List<AnalitikaMagacinskeKartice> analitikaMagacinskeKartices;
+
+	private Set<AnalitikaMagacinskeKartice> analitikaMagacinskeKartices;
 
 	//bi-directional many-to-one association to Artikal
 	@ManyToOne
@@ -138,11 +142,11 @@ public class MagacinskaKartica implements Serializable {
 		this.vrUlaza = vrUlaza;
 	}
 
-	public List<AnalitikaMagacinskeKartice> getAnalitikaMagacinskeKartices() {
+	public Set<AnalitikaMagacinskeKartice> getAnalitikaMagacinskeKartices() {
 		return this.analitikaMagacinskeKartices;
 	}
 
-	public void setAnalitikaMagacinskeKartices(List<AnalitikaMagacinskeKartice> analitikaMagacinskeKartices) {
+	public void setAnalitikaMagacinskeKartices(Set<AnalitikaMagacinskeKartice> analitikaMagacinskeKartices) {
 		this.analitikaMagacinskeKartices = analitikaMagacinskeKartices;
 	}
 

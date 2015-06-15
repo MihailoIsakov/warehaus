@@ -1,8 +1,10 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
-import java.util.List;
+
+import java.util.Set;
 
 
 /**
@@ -24,23 +26,29 @@ public class PoslovnaGodina implements Serializable {
 
 	@Column(name="ZAKLJUCENA_GODINA")
 	private byte zakljucenaGodina;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="poslovnaGodina")
 
 	//bi-directional many-to-one association to MagacinskaKartica
-	@OneToMany(mappedBy="poslovnaGodina")
-	private List<MagacinskaKartica> magacinskaKarticas;
+
+	private Set<MagacinskaKartica> magacinskaKarticas;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="poslovnaGodina")
 
 	//bi-directional many-to-one association to PopisniDokument
-	@OneToMany(mappedBy="poslovnaGodina")
-	private List<PopisniDokument> popisniDokuments;
+
+	private Set<PopisniDokument> popisniDokuments;
 
 	//bi-directional many-to-one association to Preduzece
 	@ManyToOne
 	@JoinColumn(name="ID_PREDUZECE")
 	private Preduzece preduzece;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="poslovnaGodina")
 
 	//bi-directional many-to-one association to PrometniDokument
-	@OneToMany(mappedBy="poslovnaGodina")
-	private List<PrometniDokument> prometniDokuments;
+
+	private Set<PrometniDokument> prometniDokuments;
 
 	public PoslovnaGodina() {
 	}
@@ -69,11 +77,11 @@ public class PoslovnaGodina implements Serializable {
 		this.zakljucenaGodina = zakljucenaGodina;
 	}
 
-	public List<MagacinskaKartica> getMagacinskaKarticas() {
+	public Set<MagacinskaKartica> getMagacinskaKarticas() {
 		return this.magacinskaKarticas;
 	}
 
-	public void setMagacinskaKarticas(List<MagacinskaKartica> magacinskaKarticas) {
+	public void setMagacinskaKarticas(Set<MagacinskaKartica> magacinskaKarticas) {
 		this.magacinskaKarticas = magacinskaKarticas;
 	}
 
@@ -91,11 +99,11 @@ public class PoslovnaGodina implements Serializable {
 		return magacinskaKartica;
 	}
 
-	public List<PopisniDokument> getPopisniDokuments() {
+	public Set<PopisniDokument> getPopisniDokuments() {
 		return this.popisniDokuments;
 	}
 
-	public void setPopisniDokuments(List<PopisniDokument> popisniDokuments) {
+	public void setPopisniDokuments(Set<PopisniDokument> popisniDokuments) {
 		this.popisniDokuments = popisniDokuments;
 	}
 
@@ -121,11 +129,11 @@ public class PoslovnaGodina implements Serializable {
 		this.preduzece = preduzece;
 	}
 
-	public List<PrometniDokument> getPrometniDokuments() {
+	public Set<PrometniDokument> getPrometniDokuments() {
 		return this.prometniDokuments;
 	}
 
-	public void setPrometniDokuments(List<PrometniDokument> prometniDokuments) {
+	public void setPrometniDokuments(Set<PrometniDokument> prometniDokuments) {
 		this.prometniDokuments = prometniDokuments;
 	}
 

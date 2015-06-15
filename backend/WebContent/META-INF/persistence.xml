@@ -10,6 +10,26 @@
 		<class>rs.ac.uns.ftn.xws.entities.payments.Invoice</class>
 		<class>rs.ac.uns.ftn.xws.entities.payments.InvoiceItem</class>
 		<class>rs.ac.uns.ftn.xws.entities.users.User</class>
+		<class>model.AnalitikaMagacinskeKartice</class>
+		<class>model.Artikal</class>
+		<class>model.Drzava</class>
+		<class>model.GrupaArtikala</class>
+		<class>model.JedinicaMere</class>
+		<class>model.Magacin</class>
+		<class>model.MagacinskaKartica</class>
+		<class>model.Mesto</class>
+		<class>model.PopisnaKomisija</class>
+		<class>model.PopisniDokument</class>
+		<class>model.PoslovnaGodina</class>
+		<class>model.PoslovniPartner</class>
+		<class>model.Preduzece</class>
+		<class>model.PrometniDokument</class>
+		<class>model.RadnoMesto</class>
+		<class>model.Sektor</class>
+		<class>model.StavkaPopisa</class>
+		<class>model.StavkaPrometnogDokumenta</class>
+		<class>model.VrstaDokumenta</class>
+		<class>model.Zaposleni</class>
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.transaction.flush_before_completion"

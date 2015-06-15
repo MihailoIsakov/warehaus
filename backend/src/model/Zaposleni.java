@@ -1,9 +1,11 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -40,18 +42,24 @@ public class Zaposleni implements Serializable {
 
 	@Column(name="STATUS_ZAPOSLENOG")
 	private String statusZaposlenog;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="zaposleni1")
 
 	//bi-directional many-to-one association to PopisnaKomisija
-	@OneToMany(mappedBy="zaposleni1")
-	private List<PopisnaKomisija> popisnaKomisijas1;
+	
+	private Set<PopisnaKomisija> popisnaKomisijas1;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="zaposleni2")
 
 	//bi-directional many-to-one association to PopisnaKomisija
-	@OneToMany(mappedBy="zaposleni2")
-	private List<PopisnaKomisija> popisnaKomisijas2;
+	
+	private Set<PopisnaKomisija> popisnaKomisijas2;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="zaposleni3")
 
 	//bi-directional many-to-one association to PopisnaKomisija
-	@OneToMany(mappedBy="zaposleni3")
-	private List<PopisnaKomisija> popisnaKomisijas3;
+	
+	private Set<PopisnaKomisija> popisnaKomisijas3;
 
 	//bi-directional many-to-one association to Mesto
 	@ManyToOne
@@ -143,11 +151,11 @@ public class Zaposleni implements Serializable {
 		this.statusZaposlenog = statusZaposlenog;
 	}
 
-	public List<PopisnaKomisija> getPopisnaKomisijas1() {
+	public Set<PopisnaKomisija> getPopisnaKomisijas1() {
 		return this.popisnaKomisijas1;
 	}
 
-	public void setPopisnaKomisijas1(List<PopisnaKomisija> popisnaKomisijas1) {
+	public void setPopisnaKomisijas1(Set<PopisnaKomisija> popisnaKomisijas1) {
 		this.popisnaKomisijas1 = popisnaKomisijas1;
 	}
 
@@ -165,11 +173,11 @@ public class Zaposleni implements Serializable {
 		return popisnaKomisijas1;
 	}
 
-	public List<PopisnaKomisija> getPopisnaKomisijas2() {
+	public Set<PopisnaKomisija> getPopisnaKomisijas2() {
 		return this.popisnaKomisijas2;
 	}
 
-	public void setPopisnaKomisijas2(List<PopisnaKomisija> popisnaKomisijas2) {
+	public void setPopisnaKomisijas2(Set<PopisnaKomisija> popisnaKomisijas2) {
 		this.popisnaKomisijas2 = popisnaKomisijas2;
 	}
 
@@ -187,11 +195,11 @@ public class Zaposleni implements Serializable {
 		return popisnaKomisijas2;
 	}
 
-	public List<PopisnaKomisija> getPopisnaKomisijas3() {
+	public Set<PopisnaKomisija> getPopisnaKomisijas3() {
 		return this.popisnaKomisijas3;
 	}
 
-	public void setPopisnaKomisijas3(List<PopisnaKomisija> popisnaKomisijas3) {
+	public void setPopisnaKomisijas3(Set<PopisnaKomisija> popisnaKomisijas3) {
 		this.popisnaKomisijas3 = popisnaKomisijas3;
 	}
 

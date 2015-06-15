@@ -1,8 +1,10 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
-import java.util.List;
+
+import java.util.Set;
 
 
 /**
@@ -28,25 +30,31 @@ public class Mesto implements Serializable {
 	private String sifraMesta;
 
 	//bi-directional many-to-one association to Magacin
-	@OneToMany(mappedBy="mesto")
-	private List<Magacin> magacins;
+	@OneToMany(mappedBy="mesto", fetch=FetchType.EAGER)
+	private Set<Magacin> magacins;
 
 	//bi-directional many-to-one association to Drzava
 	@ManyToOne
 	@JoinColumn(name="ID_DRZAVA")
 	private Drzava drzava;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="mesto")
 
 	//bi-directional many-to-one association to PoslovniPartner
-	@OneToMany(mappedBy="mesto")
-	private List<PoslovniPartner> poslovniPartners;
+	
+	private Set<PoslovniPartner> poslovniPartners;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="mesto")
 
 	//bi-directional many-to-one association to Preduzece
-	@OneToMany(mappedBy="mesto")
-	private List<Preduzece> preduzeces;
+	
+	private Set<Preduzece> preduzeces;
+	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	    @JoinColumn(name="mesto")
 
 	//bi-directional many-to-one association to Zaposleni
-	@OneToMany(mappedBy="mesto")
-	private List<Zaposleni> zaposlenis;
+
+	private Set<Zaposleni> zaposlenis;
 
 	public Mesto() {
 	}
@@ -83,11 +91,11 @@ public class Mesto implements Serializable {
 		this.sifraMesta = sifraMesta;
 	}
 
-	public List<Magacin> getMagacins() {
+	public Set<Magacin> getMagacins() {
 		return this.magacins;
 	}
 
-	public void setMagacins(List<Magacin> magacins) {
+	public void setMagacins(Set<Magacin> magacins) {
 		this.magacins = magacins;
 	}
 
@@ -113,11 +121,11 @@ public class Mesto implements Serializable {
 		this.drzava = drzava;
 	}
 
-	public List<PoslovniPartner> getPoslovniPartners() {
+	public Set<PoslovniPartner> getPoslovniPartners() {
 		return this.poslovniPartners;
 	}
 
-	public void setPoslovniPartners(List<PoslovniPartner> poslovniPartners) {
+	public void setPoslovniPartners(Set<PoslovniPartner> poslovniPartners) {
 		this.poslovniPartners = poslovniPartners;
 	}
 
@@ -135,11 +143,11 @@ public class Mesto implements Serializable {
 		return poslovniPartner;
 	}
 
-	public List<Preduzece> getPreduzeces() {
+	public Set<Preduzece> getPreduzeces() {
 		return this.preduzeces;
 	}
 
-	public void setPreduzeces(List<Preduzece> preduzeces) {
+	public void setPreduzeces(Set<Preduzece> preduzeces) {
 		this.preduzeces = preduzeces;
 	}
 
@@ -157,11 +165,11 @@ public class Mesto implements Serializable {
 		return preduzece;
 	}
 
-	public List<Zaposleni> getZaposlenis() {
+	public Set<Zaposleni> getZaposlenis() {
 		return this.zaposlenis;
 	}
 
-	public void setZaposlenis(List<Zaposleni> zaposlenis) {
+	public void setZaposlenis(Set<Zaposleni> zaposlenis) {
 		this.zaposlenis = zaposlenis;
 	}
 
