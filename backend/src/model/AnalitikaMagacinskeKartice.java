@@ -49,9 +49,7 @@ public class AnalitikaMagacinskeKartice implements Serializable {
 	private StavkaPrometnogDokumenta stavkaPrometnogDokumenta;
 
 	//bi-directional many-to-one association to VrstaDokumenta
-	@ManyToOne
-	@JoinColumn(name="ID_VRSTA_DOKUMENTA")
-	private VrstaDokumenta vrstaDokumenta;
+	
 
 	public AnalitikaMagacinskeKartice() {
 	}
@@ -136,12 +134,6 @@ public class AnalitikaMagacinskeKartice implements Serializable {
 		this.stavkaPrometnogDokumenta = stavkaPrometnogDokumenta;
 	}
 
-	public VrstaDokumenta getVrstaDokumenta() {
-		return this.vrstaDokumenta;
-	}
 
-	public void setVrstaDokumenta(VrstaDokumenta vrstaDokumenta) {
-		this.vrstaDokumenta = vrstaDokumenta;
-	}
 
 }

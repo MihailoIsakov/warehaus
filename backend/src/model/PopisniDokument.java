@@ -34,13 +34,6 @@ public class PopisniDokument implements Serializable {
 
 	@Column(name="STATUS_PREDAJE")
 	private String statusPredaje;
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="popisniDokument")
-
-	//bi-directional many-to-one association to PopisnaKomisija
-
-	private Set<PopisnaKomisija> popisnaKomisijas;
-
 	//bi-directional many-to-one association to Magacin
 	@ManyToOne
 	@JoinColumn(name="ID_MAGACIN")
@@ -50,13 +43,7 @@ public class PopisniDokument implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="ID_POSLOVNA_GODINA")
 	private PoslovnaGodina poslovnaGodina;
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="popisniDokument")
-
-	//bi-directional many-to-one association to StavkaPopisa
 	
-	private Set<StavkaPopisa> stavkaPopisas;
-
 	public PopisniDokument() {
 	}
 
@@ -100,28 +87,6 @@ public class PopisniDokument implements Serializable {
 		this.statusPredaje = statusPredaje;
 	}
 
-	public Set<PopisnaKomisija> getPopisnaKomisijas() {
-		return this.popisnaKomisijas;
-	}
-
-	public void setPopisnaKomisijas(Set<PopisnaKomisija> popisnaKomisijas) {
-		this.popisnaKomisijas = popisnaKomisijas;
-	}
-
-	public PopisnaKomisija addPopisnaKomisija(PopisnaKomisija popisnaKomisija) {
-		getPopisnaKomisijas().add(popisnaKomisija);
-		popisnaKomisija.setPopisniDokument(this);
-
-		return popisnaKomisija;
-	}
-
-	public PopisnaKomisija removePopisnaKomisija(PopisnaKomisija popisnaKomisija) {
-		getPopisnaKomisijas().remove(popisnaKomisija);
-		popisnaKomisija.setPopisniDokument(null);
-
-		return popisnaKomisija;
-	}
-
 	public Magacin getMagacin() {
 		return this.magacin;
 	}
@@ -138,26 +103,5 @@ public class PopisniDokument implements Serializable {
 		this.poslovnaGodina = poslovnaGodina;
 	}
 
-	public Set<StavkaPopisa> getStavkaPopisas() {
-		return this.stavkaPopisas;
-	}
-
-	public void setStavkaPopisas(Set<StavkaPopisa> stavkaPopisas) {
-		this.stavkaPopisas = stavkaPopisas;
-	}
-
-	public StavkaPopisa addStavkaPopisa(StavkaPopisa stavkaPopisa) {
-		getStavkaPopisas().add(stavkaPopisa);
-		stavkaPopisa.setPopisniDokument(this);
-
-		return stavkaPopisa;
-	}
-
-	public StavkaPopisa removeStavkaPopisa(StavkaPopisa stavkaPopisa) {
-		getStavkaPopisas().remove(stavkaPopisa);
-		stavkaPopisa.setPopisniDokument(null);
-
-		return stavkaPopisa;
-	}
 
 }

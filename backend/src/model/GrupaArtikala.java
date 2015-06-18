@@ -31,11 +31,6 @@ public class GrupaArtikala implements Serializable {
 	@Column(name="SIFRA_GRUPE")
 	private String sifraGrupe;
 
-	//bi-directional many-to-one association to Artikal
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="grupaArtikala")
-	
-	private Set<Artikal> artikals;
 
 	//bi-directional many-to-one association to Preduzece
 	@ManyToOne
@@ -69,27 +64,8 @@ public class GrupaArtikala implements Serializable {
 		this.sifraGrupe = sifraGrupe;
 	}
 
-	public Set<Artikal> getArtikals() {
-		return this.artikals;
-	}
+	
 
-	public void setArtikals(Set<Artikal> artikals) {
-		this.artikals = artikals;
-	}
-
-	public Artikal addArtikal(Artikal artikal) {
-		getArtikals().add(artikal);
-		artikal.setGrupaArtikala(this);
-
-		return artikal;
-	}
-
-	public Artikal removeArtikal(Artikal artikal) {
-		getArtikals().remove(artikal);
-		artikal.setGrupaArtikala(null);
-
-		return artikal;
-	}
 
 	public Preduzece getPreduzece() {
 		return this.preduzece;

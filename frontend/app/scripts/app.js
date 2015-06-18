@@ -33,9 +33,9 @@
     templateUrl: 'views/lager-list.html',
     controller: 'lagerListCtrl'
   })
-  .when('/invoice/:invoiceId', {
-    templateUrl: 'views/invoice.html',
-    controller: 'invoiceCtrl'
+  .when('/lager-list/:invoiceId', {
+    templateUrl: 'views/lager-list.html',
+    controller: 'lagerListCtrl'
   })
   .when('/login', {
     templateUrl: 'views/login.html',

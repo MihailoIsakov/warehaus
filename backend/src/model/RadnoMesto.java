@@ -26,12 +26,7 @@ public class RadnoMesto implements Serializable {
 
 	@Column(name="SIFRA_RADNOG_MESTA")
 	private String sifraRadnogMesta;
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="radnoMesto")
-
-	//bi-directional many-to-one association to Zaposleni
 	
-	private Set<Zaposleni> zaposlenis;
 
 	public RadnoMesto() {
 	}
@@ -60,26 +55,5 @@ public class RadnoMesto implements Serializable {
 		this.sifraRadnogMesta = sifraRadnogMesta;
 	}
 
-	public Set<Zaposleni> getZaposlenis() {
-		return this.zaposlenis;
-	}
-
-	public void setZaposlenis(Set<Zaposleni> zaposlenis) {
-		this.zaposlenis = zaposlenis;
-	}
-
-	public Zaposleni addZaposleni(Zaposleni zaposleni) {
-		getZaposlenis().add(zaposleni);
-		zaposleni.setRadnoMesto(this);
-
-		return zaposleni;
-	}
-
-	public Zaposleni removeZaposleni(Zaposleni zaposleni) {
-		getZaposlenis().remove(zaposleni);
-		zaposleni.setRadnoMesto(null);
-
-		return zaposleni;
-	}
 
 }

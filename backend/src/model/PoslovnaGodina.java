@@ -26,30 +26,12 @@ public class PoslovnaGodina implements Serializable {
 
 	@Column(name="ZAKLJUCENA_GODINA")
 	private byte zakljucenaGodina;
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="poslovnaGodina")
-
-	//bi-directional many-to-one association to MagacinskaKartica
-
-	private Set<MagacinskaKartica> magacinskaKarticas;
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="poslovnaGodina")
-
-	//bi-directional many-to-one association to PopisniDokument
-
-	private Set<PopisniDokument> popisniDokuments;
-
+	
 	//bi-directional many-to-one association to Preduzece
 	@ManyToOne
 	@JoinColumn(name="ID_PREDUZECE")
 	private Preduzece preduzece;
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="poslovnaGodina")
-
-	//bi-directional many-to-one association to PrometniDokument
-
-	private Set<PrometniDokument> prometniDokuments;
-
+	
 	public PoslovnaGodina() {
 	}
 
@@ -77,78 +59,5 @@ public class PoslovnaGodina implements Serializable {
 		this.zakljucenaGodina = zakljucenaGodina;
 	}
 
-	public Set<MagacinskaKartica> getMagacinskaKarticas() {
-		return this.magacinskaKarticas;
-	}
-
-	public void setMagacinskaKarticas(Set<MagacinskaKartica> magacinskaKarticas) {
-		this.magacinskaKarticas = magacinskaKarticas;
-	}
-
-	public MagacinskaKartica addMagacinskaKartica(MagacinskaKartica magacinskaKartica) {
-		getMagacinskaKarticas().add(magacinskaKartica);
-		magacinskaKartica.setPoslovnaGodina(this);
-
-		return magacinskaKartica;
-	}
-
-	public MagacinskaKartica removeMagacinskaKartica(MagacinskaKartica magacinskaKartica) {
-		getMagacinskaKarticas().remove(magacinskaKartica);
-		magacinskaKartica.setPoslovnaGodina(null);
-
-		return magacinskaKartica;
-	}
-
-	public Set<PopisniDokument> getPopisniDokuments() {
-		return this.popisniDokuments;
-	}
-
-	public void setPopisniDokuments(Set<PopisniDokument> popisniDokuments) {
-		this.popisniDokuments = popisniDokuments;
-	}
-
-	public PopisniDokument addPopisniDokument(PopisniDokument popisniDokument) {
-		getPopisniDokuments().add(popisniDokument);
-		popisniDokument.setPoslovnaGodina(this);
-
-		return popisniDokument;
-	}
-
-	public PopisniDokument removePopisniDokument(PopisniDokument popisniDokument) {
-		getPopisniDokuments().remove(popisniDokument);
-		popisniDokument.setPoslovnaGodina(null);
-
-		return popisniDokument;
-	}
-
-	public Preduzece getPreduzece() {
-		return this.preduzece;
-	}
-
-	public void setPreduzece(Preduzece preduzece) {
-		this.preduzece = preduzece;
-	}
-
-	public Set<PrometniDokument> getPrometniDokuments() {
-		return this.prometniDokuments;
-	}
-
-	public void setPrometniDokuments(Set<PrometniDokument> prometniDokuments) {
-		this.prometniDokuments = prometniDokuments;
-	}
-
-	public PrometniDokument addPrometniDokument(PrometniDokument prometniDokument) {
-		getPrometniDokuments().add(prometniDokument);
-		prometniDokument.setPoslovnaGodina(this);
-
-		return prometniDokument;
-	}
-
-	public PrometniDokument removePrometniDokument(PrometniDokument prometniDokument) {
-		getPrometniDokuments().remove(prometniDokument);
-		prometniDokument.setPoslovnaGodina(null);
-
-		return prometniDokument;
-	}
 
 }

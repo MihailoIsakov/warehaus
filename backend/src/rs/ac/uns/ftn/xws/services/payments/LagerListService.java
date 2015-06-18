@@ -17,38 +17,50 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import model.Artikal;
+import model.Magacin;
 
 import org.apache.log4j.Logger;
 
+import com.google.gson.Gson;
+
 import rs.ac.uns.ftn.xws.entities.payments.Invoice;
-import rs.ac.uns.ftn.xws.sessionbeans.payments.InvoiceDaoLocal;
 import rs.ac.uns.ftn.xws.util.Authenticate;
 import daoBean.ArtikalDaoLocal;
+import daoBean.MagacinDaoLocal;
+import daoBean.MagacinskaKarticaDaoLocal;
 
-@Path("/invoice")
-public class InvoiceService {
+@Path("/lager-list")
+public class LagerListService {
 
 	private static Logger log = Logger.getLogger(Invoice.class);
 
 	@EJB
-	private InvoiceDaoLocal invoiceDao;
-	@EJB
 	private ArtikalDaoLocal artikalDao;
+	@EJB
+	private MagacinDaoLocal magacinDao;
+	@EJB
+	private MagacinskaKarticaDaoLocal mkDao;
+
 	@GET 
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-	public List<Artikal> findByAll() {
-		List<Artikal> retVal = new ArrayList<Artikal>();
-		Artikal a = new Artikal();
-		a.setNazivArtikla("nazivAksksks");
+	public List<Magacin> findByAll() {
+		List<Magacin> retVal = new ArrayList<Magacin>();
+		Magacin a = new Magacin();
 		
 		
 		try {
 			log.error("usao");
 		
-		retVal =  artikalDao.findAll();
-		log.error("poruka"+retVal.get(0).getGrupaArtikala().getIdGrupaArtikala());
-		} catch (Exception e) {
+		retVal =  magacinDao.findAll();
+	//	Gson gson = new Gson();
+	///	String rez = gson.toJson(retVal);
+	//	log.error(rez);
+	//	retVal = gson.fromJson(rez,retVal.getClass());
+		log.error("size1"+retVal.size());
+		log.error("id"+retVal.get(0).getIdMagacin());
+		//log.error("size2"+retVal.get(0).getMagacinskaKarticas().size());
+			} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
 		return retVal;
@@ -58,11 +70,12 @@ public class InvoiceService {
 	@Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public Invoice findById(@PathParam("id") String id) {
-		Artikal a = new Artikal();
-		Invoice retVal = null;
+    public List<Object> findById(@PathParam("id") String id) {
+		List<Object> retVal = new ArrayList<Object>();
 		try {
-			retVal = invoiceDao.findById(Long.parseLong(id));
+			log.error("OVO JE ERROR"+Integer.parseInt(id));
+			retVal = mkDao.findByMagacin(Integer.parseInt(id));
+			log.error(retVal.size());
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -73,13 +86,13 @@ public class InvoiceService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public Invoice create(Invoice entity) {
+    public Artikal create(Artikal entity) {
 		log.info("POST");
 		Artikal a = new Artikal();
-    	Invoice retVal = null;
+		Artikal retVal = null;
 		try {
 			System.out.println("entity: "+entity);
-			retVal = invoiceDao.persist(entity);
+			retVal = artikalDao.persist(entity);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -91,12 +104,12 @@ public class InvoiceService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public Invoice update(Invoice entity) {
+    public Artikal update(Artikal entity) {
     	log.info("PUT");
     	Artikal a = new Artikal();
-    	Invoice retVal = null;
+    	Artikal retVal = null;
         try {
-        	retVal = invoiceDao.merge(entity);
+        	retVal = artikalDao.merge(entity);
         } catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -110,7 +123,7 @@ public class InvoiceService {
     public String remove(@PathParam("id") Long id) {
     	Artikal a = new Artikal();
     	try {
-        	invoiceDao.remove(id);
+    		artikalDao.remove(id);
         } catch (Exception e) {
         	log.error(e.getMessage(), e);
         }

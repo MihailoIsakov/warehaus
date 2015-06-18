@@ -46,12 +46,6 @@ public class PoslovniPartner implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="ID_MESTO")
 	private Mesto mesto;
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="poslovniPartner")
-
-	//bi-directional many-to-one association to PrometniDokument
-
-	private Set<PrometniDokument> prometniDokuments;
 
 	public PoslovniPartner() {
 	}
@@ -128,26 +122,5 @@ public class PoslovniPartner implements Serializable {
 		this.mesto = mesto;
 	}
 
-	public Set<PrometniDokument> getPrometniDokuments() {
-		return this.prometniDokuments;
-	}
-
-	public void setPrometniDokuments(Set<PrometniDokument> prometniDokuments) {
-		this.prometniDokuments = prometniDokuments;
-	}
-
-	public PrometniDokument addPrometniDokument(PrometniDokument prometniDokument) {
-		getPrometniDokuments().add(prometniDokument);
-		prometniDokument.setPoslovniPartner(this);
-
-		return prometniDokument;
-	}
-
-	public PrometniDokument removePrometniDokument(PrometniDokument prometniDokument) {
-		getPrometniDokuments().remove(prometniDokument);
-		prometniDokument.setPoslovniPartner(null);
-
-		return prometniDokument;
-	}
 
 }

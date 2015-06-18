@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import java.util.Set;
 
 
@@ -13,6 +16,7 @@ import java.util.Set;
  */
 @Entity
 @NamedQuery(name="Magacin.findAll", query="SELECT m FROM Magacin m")
+@JsonInclude(Include.NON_NULL)
 public class Magacin implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -40,29 +44,7 @@ public class Magacin implements Serializable {
 	private Sektor sektor;
 
 	//bi-directional many-to-one association to MagacinskaKartica
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="magacin")
-
-	private Set<MagacinskaKartica> magacinskaKarticas;
-
-	//bi-directional many-to-one association to PopisniDokument
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="magacin")
-
-
-	private Set<PopisniDokument> popisniDokuments;
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="magacin1")
-
-
-	private Set<PrometniDokument> prometniDokuments1;
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="magacin2")
-
-	//bi-directional many-to-one association to PrometniDokument
-
-	private Set<PrometniDokument> prometniDokuments2;
-
+	
 	public Magacin() {
 	}
 
@@ -114,92 +96,6 @@ public class Magacin implements Serializable {
 		this.sektor = sektor;
 	}
 
-	public Set<MagacinskaKartica> getMagacinskaKarticas() {
-		return this.magacinskaKarticas;
-	}
 
-	public void setMagacinskaKarticas(Set<MagacinskaKartica> magacinskaKarticas) {
-		this.magacinskaKarticas = magacinskaKarticas;
-	}
-
-	public MagacinskaKartica addMagacinskaKartica(MagacinskaKartica magacinskaKartica) {
-		getMagacinskaKarticas().add(magacinskaKartica);
-		magacinskaKartica.setMagacin(this);
-
-		return magacinskaKartica;
-	}
-
-	public MagacinskaKartica removeMagacinskaKartica(MagacinskaKartica magacinskaKartica) {
-		getMagacinskaKarticas().remove(magacinskaKartica);
-		magacinskaKartica.setMagacin(null);
-
-		return magacinskaKartica;
-	}
-
-	public Set<PopisniDokument> getPopisniDokuments() {
-		return this.popisniDokuments;
-	}
-
-	public void setPopisniDokuments(Set<PopisniDokument> popisniDokuments) {
-		this.popisniDokuments = popisniDokuments;
-	}
-
-	public PopisniDokument addPopisniDokument(PopisniDokument popisniDokument) {
-		getPopisniDokuments().add(popisniDokument);
-		popisniDokument.setMagacin(this);
-
-		return popisniDokument;
-	}
-
-	public PopisniDokument removePopisniDokument(PopisniDokument popisniDokument) {
-		getPopisniDokuments().remove(popisniDokument);
-		popisniDokument.setMagacin(null);
-
-		return popisniDokument;
-	}
-
-	public Set<PrometniDokument> getPrometniDokuments1() {
-		return this.prometniDokuments1;
-	}
-
-	public void setPrometniDokuments1(Set<PrometniDokument> prometniDokuments1) {
-		this.prometniDokuments1 = prometniDokuments1;
-	}
-
-	public PrometniDokument addPrometniDokuments1(PrometniDokument prometniDokuments1) {
-		getPrometniDokuments1().add(prometniDokuments1);
-		prometniDokuments1.setMagacin1(this);
-
-		return prometniDokuments1;
-	}
-
-	public PrometniDokument removePrometniDokuments1(PrometniDokument prometniDokuments1) {
-		getPrometniDokuments1().remove(prometniDokuments1);
-		prometniDokuments1.setMagacin1(null);
-
-		return prometniDokuments1;
-	}
-
-	public Set<PrometniDokument> getPrometniDokuments2() {
-		return this.prometniDokuments2;
-	}
-
-	public void setPrometniDokuments2(Set<PrometniDokument> prometniDokuments2) {
-		this.prometniDokuments2 = prometniDokuments2;
-	}
-
-	public PrometniDokument addPrometniDokuments2(PrometniDokument prometniDokuments2) {
-		getPrometniDokuments2().add(prometniDokuments2);
-		prometniDokuments2.setMagacin2(this);
-
-		return prometniDokuments2;
-	}
-
-	public PrometniDokument removePrometniDokuments2(PrometniDokument prometniDokuments2) {
-		getPrometniDokuments2().remove(prometniDokuments2);
-		prometniDokuments2.setMagacin2(null);
-
-		return prometniDokuments2;
-	}
 
 }

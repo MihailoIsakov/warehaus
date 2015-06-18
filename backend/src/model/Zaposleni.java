@@ -42,25 +42,7 @@ public class Zaposleni implements Serializable {
 
 	@Column(name="STATUS_ZAPOSLENOG")
 	private String statusZaposlenog;
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="zaposleni1")
-
-	//bi-directional many-to-one association to PopisnaKomisija
 	
-	private Set<PopisnaKomisija> popisnaKomisijas1;
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="zaposleni2")
-
-	//bi-directional many-to-one association to PopisnaKomisija
-	
-	private Set<PopisnaKomisija> popisnaKomisijas2;
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="zaposleni3")
-
-	//bi-directional many-to-one association to PopisnaKomisija
-	
-	private Set<PopisnaKomisija> popisnaKomisijas3;
-
 	//bi-directional many-to-one association to Mesto
 	@ManyToOne
 	@JoinColumn(name="ID_MESTO")
@@ -151,71 +133,6 @@ public class Zaposleni implements Serializable {
 		this.statusZaposlenog = statusZaposlenog;
 	}
 
-	public Set<PopisnaKomisija> getPopisnaKomisijas1() {
-		return this.popisnaKomisijas1;
-	}
-
-	public void setPopisnaKomisijas1(Set<PopisnaKomisija> popisnaKomisijas1) {
-		this.popisnaKomisijas1 = popisnaKomisijas1;
-	}
-
-	public PopisnaKomisija addPopisnaKomisijas1(PopisnaKomisija popisnaKomisijas1) {
-		getPopisnaKomisijas1().add(popisnaKomisijas1);
-		popisnaKomisijas1.setZaposleni1(this);
-
-		return popisnaKomisijas1;
-	}
-
-	public PopisnaKomisija removePopisnaKomisijas1(PopisnaKomisija popisnaKomisijas1) {
-		getPopisnaKomisijas1().remove(popisnaKomisijas1);
-		popisnaKomisijas1.setZaposleni1(null);
-
-		return popisnaKomisijas1;
-	}
-
-	public Set<PopisnaKomisija> getPopisnaKomisijas2() {
-		return this.popisnaKomisijas2;
-	}
-
-	public void setPopisnaKomisijas2(Set<PopisnaKomisija> popisnaKomisijas2) {
-		this.popisnaKomisijas2 = popisnaKomisijas2;
-	}
-
-	public PopisnaKomisija addPopisnaKomisijas2(PopisnaKomisija popisnaKomisijas2) {
-		getPopisnaKomisijas2().add(popisnaKomisijas2);
-		popisnaKomisijas2.setZaposleni2(this);
-
-		return popisnaKomisijas2;
-	}
-
-	public PopisnaKomisija removePopisnaKomisijas2(PopisnaKomisija popisnaKomisijas2) {
-		getPopisnaKomisijas2().remove(popisnaKomisijas2);
-		popisnaKomisijas2.setZaposleni2(null);
-
-		return popisnaKomisijas2;
-	}
-
-	public Set<PopisnaKomisija> getPopisnaKomisijas3() {
-		return this.popisnaKomisijas3;
-	}
-
-	public void setPopisnaKomisijas3(Set<PopisnaKomisija> popisnaKomisijas3) {
-		this.popisnaKomisijas3 = popisnaKomisijas3;
-	}
-
-	public PopisnaKomisija addPopisnaKomisijas3(PopisnaKomisija popisnaKomisijas3) {
-		getPopisnaKomisijas3().add(popisnaKomisijas3);
-		popisnaKomisijas3.setZaposleni3(this);
-
-		return popisnaKomisijas3;
-	}
-
-	public PopisnaKomisija removePopisnaKomisijas3(PopisnaKomisija popisnaKomisijas3) {
-		getPopisnaKomisijas3().remove(popisnaKomisijas3);
-		popisnaKomisijas3.setZaposleni3(null);
-
-		return popisnaKomisijas3;
-	}
 
 	public Mesto getMesto() {
 		return this.mesto;

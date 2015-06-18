@@ -25,14 +25,6 @@ public class Sektor implements Serializable {
 
 	@Column(name="SIFRA_SEKTORA")
 	private String sifraSektora;
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="sektor")
-
-	//bi-directional many-to-one association to Magacin
-
-	private Set<Magacin> magacins;
-
-	//bi-directional many-to-one association to Preduzece
 	@ManyToOne
 	@JoinColumn(name="ID_PREDUZECE")
 	private Preduzece preduzece;
@@ -64,27 +56,6 @@ public class Sektor implements Serializable {
 		this.sifraSektora = sifraSektora;
 	}
 
-	public Set<Magacin> getMagacins() {
-		return this.magacins;
-	}
-
-	public void setMagacins(Set<Magacin> magacins) {
-		this.magacins = magacins;
-	}
-
-	public Magacin addMagacin(Magacin magacin) {
-		getMagacins().add(magacin);
-		magacin.setSektor(this);
-
-		return magacin;
-	}
-
-	public Magacin removeMagacin(Magacin magacin) {
-		getMagacins().remove(magacin);
-		magacin.setSektor(null);
-
-		return magacin;
-	}
 
 	public Preduzece getPreduzece() {
 		return this.preduzece;

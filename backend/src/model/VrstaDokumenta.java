@@ -26,14 +26,7 @@ public class VrstaDokumenta implements Serializable {
 
 	@Column(name="SIFRA_VRSTE")
 	private String sifraVrste;
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="vrstaDokumenta")
-
-	//bi-directional many-to-one association to AnalitikaMagacinskeKartice
-
-	private Set<AnalitikaMagacinskeKartice> analitikaMagacinskeKartices;
-
-	public VrstaDokumenta() {
+		public VrstaDokumenta() {
 	}
 
 	public int getIdVrstaDokumenta() {
@@ -58,28 +51,6 @@ public class VrstaDokumenta implements Serializable {
 
 	public void setSifraVrste(String sifraVrste) {
 		this.sifraVrste = sifraVrste;
-	}
-
-	public Set<AnalitikaMagacinskeKartice> getAnalitikaMagacinskeKartices() {
-		return this.analitikaMagacinskeKartices;
-	}
-
-	public void setAnalitikaMagacinskeKartices(Set<AnalitikaMagacinskeKartice> analitikaMagacinskeKartices) {
-		this.analitikaMagacinskeKartices = analitikaMagacinskeKartices;
-	}
-
-	public AnalitikaMagacinskeKartice addAnalitikaMagacinskeKartice(AnalitikaMagacinskeKartice analitikaMagacinskeKartice) {
-		getAnalitikaMagacinskeKartices().add(analitikaMagacinskeKartice);
-		analitikaMagacinskeKartice.setVrstaDokumenta(this);
-
-		return analitikaMagacinskeKartice;
-	}
-
-	public AnalitikaMagacinskeKartice removeAnalitikaMagacinskeKartice(AnalitikaMagacinskeKartice analitikaMagacinskeKartice) {
-		getAnalitikaMagacinskeKartices().remove(analitikaMagacinskeKartice);
-		analitikaMagacinskeKartice.setVrstaDokumenta(null);
-
-		return analitikaMagacinskeKartice;
 	}
 
 }

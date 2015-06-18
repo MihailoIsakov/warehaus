@@ -31,36 +31,11 @@ public class Preduzece implements Serializable {
 	private String sifraPreduzeca;
 
 	private String telefon;
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="preduzece")
-
-	//bi-directional many-to-one association to GrupaArtikala
-	
-	private Set<GrupaArtikala> grupaArtikalas;
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="preduzece")
-
-	//bi-directional many-to-one association to PoslovnaGodina
-	
-	private Set<PoslovnaGodina> poslovnaGodinas;
 
 	//bi-directional many-to-one association to Mesto
 	@ManyToOne
 	@JoinColumn(name="ID_MESTO")
 	private Mesto mesto;
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="preduzece")
-
-	//bi-directional many-to-one association to Sektor
-	
-	private Set<Sektor> sektors;
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="preduzece")
-
-	//bi-directional many-to-one association to Zaposleni
-	
-	private Set<Zaposleni> zaposlenis;
-
 	public Preduzece() {
 	}
 
@@ -112,100 +87,13 @@ public class Preduzece implements Serializable {
 		this.telefon = telefon;
 	}
 
-	public Set<GrupaArtikala> getGrupaArtikalas() {
-		return this.grupaArtikalas;
-	}
-
-	public void setGrupaArtikalas(Set<GrupaArtikala> grupaArtikalas) {
-		this.grupaArtikalas = grupaArtikalas;
-	}
-
-	public GrupaArtikala addGrupaArtikala(GrupaArtikala grupaArtikala) {
-		getGrupaArtikalas().add(grupaArtikala);
-		grupaArtikala.setPreduzece(this);
-
-		return grupaArtikala;
-	}
-
-	public GrupaArtikala removeGrupaArtikala(GrupaArtikala grupaArtikala) {
-		getGrupaArtikalas().remove(grupaArtikala);
-		grupaArtikala.setPreduzece(null);
-
-		return grupaArtikala;
-	}
-
-	public Set<PoslovnaGodina> getPoslovnaGodinas() {
-		return this.poslovnaGodinas;
-	}
-
-	public void setPoslovnaGodinas(Set<PoslovnaGodina> poslovnaGodinas) {
-		this.poslovnaGodinas = poslovnaGodinas;
-	}
-
-	public PoslovnaGodina addPoslovnaGodina(PoslovnaGodina poslovnaGodina) {
-		getPoslovnaGodinas().add(poslovnaGodina);
-		poslovnaGodina.setPreduzece(this);
-
-		return poslovnaGodina;
-	}
-
-	public PoslovnaGodina removePoslovnaGodina(PoslovnaGodina poslovnaGodina) {
-		getPoslovnaGodinas().remove(poslovnaGodina);
-		poslovnaGodina.setPreduzece(null);
-
-		return poslovnaGodina;
-	}
-
 	public Mesto getMesto() {
-		return this.mesto;
+		return mesto;
 	}
 
 	public void setMesto(Mesto mesto) {
 		this.mesto = mesto;
 	}
 
-	public Set<Sektor> getSektors() {
-		return this.sektors;
-	}
-
-	public void setSektors(Set<Sektor> sektors) {
-		this.sektors = sektors;
-	}
-
-	public Sektor addSektor(Sektor sektor) {
-		getSektors().add(sektor);
-		sektor.setPreduzece(this);
-
-		return sektor;
-	}
-
-	public Sektor removeSektor(Sektor sektor) {
-		getSektors().remove(sektor);
-		sektor.setPreduzece(null);
-
-		return sektor;
-	}
-
-	public Set<Zaposleni> getZaposlenis() {
-		return this.zaposlenis;
-	}
-
-	public void setZaposlenis(Set<Zaposleni> zaposlenis) {
-		this.zaposlenis = zaposlenis;
-	}
-
-	public Zaposleni addZaposleni(Zaposleni zaposleni) {
-		getZaposlenis().add(zaposleni);
-		zaposleni.setPreduzece(this);
-
-		return zaposleni;
-	}
-
-	public Zaposleni removeZaposleni(Zaposleni zaposleni) {
-		getZaposlenis().remove(zaposleni);
-		zaposleni.setPreduzece(null);
-
-		return zaposleni;
-	}
 
 }

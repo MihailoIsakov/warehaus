@@ -54,12 +54,17 @@ public class PrometniDokument implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="ID_POSLOVNI_PARTNER")
 	private PoslovniPartner poslovniPartner;
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="prometniDokument")
-
-	//bi-directional many-to-one association to StavkaPrometnogDokumenta
 	
-	private Set<StavkaPrometnogDokumenta> stavkaPrometnogDokumentas;
+	@ManyToOne
+	@JoinColumn(name="ID_VRSTA_DOKUMENTA")
+	private VrstaDokumenta vrstaDokumenta;
+	public VrstaDokumenta getVrstaDokumenta() {
+		return vrstaDokumenta;
+	}
+
+	public void setVrstaDokumenta(VrstaDokumenta vrstaDokumenta) {
+		this.vrstaDokumenta = vrstaDokumenta;
+	}
 
 	public PrometniDokument() {
 	}
@@ -136,26 +141,7 @@ public class PrometniDokument implements Serializable {
 		this.poslovniPartner = poslovniPartner;
 	}
 
-	public Set<StavkaPrometnogDokumenta> getStavkaPrometnogDokumentas() {
-		return this.stavkaPrometnogDokumentas;
-	}
 
-	public void setStavkaPrometnogDokumentas(Set<StavkaPrometnogDokumenta> stavkaPrometnogDokumentas) {
-		this.stavkaPrometnogDokumentas = stavkaPrometnogDokumentas;
-	}
 
-	public StavkaPrometnogDokumenta addStavkaPrometnogDokumenta(StavkaPrometnogDokumenta stavkaPrometnogDokumenta) {
-		getStavkaPrometnogDokumentas().add(stavkaPrometnogDokumenta);
-		stavkaPrometnogDokumenta.setPrometniDokument(this);
-
-		return stavkaPrometnogDokumenta;
-	}
-
-	public StavkaPrometnogDokumenta removeStavkaPrometnogDokumenta(StavkaPrometnogDokumenta stavkaPrometnogDokumenta) {
-		getStavkaPrometnogDokumentas().remove(stavkaPrometnogDokumenta);
-		stavkaPrometnogDokumenta.setPrometniDokument(null);
-
-		return stavkaPrometnogDokumenta;
-	}
-
+	
 }

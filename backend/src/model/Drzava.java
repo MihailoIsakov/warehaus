@@ -27,11 +27,7 @@ public class Drzava implements Serializable {
 	private String sifraDrzave;
 
 	//bi-directional many-to-one association to Mesto
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="drzava")
 	
-	private Set<Mesto> mestos;
-
 	public Drzava() {
 	}
 
@@ -57,28 +53,6 @@ public class Drzava implements Serializable {
 
 	public void setSifraDrzave(String sifraDrzave) {
 		this.sifraDrzave = sifraDrzave;
-	}
-
-	public Set<Mesto> getMestos() {
-		return this.mestos;
-	}
-
-	public void setMestos(Set<Mesto> mestos) {
-		this.mestos = mestos;
-	}
-
-	public Mesto addMesto(Mesto mesto) {
-		getMestos().add(mesto);
-		mesto.setDrzava(this);
-
-		return mesto;
-	}
-
-	public Mesto removeMesto(Mesto mesto) {
-		getMestos().remove(mesto);
-		mesto.setDrzava(null);
-
-		return mesto;
 	}
 
 }

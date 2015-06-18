@@ -32,13 +32,7 @@ public class StavkaPrometnogDokumenta implements Serializable {
 
 	@Column(name="VREDNOST_STAVKE")
 	private BigDecimal vrednostStavke;
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="stavkaPrometnogDokumenta")
-
-	//bi-directional many-to-one association to AnalitikaMagacinskeKartice
-
-	private Set<AnalitikaMagacinskeKartice> analitikaMagacinskeKartices;
-
+	
 	//bi-directional many-to-one association to Artikal
 	@ManyToOne
 	@JoinColumn(name="ID_ARTIKAL")
@@ -92,27 +86,6 @@ public class StavkaPrometnogDokumenta implements Serializable {
 		this.vrednostStavke = vrednostStavke;
 	}
 
-	public Set<AnalitikaMagacinskeKartice> getAnalitikaMagacinskeKartices() {
-		return this.analitikaMagacinskeKartices;
-	}
-
-	public void setAnalitikaMagacinskeKartices(Set<AnalitikaMagacinskeKartice> analitikaMagacinskeKartices) {
-		this.analitikaMagacinskeKartices = analitikaMagacinskeKartices;
-	}
-
-	public AnalitikaMagacinskeKartice addAnalitikaMagacinskeKartice(AnalitikaMagacinskeKartice analitikaMagacinskeKartice) {
-		getAnalitikaMagacinskeKartices().add(analitikaMagacinskeKartice);
-		analitikaMagacinskeKartice.setStavkaPrometnogDokumenta(this);
-
-		return analitikaMagacinskeKartice;
-	}
-
-	public AnalitikaMagacinskeKartice removeAnalitikaMagacinskeKartice(AnalitikaMagacinskeKartice analitikaMagacinskeKartice) {
-		getAnalitikaMagacinskeKartices().remove(analitikaMagacinskeKartice);
-		analitikaMagacinskeKartice.setStavkaPrometnogDokumenta(null);
-
-		return analitikaMagacinskeKartice;
-	}
 
 	public Artikal getArtikal() {
 		return this.artikal;

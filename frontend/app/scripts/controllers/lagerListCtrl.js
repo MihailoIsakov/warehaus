@@ -3,78 +3,99 @@
  angular.module('article', ['resource.invoice',
  	'angular-md5'])
 
- .controller('lagerListCtrl', function (Artikal, $scope, $location, md5, $log) {
- 	//postavljanje niza invoices u kodu
- 	/*$scope.invoices = [
- 	{
- 		"id": 1,
- 		"deleted": false,
- 		"version": 0,
- 		"suplierName": "Majstor za pivo",
- 		"suplierAddress": "Zorza Klemansoa 18",
- 		"supplierPib": "1232233",
- 		"buyerName": "Home Brew INC",
- 		"buyerAddress": "Skojevska 12",
- 		"acountNumber": 1226458,
- 		"date": 1169301600000,
- 		"totalGoodsValue": 5000.0,
- 		"totalServiceValue": 0.0,
- 		"totalValue": 5000.0,
- 		"totalRabate": 0.0,
- 		"totalTax": 20.0,
- 		"currency": "rsd",
- 		"totalAmount": 5000.0,
- 		"currencyDate": 1169301600000,
- 		"invoiceItems": [
- 		{
- 			"id": 1,
- 			"deleted": false,
- 			"version": 0,
- 			"orderNumber": 1,
- 			"goodsName": "Hmelj",
- 			"quantity": 3.0,
- 			"measureUnit": "kilogram",
- 			"pricePerUnit": 1000.0,
- 			"amount": 3.0,
- 			"rabatePercentage": 0.0,
- 			"rabateAmount": 0.0,
- 			"minusRabat": 0.0,
- 			"totalTax": 20.0
- 		},
- 		{
- 			"id": 2,
- 			"deleted": false,
- 			"version": 0,
- 			"orderNumber": 2,
- 			"goodsName": "Jecam",
- 			"quantity": 2.0,
- 			"measureUnit": "kilogram",
- 			"pricePerUnit": 1000.0,
- 			"amount": 2.0,
- 			"rabatePercentage": 0.0,
- 			"rabateAmount": 0.0,
- 			"minusRabat": 0.0,
- 			"totalTax": 20.0
- 		}
- 		]
- 	}
- 	];*/
- 	//preuzimanje niza faktura sa servera
-/* 	Invoice.query().$promise.then(function (data) {
- 		$scope.invoices = data;
- 	}, function (error) {
- 		console.log(error);
- 	});
-*/
-	$scope.articles = Artikal.query();
+ .controller('lagerListCtrl', function (Artikal, $scope, $routeParams, $modal, $log, $location, InvoiceItem) {
+
+if($routeParams.invoiceId!='new'){
+		//preuzimanje parametra iz URL
+		var invoiceId = $routeParams.invoiceId;
+		if(invoiceId){
+		//preuzimanje fakure sa servera. Posto smo u Invoice factory rutu definisali kao '...invoice/:invoiceId' invoiceId ce se proslediti kao parametar rute na server 
+		Artikal.query({'invoiceId':invoiceId}).$promise.then(function (data) {
+			$scope.articles = data;
+		});
+	}
+
+	//ako kreiramo novu fakutru
+	else{
+		$scope.articles = new Artikal();
+		$scope.articles.invoiceItems = [];
+	}
+}
+	//funkcija koja otvara datepicker
+	$scope.openDatepicker = function($event, opened) {
+		$event.preventDefault();
+		$event.stopPropagation();
+		$scope[opened] = true;
+	};
+
+	//modalni dijalog za stavku fakutre
+	$scope.openModal = function (invoiceItem, size) {
+
+		var modalInstance = $modal.open({
+			templateUrl: 'views/invoice-item.html',
+			controller: 'invoiceItemCtrl',
+			size: size,
+			resolve: {
+				invoiceItem: function () {
+					return invoiceItem;
+				}
+			}
+		});
+		modalInstance.result.then(function (data) {
+			var invoiceItem = data.invoiceItem;
+			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
+			if(!invoiceItem.id && data.action==='save'){
+				$scope.invoice.invoiceItems.push(invoiceItem);				
+			}
+			//ako stavka treba da se obrise izbaci se iz niza
+			if(data.action==='delete'){
+				var index = $scope.invoice.invoiceItems.indexOf(invoiceItem);
+				$scope.invoice.invoiceItems.splice(index, 1);
+				//ako je stavka imala i id, treba da se obrise i na serveru (da li je to dobro?)
+				if(invoiceItem.id){
+					InvoiceItem.delete({invoiceItemId:invoiceItem.id});
+				}
+			}
+		}, function () {
+			$log.info('Modal dismissed at: ' + new Date());
+		});
+	};
+
+	//cuvanje izmena
+	$scope.save = function () {
+		if($scope.invoice.id){
+			//zbog cega redirekcija ide na callback?
+			$scope.invoice.$update({invoiceId:$scope.invoice.id},function () {
+				$location.path('/invoiceList');
+			});
+		}
+		else{
+			$scope.invoice.$save(function () {
+				$location.path('/invoiceList');
+			});
+		}
+		$log.info("save");
+	}
+
+	$scope.delete = function () {
+		if($scope.invoice.id){
+			$scope.invoice.$delete({invoiceId:$scope.invoice.id}, function () {
+				$location.path('invoiceList');
+			});
+		}
+	}
+
+$scope.articles = "";
+	$scope.options = Artikal.query();
 	$log.info($scope.articles.length);//0
 	//kada smo kliknuli na red u tabeli prelazimo na stranicu za editovanje fakture sa zadatim id-om
  	$scope.insertOrEditInvoice = function (article) {
  		if(article){
- 			$location.path('/invoice/'+article.id);
+ 			$location.path('/lager-list/'+article);
  		}
  		else{
 			$location.path('/invoice/new');
  		}
  	}
- });
+});
+

@@ -33,9 +33,7 @@ public class JedinicaMere implements Serializable {
 
 	//bi-directional many-to-one association to Artikal
 	
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-    @JoinColumn(name="jedinicaMere")
-	private Set<Artikal> artikals;
+
 
 	public JedinicaMere() {
 	}
@@ -64,26 +62,7 @@ public class JedinicaMere implements Serializable {
 		this.sifraJediniceMere = sifraJediniceMere;
 	}
 
-	public Set<Artikal> getArtikals() {
-		return this.artikals;
-	}
+	
 
-	public void setArtikals(Set<Artikal> artikals) {
-		this.artikals = artikals;
-	}
-
-	public Artikal addArtikal(Artikal artikal) {
-		getArtikals().add(artikal);
-		artikal.setJedinicaMere(this);
-
-		return artikal;
-	}
-
-	public Artikal removeArtikal(Artikal artikal) {
-		getArtikals().remove(artikal);
-		artikal.setJedinicaMere(null);
-
-		return artikal;
-	}
 
 }

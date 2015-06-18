@@ -44,22 +44,7 @@ public class Artikal implements Serializable {
 	private JedinicaMere jedinicaMere;
 
 	//bi-directional many-to-one association to MagacinskaKartica
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="artikal")
 	
-	private Set<MagacinskaKartica> magacinskaKarticas;
-
-	//bi-directional many-to-one association to StavkaPopisa
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="artikal")
-	
-	private Set<StavkaPopisa> stavkaPopisas;
-
-	//bi-directional many-to-one association to StavkaPrometnogDokumenta
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="artikal")
-	
-	private Set<StavkaPrometnogDokumenta> stavkaPrometnogDokumentas;
 
 	public Artikal() {
 	}
@@ -112,70 +97,5 @@ public class Artikal implements Serializable {
 		this.jedinicaMere = jedinicaMere;
 	}
 
-	public Set<MagacinskaKartica> getMagacinskaKarticas() {
-		return this.magacinskaKarticas;
-	}
-
-	public void setMagacinskaKarticas(Set<MagacinskaKartica> magacinskaKarticas) {
-		this.magacinskaKarticas = magacinskaKarticas;
-	}
-
-	public MagacinskaKartica addMagacinskaKartica(MagacinskaKartica magacinskaKartica) {
-		getMagacinskaKarticas().add(magacinskaKartica);
-		magacinskaKartica.setArtikal(this);
-
-		return magacinskaKartica;
-	}
-
-	public MagacinskaKartica removeMagacinskaKartica(MagacinskaKartica magacinskaKartica) {
-		getMagacinskaKarticas().remove(magacinskaKartica);
-		magacinskaKartica.setArtikal(null);
-
-		return magacinskaKartica;
-	}
-
-	public Set<StavkaPopisa> getStavkaPopisas() {
-		return this.stavkaPopisas;
-	}
-
-	public void setStavkaPopisas(Set<StavkaPopisa> stavkaPopisas) {
-		this.stavkaPopisas = stavkaPopisas;
-	}
-
-	public StavkaPopisa addStavkaPopisa(StavkaPopisa stavkaPopisa) {
-		getStavkaPopisas().add(stavkaPopisa);
-		stavkaPopisa.setArtikal(this);
-
-		return stavkaPopisa;
-	}
-
-	public StavkaPopisa removeStavkaPopisa(StavkaPopisa stavkaPopisa) {
-		getStavkaPopisas().remove(stavkaPopisa);
-		stavkaPopisa.setArtikal(null);
-
-		return stavkaPopisa;
-	}
-
-	public Set<StavkaPrometnogDokumenta> getStavkaPrometnogDokumentas() {
-		return this.stavkaPrometnogDokumentas;
-	}
-
-	public void setStavkaPrometnogDokumentas(Set<StavkaPrometnogDokumenta> stavkaPrometnogDokumentas) {
-		this.stavkaPrometnogDokumentas = stavkaPrometnogDokumentas;
-	}
-
-	public StavkaPrometnogDokumenta addStavkaPrometnogDokumenta(StavkaPrometnogDokumenta stavkaPrometnogDokumenta) {
-		getStavkaPrometnogDokumentas().add(stavkaPrometnogDokumenta);
-		stavkaPrometnogDokumenta.setArtikal(this);
-
-		return stavkaPrometnogDokumenta;
-	}
-
-	public StavkaPrometnogDokumenta removeStavkaPrometnogDokumenta(StavkaPrometnogDokumenta stavkaPrometnogDokumenta) {
-		getStavkaPrometnogDokumentas().remove(stavkaPrometnogDokumenta);
-		stavkaPrometnogDokumenta.setArtikal(null);
-
-		return stavkaPrometnogDokumenta;
-	}
-
+	
 }

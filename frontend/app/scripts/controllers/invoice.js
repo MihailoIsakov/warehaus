@@ -6,21 +6,21 @@ angular.module('invoice', [
 	'invoiceItem',
 	'resource.invoiceItem'])
 
-.controller('invoiceCtrl', function (Invoice, $scope, $routeParams, $modal, $log, $location, InvoiceItem) {
+.controller('invoiceCtrl', function (Artikal, $scope, $routeParams, $modal, $log, $location, InvoiceItem) {
 	//ako pozivamo edit postojece fakture
 	if($routeParams.invoiceId!='new'){
 		//preuzimanje parametra iz URL
 		var invoiceId = $routeParams.invoiceId;
 		
 		//preuzimanje fakure sa servera. Posto smo u Invoice factory rutu definisali kao '...invoice/:invoiceId' invoiceId ce se proslediti kao parametar rute na server 
-		Invoice.get({'invoiceId':invoiceId}).$promise.then(function (data) {
-			$scope.invoice = data;
+		Artikal.query({'invoiceId':invoiceId}).$promise.then(function (data) {
+			$scope.articles = data;
 		});
 	}
 	//ako kreiramo novu fakutru
 	else{
-		$scope.invoice = new Invoice();
-		$scope.invoice.invoiceItems = [];
+		$scope.articals = new Artikal();
+		$scope.articals.invoiceItems = [];
 	}
 	//funkcija koja otvara datepicker
 	$scope.openDatepicker = function($event, opened) {

@@ -1,11 +1,19 @@
 package model;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
 import java.math.BigDecimal;
-import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 
 /**
@@ -14,7 +22,11 @@ import java.util.Set;
  */
 @Entity
 @Table(name="magacinska_kartica")
-@NamedQuery(name="MagacinskaKartica.findAll", query="SELECT m FROM MagacinskaKartica m")
+@NamedQueries({
+@NamedQuery(name="MagacinskaKartica.findAll", query="SELECT m FROM MagacinskaKartica m"),
+@NamedQuery(name="MagacinskaKartica.findByMagacin", query="SELECT k FROM MagacinskaKartica k WHERE k.magacin.idMagacin like :id")
+})
+@JsonInclude(Include.NON_NULL)
 public class MagacinskaKartica implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -45,31 +57,23 @@ public class MagacinskaKartica implements Serializable {
 
 	@Column(name="VR__ULAZA")
 	private BigDecimal vrUlaza;
-	 @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	    @JoinColumn(name="magacinskaKartica")
-
-	//bi-directional many-to-one association to AnalitikaMagacinskeKartice
-
-	private Set<AnalitikaMagacinskeKartice> analitikaMagacinskeKartices;
-
-	//bi-directional many-to-one association to Artikal
-	@ManyToOne
-	@JoinColumn(name="ID_ARTIKAL")
-	private Artikal artikal;
-
-	//bi-directional many-to-one association to Magacin
+		//bi-directional many-to-one association to Magacin
 	@ManyToOne
 	@JoinColumn(name="ID_MAGACIN")
 	private Magacin magacin;
 
-	//bi-directional many-to-one association to PoslovnaGodina
+	@ManyToOne
+	@JoinColumn(name="ID_ARTIKAL")
+	private Artikal artikal;
+	
 	@ManyToOne
 	@JoinColumn(name="ID_POSLOVNA_GODINA")
 	private PoslovnaGodina poslovnaGodina;
-
+	
 	public MagacinskaKartica() {
 	}
 
+	
 	public int getIdMagacinskaKartica() {
 		return this.idMagacinskaKartica;
 	}
@@ -80,6 +84,14 @@ public class MagacinskaKartica implements Serializable {
 
 	public BigDecimal getKolIzlaza() {
 		return this.kolIzlaza;
+	}
+
+	public Artikal getArtikal() {
+		return artikal;
+	}
+
+	public void setArtikal(Artikal artikal) {
+		this.artikal = artikal;
 	}
 
 	public void setKolIzlaza(BigDecimal kolIzlaza) {
@@ -97,6 +109,16 @@ public class MagacinskaKartica implements Serializable {
 	public BigDecimal getPocetnoStanjeKol() {
 		return this.pocetnoStanjeKol;
 	}
+
+	public PoslovnaGodina getPoslovnaGodina() {
+		return poslovnaGodina;
+	}
+
+
+	public void setPoslovnaGodina(PoslovnaGodina poslovnaGodina) {
+		this.poslovnaGodina = poslovnaGodina;
+	}
+
 
 	public void setPocetnoStanjeKol(BigDecimal pocetnoStanjeKol) {
 		this.pocetnoStanjeKol = pocetnoStanjeKol;
@@ -142,35 +164,8 @@ public class MagacinskaKartica implements Serializable {
 		this.vrUlaza = vrUlaza;
 	}
 
-	public Set<AnalitikaMagacinskeKartice> getAnalitikaMagacinskeKartices() {
-		return this.analitikaMagacinskeKartices;
-	}
 
-	public void setAnalitikaMagacinskeKartices(Set<AnalitikaMagacinskeKartice> analitikaMagacinskeKartices) {
-		this.analitikaMagacinskeKartices = analitikaMagacinskeKartices;
-	}
 
-	public AnalitikaMagacinskeKartice addAnalitikaMagacinskeKartice(AnalitikaMagacinskeKartice analitikaMagacinskeKartice) {
-		getAnalitikaMagacinskeKartices().add(analitikaMagacinskeKartice);
-		analitikaMagacinskeKartice.setMagacinskaKartica(this);
-
-		return analitikaMagacinskeKartice;
-	}
-
-	public AnalitikaMagacinskeKartice removeAnalitikaMagacinskeKartice(AnalitikaMagacinskeKartice analitikaMagacinskeKartice) {
-		getAnalitikaMagacinskeKartices().remove(analitikaMagacinskeKartice);
-		analitikaMagacinskeKartice.setMagacinskaKartica(null);
-
-		return analitikaMagacinskeKartice;
-	}
-
-	public Artikal getArtikal() {
-		return this.artikal;
-	}
-
-	public void setArtikal(Artikal artikal) {
-		this.artikal = artikal;
-	}
 
 	public Magacin getMagacin() {
 		return this.magacin;
@@ -180,12 +175,5 @@ public class MagacinskaKartica implements Serializable {
 		this.magacin = magacin;
 	}
 
-	public PoslovnaGodina getPoslovnaGodina() {
-		return this.poslovnaGodina;
-	}
-
-	public void setPoslovnaGodina(PoslovnaGodina poslovnaGodina) {
-		this.poslovnaGodina = poslovnaGodina;
-	}
 
 }

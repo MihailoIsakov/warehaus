@@ -1,7 +1,5 @@
 package daoBean;
 
-import java.util.List;
-
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 

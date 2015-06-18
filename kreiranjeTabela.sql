@@ -50,7 +50,7 @@ drop table if exists ZAPOSLENI;
 create table ANALITIKA_MAGACINSKE_KARTICE
 (
    ID_ANALITIKA_MAGACINSKE_KARTICE int not null,
-   ID_VRSTA_DOKUMENTA   int,
+   
    ID_STAVKA_PROMETNOG_DOKUMENTA int,
    ID_MAGACINSKA_KARTICA int,
    SIFRA_DOKUMENTA      varchar(12) not null,
@@ -240,6 +240,7 @@ create table PROMETNI_DOKUMENT
    ID_MAGACIN           int,
    ID_POSLOVNA_GODINA   int ,
    ID_POSLOVNI_PARTNER  int,
+   ID_VRSTA_DOKUMENTA   int,
    MAG_ID_MAGACIN       int ,
    BROJ                 int not null,
    DATUM_NASTANKA       date not null,
@@ -340,8 +341,6 @@ alter table ANALITIKA_MAGACINSKE_KARTICE add constraint FK_ANALITIKA_ZA_MAGACINS
 alter table ANALITIKA_MAGACINSKE_KARTICE add constraint FK_STAVKA_DOKUMENTA foreign key (ID_STAVKA_PROMETNOG_DOKUMENTA)
       references STAVKA_PROMETNOG_DOKUMENTA (ID_STAVKA_PROMETNOG_DOKUMENTA) on delete restrict on update restrict;
 
-alter table ANALITIKA_MAGACINSKE_KARTICE add constraint FK_VRSTA_DOKUMENTA_U_ANALITICI foreign key (ID_VRSTA_DOKUMENTA)
-      references VRSTA_DOKUMENTA (ID_VRSTA_DOKUMENTA) on delete restrict on update restrict;
 
 alter table ARTIKAL add constraint FK_MERA_ZA_ARTIKAL foreign key (ID_JEDINICA_MERE)
       references JEDINICA_MERE (ID_JEDINICA_MERE) on delete restrict on update restrict;
@@ -405,6 +404,8 @@ alter table PROMETNI_DOKUMENT add constraint FK_MAGACIN_U_PROMETU foreign key (I
 
 alter table PROMETNI_DOKUMENT add constraint FK_TEKUCA_GODINA_ZA_DOKUMENT foreign key (ID_POSLOVNA_GODINA)
       references POSLOVNA_GODINA (ID_POSLOVNA_GODINA) on delete restrict on update restrict;
+alter table PROMETNI_DOKUMENT add constraint FK_VRSTA_DOKUMENTA_ZA_DOKUMENT foreign key (ID_VRSTA_DOKUMENTA)
+      references VRSTA_DOKUMENTA (ID_VRSTA_DOKUMENTA) on delete restrict on update restrict;
 
 alter table PROMETNI_DOKUMENT add constraint FK_ZA_MEDJUMAGACINSKI_TRANSFER___ULAZNI foreign key (MAG_ID_MAGACIN)
       references MAGACIN (ID_MAGACIN) on delete restrict on update restrict;
