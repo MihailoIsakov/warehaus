@@ -21,18 +21,6 @@ public class InvoiceItemService {
 	@EJB
 	private InvoiceItemDaoLocal invoiceItemDao;
 
-	@DELETE 
-    @Path("{id}")
-    @Produces(MediaType.TEXT_HTML)
-	@Authenticate
-	public String removeItem(@PathParam("id") Long id) {
-    	try {
-        	invoiceItemDao.remove(id);
-        } catch (Exception e) {
-        	log.error(e.getMessage(), e);
-        }
-    	return "ok";
-    }
-    
+
 
 }

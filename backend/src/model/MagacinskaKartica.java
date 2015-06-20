@@ -1,16 +1,22 @@
 package model;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import model.AnalitikaMagacinskeKartice.smer;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -24,13 +30,15 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Table(name="magacinska_kartica")
 @NamedQueries({
 @NamedQuery(name="MagacinskaKartica.findAll", query="SELECT m FROM MagacinskaKartica m"),
-@NamedQuery(name="MagacinskaKartica.findByMagacin", query="SELECT k FROM MagacinskaKartica k WHERE k.magacin.idMagacin like :id")
+@NamedQuery(name="MagacinskaKartica.findByMagacin", query="SELECT k FROM MagacinskaKartica k WHERE k.magacin.idMagacin like :id"),
+@NamedQuery(name="MagacinskaKartica.findByMagaciniArtikaliPG", query="FROM MagacinskaKartica k WHERE k.magacin.idMagacin like :idMagacin and k.artikal.idArtikal like :idArtikal and k.poslovnaGodina.idPoslovnaGodina like :idPG")
 })
 @JsonInclude(Include.NON_NULL)
 public class MagacinskaKartica implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	 @GeneratedValue(strategy=IDENTITY)
 	@Column(name="ID_MAGACINSKA_KARTICA")
 	private int idMagacinskaKartica;
 
@@ -74,6 +82,29 @@ public class MagacinskaKartica implements Serializable {
 	}
 
 	
+	public MagacinskaKartica(StavkaPrometnogDokumenta stavkaPrometnogDokumenta, smer smer) {
+		
+		if(smer.equals(model.AnalitikaMagacinskeKartice.smer.I)){
+			this.setKolIzlaza(stavkaPrometnogDokumenta.getKolicinaPrDokumenta());
+			this.setVrIzlaza(stavkaPrometnogDokumenta.getVrednostStavke());
+			this.setKolUlaza(new BigDecimal(0));
+			this.setVrUlaza(new BigDecimal(0));
+			this.setArtikal(stavkaPrometnogDokumenta.getArtikal());
+			this.setPocetnoStanjeKol(new BigDecimal(0));
+			this.setPocetnoStanjeVr(new BigDecimal(0));
+			this.setProsecnaCena(stavkaPrometnogDokumenta.getCenaStavke());
+		
+		
+		}
+		else{
+			this.setKolUlaza(this.getKolUlaza().add(stavkaPrometnogDokumenta.getKolicinaPrDokumenta()));
+			this.setVrUlaza(vrUlaza.add(stavkaPrometnogDokumenta.getVrednostStavke()));
+		}
+		this.setProsecnaCena(vrIzlaza.add(vrUlaza).add(pocetnoStanjeVr).divide(kolIzlaza.add(kolUlaza).add(pocetnoStanjeKol), 2, RoundingMode.HALF_UP));
+		
+	}
+
+
 	public int getIdMagacinskaKartica() {
 		return this.idMagacinskaKartica;
 	}
@@ -173,6 +204,21 @@ public class MagacinskaKartica implements Serializable {
 
 	public void setMagacin(Magacin magacin) {
 		this.magacin = magacin;
+	}
+
+
+	public void update(StavkaPrometnogDokumenta stavkaPrometnogDokumenta, smer smer) {
+		if(smer.equals(model.AnalitikaMagacinskeKartice.smer.I)){
+			this.setKolIzlaza(this.getKolIzlaza().add(stavkaPrometnogDokumenta.getKolicinaPrDokumenta()));
+			this.setVrIzlaza(vrIzlaza.add(stavkaPrometnogDokumenta.getVrednostStavke()));
+		
+		}
+		else{
+			this.setKolUlaza(this.getKolUlaza().add(stavkaPrometnogDokumenta.getKolicinaPrDokumenta()));
+			this.setVrUlaza(vrUlaza.add(stavkaPrometnogDokumenta.getVrednostStavke()));
+		}
+		this.setProsecnaCena(vrIzlaza.add(vrUlaza).add(pocetnoStanjeVr).divide(kolIzlaza.add(kolUlaza).add(pocetnoStanjeKol), 2, RoundingMode.HALF_UP));
+		
 	}
 
 

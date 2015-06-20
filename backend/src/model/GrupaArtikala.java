@@ -1,5 +1,7 @@
 package model;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.io.Serializable;
 
 import javax.persistence.*;
@@ -22,6 +24,7 @@ public class GrupaArtikala implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	 @GeneratedValue(strategy=IDENTITY)
 	@Column(name="ID_GRUPA_ARTIKALA")
 	private int idGrupaArtikala;
 

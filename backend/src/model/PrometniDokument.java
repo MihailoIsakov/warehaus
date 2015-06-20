@@ -1,11 +1,30 @@
 package model;
 
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.io.Serializable;
-
-import javax.persistence.*;
-
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 
 /**
@@ -19,6 +38,7 @@ public class PrometniDokument implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	  @GeneratedValue(strategy=IDENTITY)
 	@Column(name="ID_PROMETNI_DOKUMENT")
 	private int idPrometniDokument;
 
@@ -32,8 +52,14 @@ public class PrometniDokument implements Serializable {
 	@Column(name="DATUM_NASTANKA")
 	private Date datumNastanka;
 
+	public enum statusDokumenta {
+		u_fazi_formiranje,proknjizen
+	}
+
+
+	 @Enumerated(EnumType.STRING)
 	@Column(name="STATUS_DOKUMENTA")
-	private String statusDokumenta;
+	private statusDokumenta statusDokumenta;
 
 	//bi-directional many-to-one association to Magacin
 	@ManyToOne
@@ -62,11 +88,22 @@ public class PrometniDokument implements Serializable {
 		return vrstaDokumenta;
 	}
 
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="prometniDokument")
+	  private Set<StavkaPrometnogDokumenta> stavke = new HashSet<StavkaPrometnogDokumenta>();
+	  
 	public void setVrstaDokumenta(VrstaDokumenta vrstaDokumenta) {
 		this.vrstaDokumenta = vrstaDokumenta;
 	}
 
 	public PrometniDokument() {
+	}
+
+	public Set<StavkaPrometnogDokumenta> getStavke() {
+		return stavke;
+	}
+
+	public void setStavke(Set<StavkaPrometnogDokumenta> stavke) {
+		this.stavke = stavke;
 	}
 
 	public int getIdPrometniDokument() {
@@ -101,11 +138,12 @@ public class PrometniDokument implements Serializable {
 		this.datumNastanka = datumNastanka;
 	}
 
-	public String getStatusDokumenta() {
-		return this.statusDokumenta;
+
+	public statusDokumenta getStatusDokumenta() {
+		return statusDokumenta;
 	}
 
-	public void setStatusDokumenta(String statusDokumenta) {
+	public void setStatusDokumenta(statusDokumenta statusDokumenta) {
 		this.statusDokumenta = statusDokumenta;
 	}
 

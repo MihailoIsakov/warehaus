@@ -1,7 +1,11 @@
 package model;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -17,6 +21,7 @@ public class AnalitikaMagacinskeKartice implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	 @GeneratedValue(strategy=IDENTITY)
 	@Column(name="ID_ANALITIKA_MAGACINSKE_KARTICE")
 	private int idAnalitikaMagacinskeKartice;
 
@@ -34,7 +39,11 @@ public class AnalitikaMagacinskeKartice implements Serializable {
 	@Column(name="SIFRA_DOKUMENTA")
 	private String sifraDokumenta;
 
-	private String smer;
+	public enum smer{
+		I,U
+	}
+	 @Enumerated(EnumType.STRING)
+	private smer smer;
 
 	private BigDecimal vrednost;
 
@@ -53,6 +62,29 @@ public class AnalitikaMagacinskeKartice implements Serializable {
 
 	public AnalitikaMagacinskeKartice() {
 	}
+
+	public AnalitikaMagacinskeKartice(PrometniDokument entity,
+			StavkaPrometnogDokumenta stavkaPrometnogDokumenta2) {
+		setCena(stavkaPrometnogDokumenta2.getCenaStavke());
+		setDatumPromene(entity.getDatumNastanka());
+		setKolicina(stavkaPrometnogDokumenta2.getKolicinaPrDokumenta());
+		this.setStavkaPrometnogDokumenta(stavkaPrometnogDokumenta2);
+		this.setVrednost(stavkaPrometnogDokumenta2.getVrednostStavke());
+	}
+
+	public AnalitikaMagacinskeKartice(
+			StavkaPrometnogDokumenta stavkaPrometnogDokumenta2) {
+	
+		this.cena = stavkaPrometnogDokumenta2.getCenaStavke();
+		this.datumPromene = stavkaPrometnogDokumenta2.getPrometniDokument().getDatumKnjizenja();
+		this.kolicina = stavkaPrometnogDokumenta2.getKolicinaPrDokumenta();
+		this.sifraDokumenta = String.valueOf(stavkaPrometnogDokumenta2.getPrometniDokument().getBroj());
+		this.stavkaPrometnogDokumenta = stavkaPrometnogDokumenta2;
+		this.vrednost = stavkaPrometnogDokumenta2.getVrednostStavke();
+		
+	}
+
+
 
 	public int getIdAnalitikaMagacinskeKartice() {
 		return this.idAnalitikaMagacinskeKartice;
@@ -102,11 +134,12 @@ public class AnalitikaMagacinskeKartice implements Serializable {
 		this.sifraDokumenta = sifraDokumenta;
 	}
 
-	public String getSmer() {
-		return this.smer;
+	
+	public smer getSmer() {
+		return smer;
 	}
 
-	public void setSmer(String smer) {
+	public void setSmer(smer smer) {
 		this.smer = smer;
 	}
 

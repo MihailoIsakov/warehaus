@@ -49,8 +49,8 @@ drop table if exists ZAPOSLENI;
 /*==============================================================*/
 create table ANALITIKA_MAGACINSKE_KARTICE
 (
-   ID_ANALITIKA_MAGACINSKE_KARTICE int not null,
-   
+   ID_ANALITIKA_MAGACINSKE_KARTICE int not null AUTO_INCREMENT,
+   ID_VRSTA_DOKUMENTA   int,
    ID_STAVKA_PROMETNOG_DOKUMENTA int,
    ID_MAGACINSKA_KARTICA int,
    SIFRA_DOKUMENTA      varchar(12) not null,
@@ -68,7 +68,7 @@ create table ANALITIKA_MAGACINSKE_KARTICE
 /*==============================================================*/
 create table ARTIKAL
 (
-   ID_ARTIKAL           int not null,
+   ID_ARTIKAL           int not null AUTO_INCREMENT,
    ID_JEDINICA_MERE     int ,
    ID_GRUPA_ARTIKALA    int,
    SIFRA_ARTIKLA        varchar(12) not null,
@@ -82,7 +82,7 @@ create table ARTIKAL
 /*==============================================================*/
 create table DRZAVA
 (
-   ID_DRZAVA            int not null,
+   ID_DRZAVA            int not null AUTO_INCREMENT,
    SIFRA_DRZAVE         varchar(3) not null,
    NAZIV_DRZAVE         varchar(30) not null,
    primary key (ID_DRZAVA)
@@ -93,7 +93,7 @@ create table DRZAVA
 /*==============================================================*/
 create table GRUPA_ARTIKALA
 (
-   ID_GRUPA_ARTIKALA    int not null,
+   ID_GRUPA_ARTIKALA    int not null AUTO_INCREMENT,
    ID_PREDUZECE         int,
    SIFRA_GRUPE          varchar(12) not null,
    NAZIV_GRUPE          varchar(30) not null,
@@ -105,7 +105,7 @@ create table GRUPA_ARTIKALA
 /*==============================================================*/
 create table JEDINICA_MERE
 (
-   ID_JEDINICA_MERE     int not null,
+   ID_JEDINICA_MERE     int not null AUTO_INCREMENT,
    SIFRA_JEDINICE_MERE  varchar(5) not null,
    NAZIV_JEDINICE_MERE  varchar(20) not null,
    primary key (ID_JEDINICA_MERE)
@@ -116,7 +116,7 @@ create table JEDINICA_MERE
 /*==============================================================*/
 create table MAGACIN
 (
-   ID_MAGACIN           int not null,
+   ID_MAGACIN           int not null AUTO_INCREMENT,
    ID_MESTO             int,
    ID_SEKTOR            int,
    SIFRA_MAGACINA       varchar(12) not null,
@@ -130,7 +130,7 @@ create table MAGACIN
 /*==============================================================*/
 create table MAGACINSKA_KARTICA
 (
-   ID_MAGACINSKA_KARTICA int not null,
+   ID_MAGACINSKA_KARTICA int not null AUTO_INCREMENT,
    ID_ARTIKAL           int ,
    ID_POSLOVNA_GODINA   int,
    ID_MAGACIN           int ,
@@ -150,7 +150,7 @@ create table MAGACINSKA_KARTICA
 /*==============================================================*/
 create table MESTO
 (
-   ID_MESTO             int not null,
+   ID_MESTO             int not null AUTO_INCREMENT,
    ID_DRZAVA            int,
    SIFRA_MESTA          varchar(3) not null,
    NAZIV_MESTA          varchar(30) not null,
@@ -163,7 +163,7 @@ create table MESTO
 /*==============================================================*/
 create table POPISNA_KOMISIJA
 (
-   ID_POPISNA_KOMISIJA  int not null,
+   ID_POPISNA_KOMISIJA  int not null AUTO_INCREMENT,
    ID_ZAPOSLENI         int,
    ZAP_ID_ZAPOSLENI     int,
    ZAP_ID_ZAPOSLENI2    int,
@@ -177,7 +177,7 @@ create table POPISNA_KOMISIJA
 /*==============================================================*/
 create table POPISNI_DOKUMENT
 (
-   ID_POPISNI_DOKUMENT  int not null,
+   ID_POPISNI_DOKUMENT  int not null AUTO_INCREMENT,
    ID_POSLOVNA_GODINA   int ,
    ID_MAGACIN           int,
    SIFRA_POPISA         varchar(12) not null,
@@ -192,7 +192,7 @@ create table POPISNI_DOKUMENT
 /*==============================================================*/
 create table POSLOVNA_GODINA
 (
-   ID_POSLOVNA_GODINA   int not null,
+   ID_POSLOVNA_GODINA   int not null AUTO_INCREMENT,
    ID_PREDUZECE         int ,
    BROJ_GODINE          int not null default 1,
    ZAKLJUCENA_GODINA    bool default false,
@@ -204,7 +204,7 @@ create table POSLOVNA_GODINA
 /*==============================================================*/
 create table POSLOVNI_PARTNER
 (
-   ID_POSLOVNI_PARTNER  int not null,
+   ID_POSLOVNI_PARTNER  int not null AUTO_INCREMENT,
    ID_MESTO             int,
    SIFRA_PARTNERA       varchar(12) not null,
    NAZIV_PARTNERA       varchar(30) not null,
@@ -221,7 +221,7 @@ create table POSLOVNI_PARTNER
 /*==============================================================*/
 create table PREDUZECE
 (
-   ID_PREDUZECE         int not null,
+   ID_PREDUZECE         int not null AUTO_INCREMENT,
    ID_MESTO             int not null,
    SIFRA_PREDUZECA      varchar(12) not null,
    NAZIV_PREDUZECA      varchar(30) not null,
@@ -236,16 +236,15 @@ create table PREDUZECE
 /*==============================================================*/
 create table PROMETNI_DOKUMENT
 (
-   ID_PROMETNI_DOKUMENT int not null,
+   ID_PROMETNI_DOKUMENT int not null AUTO_INCREMENT,
    ID_MAGACIN           int,
    ID_POSLOVNA_GODINA   int ,
    ID_POSLOVNI_PARTNER  int,
-   ID_VRSTA_DOKUMENTA   int,
    MAG_ID_MAGACIN       int ,
    BROJ                 int not null,
    DATUM_NASTANKA       date not null,
    DATUM_KNJIZENJA      date not null,
-   STATUS_DOKUMENTA     varchar(1024),
+   STATUS_DOKUMENTA      ENUM("u_fazi_formiranje","proknjizen"), 
    primary key (ID_PROMETNI_DOKUMENT)
 );
 
@@ -254,7 +253,7 @@ create table PROMETNI_DOKUMENT
 /*==============================================================*/
 create table RADNO_MESTO
 (
-   SIFRA_RADNOG_MESTA   varchar(5) not null,
+   SIFRA_RADNOG_MESTA   varchar(5) not null AUTO_INCREMENT,
    NAZIV_RADNOG_MESTA   varchar(30) not null,
    ID_RADNO_MESTO       int not null,
    primary key (ID_RADNO_MESTO)
@@ -265,7 +264,7 @@ create table RADNO_MESTO
 /*==============================================================*/
 create table SEKTOR
 (
-   ID_SEKTOR            int not null,
+   ID_SEKTOR            int not null AUTO_INCREMENT,
    ID_PREDUZECE         int,
    SIFRA_SEKTORA        varchar(3) not null,
    NAZIV_SEKTORA        varchar(30) not null,
@@ -277,7 +276,7 @@ create table SEKTOR
 /*==============================================================*/
 create table STAVKA_POPISA
 (
-   ID_STAVKA_POPISA     int not null,
+   ID_STAVKA_POPISA     int not null AUTO_INCREMENT,
    ID_ARTIKAL           int ,
    ID_POPISNI_DOKUMENT  int ,
    REDNI_BROJ_STAVKE    int not null,
@@ -294,7 +293,7 @@ create table STAVKA_POPISA
 /*==============================================================*/
 create table STAVKA_PROMETNOG_DOKUMENTA
 (
-   ID_STAVKA_PROMETNOG_DOKUMENTA int,
+   ID_STAVKA_PROMETNOG_DOKUMENTA int not null  AUTO_INCREMENT,
    ID_ARTIKAL           int ,
    ID_PROMETNI_DOKUMENT int ,
    RBR                  int not null default 1,
@@ -309,7 +308,7 @@ create table STAVKA_PROMETNOG_DOKUMENTA
 /*==============================================================*/
 create table VRSTA_DOKUMENTA
 (
-   ID_VRSTA_DOKUMENTA   int not null,
+   ID_VRSTA_DOKUMENTA   int not null  AUTO_INCREMENT,
    SIFRA_VRSTE          varchar(3) not null,
    NAZIV_VRSTE          varchar(30) not null,
    primary key (ID_VRSTA_DOKUMENTA)
@@ -320,7 +319,7 @@ create table VRSTA_DOKUMENTA
 /*==============================================================*/
 create table ZAPOSLENI
 (
-   ID_ZAPOSLENI         int not null,
+   ID_ZAPOSLENI         int not null AUTO_INCREMENT,
    ID_RADNO_MESTO       int,
    ID_PREDUZECE         int ,
    ID_MESTO             int,
@@ -341,6 +340,8 @@ alter table ANALITIKA_MAGACINSKE_KARTICE add constraint FK_ANALITIKA_ZA_MAGACINS
 alter table ANALITIKA_MAGACINSKE_KARTICE add constraint FK_STAVKA_DOKUMENTA foreign key (ID_STAVKA_PROMETNOG_DOKUMENTA)
       references STAVKA_PROMETNOG_DOKUMENTA (ID_STAVKA_PROMETNOG_DOKUMENTA) on delete restrict on update restrict;
 
+alter table ANALITIKA_MAGACINSKE_KARTICE add constraint FK_VRSTA_DOKUMENTA_U_ANALITICI foreign key (ID_VRSTA_DOKUMENTA)
+      references VRSTA_DOKUMENTA (ID_VRSTA_DOKUMENTA) on delete restrict on update restrict;
 
 alter table ARTIKAL add constraint FK_MERA_ZA_ARTIKAL foreign key (ID_JEDINICA_MERE)
       references JEDINICA_MERE (ID_JEDINICA_MERE) on delete restrict on update restrict;
@@ -404,8 +405,6 @@ alter table PROMETNI_DOKUMENT add constraint FK_MAGACIN_U_PROMETU foreign key (I
 
 alter table PROMETNI_DOKUMENT add constraint FK_TEKUCA_GODINA_ZA_DOKUMENT foreign key (ID_POSLOVNA_GODINA)
       references POSLOVNA_GODINA (ID_POSLOVNA_GODINA) on delete restrict on update restrict;
-alter table PROMETNI_DOKUMENT add constraint FK_VRSTA_DOKUMENTA_ZA_DOKUMENT foreign key (ID_VRSTA_DOKUMENTA)
-      references VRSTA_DOKUMENTA (ID_VRSTA_DOKUMENTA) on delete restrict on update restrict;
 
 alter table PROMETNI_DOKUMENT add constraint FK_ZA_MEDJUMAGACINSKI_TRANSFER___ULAZNI foreign key (MAG_ID_MAGACIN)
       references MAGACIN (ID_MAGACIN) on delete restrict on update restrict;
@@ -434,3 +433,57 @@ alter table ZAPOSLENI add constraint FK_RELATIONSHIP_19 foreign key (ID_MESTO)
 alter table ZAPOSLENI add constraint FK_RUKOVODILAC foreign key (ID_PREDUZECE)
       references PREDUZECE (ID_PREDUZECE) on delete restrict on update restrict;
 
+
+CREATE TABLE `invoice` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `acountNumber` int(11) NOT NULL,
+  `buyerAddress` varchar(255) DEFAULT NULL,
+  `buyerName` varchar(255) DEFAULT NULL,
+  `currency` varchar(255) DEFAULT NULL,
+  `currencyDate` datetime DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `deleted` tinyint(1) NOT NULL,
+  `suplierAddress` varchar(255) DEFAULT NULL,
+  `suplierName` varchar(255) DEFAULT NULL,
+  `supplierPib` varchar(255) DEFAULT NULL,
+  `totalAmount` double NOT NULL,
+  `totalGoodsValue` double NOT NULL,
+  `totalRabate` double NOT NULL,
+  `totalServiceValue` double NOT NULL,
+  `totalTax` double NOT NULL,
+  `totalValue` double NOT NULL,
+  `version` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `invoiceitem` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `amount` double NOT NULL,
+  `deleted` tinyint(1) NOT NULL,
+  `goodsName` varchar(255) DEFAULT NULL,
+  `measureUnit` varchar(255) DEFAULT NULL,
+  `minusRabat` double NOT NULL,
+  `orderNumber` int(11) NOT NULL,
+  `pricePerUnit` double NOT NULL,
+  `quantity` double NOT NULL,
+  `rabateAmount` double NOT NULL,
+  `rabatePercentage` double NOT NULL,
+  `totalTax` double NOT NULL,
+  `version` int(11) NOT NULL,
+  `invoiceId` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `FK30037BC0B6A49D06` (`invoiceId`),
+  CONSTRAINT `FK30037BC0B6A49D06` FOREIGN KEY (`invoiceId`) REFERENCES `invoice` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `deleted` tinyint(1) NOT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `version` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;

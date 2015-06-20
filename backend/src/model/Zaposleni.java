@@ -1,5 +1,7 @@
 package model;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.io.Serializable;
 
 import javax.persistence.*;
@@ -18,6 +20,7 @@ public class Zaposleni implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	 @GeneratedValue(strategy=IDENTITY)
 	@Column(name="ID_ZAPOSLENI")
 	private int idZaposleni;
 
@@ -39,9 +42,14 @@ public class Zaposleni implements Serializable {
 
 	@Column(name="SIFRA_ZAPOSLENOG")
 	private String sifraZaposlenog;
+	private enum statusZaposlenog {
+		aktivan,penzionisan,neaktivan,probni,odsutan
+	}
+
 
 	@Column(name="STATUS_ZAPOSLENOG")
-	private String statusZaposlenog;
+	 @Enumerated(EnumType.STRING)
+	private statusZaposlenog statusZaposlenog;
 	
 	//bi-directional many-to-one association to Mesto
 	@ManyToOne
@@ -125,14 +133,15 @@ public class Zaposleni implements Serializable {
 		this.sifraZaposlenog = sifraZaposlenog;
 	}
 
-	public String getStatusZaposlenog() {
-		return this.statusZaposlenog;
+
+
+	public statusZaposlenog getStatusZaposlenog() {
+		return statusZaposlenog;
 	}
 
-	public void setStatusZaposlenog(String statusZaposlenog) {
+	public void setStatusZaposlenog(statusZaposlenog statusZaposlenog) {
 		this.statusZaposlenog = statusZaposlenog;
 	}
-
 
 	public Mesto getMesto() {
 		return this.mesto;

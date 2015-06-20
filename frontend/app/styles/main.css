@@ -6,7 +6,10 @@ html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
-
+.selected td{
+  background-color:#337AB7;
+  color:white;
+}
 /* line 19, ../../../../InvoiceClient/bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_normalize.scss */
 body {
   margin: 0;

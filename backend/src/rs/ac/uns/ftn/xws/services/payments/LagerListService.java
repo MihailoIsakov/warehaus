@@ -73,7 +73,7 @@ public class LagerListService {
     public List<Object> findById(@PathParam("id") String id) {
 		List<Object> retVal = new ArrayList<Object>();
 		try {
-			log.error("OVO JE ERROR"+Integer.parseInt(id));
+			
 			retVal = mkDao.findByMagacin(Integer.parseInt(id));
 			log.error(retVal.size());
 		} catch (Exception e) {
@@ -116,19 +116,5 @@ public class LagerListService {
 		return retVal;
     }
 
-    @DELETE 
-    @Path("{id}")
-    @Produces(MediaType.TEXT_HTML)
-	@Authenticate
-    public String remove(@PathParam("id") Long id) {
-    	Artikal a = new Artikal();
-    	try {
-    		artikalDao.remove(id);
-        } catch (Exception e) {
-        	log.error(e.getMessage(), e);
-        }
-    	return "ok";
-    }
     
-
 }

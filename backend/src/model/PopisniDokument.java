@@ -1,5 +1,7 @@
 package model;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.io.Serializable;
 
 import javax.persistence.*;
@@ -19,6 +21,7 @@ public class PopisniDokument implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	 @GeneratedValue(strategy=IDENTITY)
 	@Column(name="ID_POPISNI_DOKUMENT")
 	private int idPopisniDokument;
 
@@ -32,8 +35,21 @@ public class PopisniDokument implements Serializable {
 	@Column(name="SIFRA_POPISA")
 	private String sifraPopisa;
 
+	private enum statusPredaje {
+		neproknjizen, proknjizen, zakljucen,
+	}
+
 	@Column(name="STATUS_PREDAJE")
-	private String statusPredaje;
+	 @Enumerated(EnumType.STRING)
+	private statusPredaje statusPredaje;
+	public statusPredaje getStatusPredaje() {
+		return statusPredaje;
+	}
+
+	public void setStatusPredaje(statusPredaje statusPredaje) {
+		this.statusPredaje = statusPredaje;
+	}
+
 	//bi-directional many-to-one association to Magacin
 	@ManyToOne
 	@JoinColumn(name="ID_MAGACIN")
@@ -79,13 +95,7 @@ public class PopisniDokument implements Serializable {
 		this.sifraPopisa = sifraPopisa;
 	}
 
-	public String getStatusPredaje() {
-		return this.statusPredaje;
-	}
 
-	public void setStatusPredaje(String statusPredaje) {
-		this.statusPredaje = statusPredaje;
-	}
 
 	public Magacin getMagacin() {
 		return this.magacin;

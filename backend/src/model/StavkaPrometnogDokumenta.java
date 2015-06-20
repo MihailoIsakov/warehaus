@@ -1,8 +1,14 @@
 package model;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.io.Serializable;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -15,10 +21,12 @@ import java.util.Set;
 @Entity
 @Table(name="stavka_prometnog_dokumenta")
 @NamedQuery(name="StavkaPrometnogDokumenta.findAll", query="SELECT s FROM StavkaPrometnogDokumenta s")
+@JsonInclude(Include.NON_NULL)
 public class StavkaPrometnogDokumenta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	 @GeneratedValue(strategy=IDENTITY)
 	@Column(name="ID_STAVKA_PROMETNOG_DOKUMENTA")
 	private int idStavkaPrometnogDokumenta;
 
@@ -41,6 +49,7 @@ public class StavkaPrometnogDokumenta implements Serializable {
 	//bi-directional many-to-one association to PrometniDokument
 	@ManyToOne
 	@JoinColumn(name="ID_PROMETNI_DOKUMENT")
+	@JsonIgnore
 	private PrometniDokument prometniDokument;
 
 	public StavkaPrometnogDokumenta() {

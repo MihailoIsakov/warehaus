@@ -19,9 +19,12 @@
   'main',
   'about',
   'article',
+  'promDoc',
   'invoice',
+  'stonPrim',
   'user',
-  'resource.user'
+  'resource.user',
+  'resource.promDoc'
   ])
  .config(function ($routeProvider) {
   $routeProvider
@@ -37,6 +40,11 @@
     templateUrl: 'views/lager-list.html',
     controller: 'lagerListCtrl'
   })
+   .when('/prometni-dokumenti', {
+    templateUrl: 'views/prometni-dokumenti.html',
+    controller: 'promDocCtrl'
+  })
+ 
   .when('/login', {
     templateUrl: 'views/login.html',
     controller: 'userCtrl'
