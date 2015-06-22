@@ -21,10 +21,12 @@
   'article',
   'promDoc',
   'invoice',
+  'correction',
   'stonPrim',
   'user',
   'resource.user',
-  'resource.promDoc'
+  'resource.promDoc',
+  'resource.artikale'
   ])
  .config(function ($routeProvider) {
   $routeProvider
@@ -44,7 +46,10 @@
     templateUrl: 'views/prometni-dokumenti.html',
     controller: 'promDocCtrl'
   })
- 
+   .when('/korekcija', {
+    templateUrl: 'views/korekcija.html',
+    controller: 'correctionCtrl'
+  })
   .when('/login', {
     templateUrl: 'views/login.html',
     controller: 'userCtrl'

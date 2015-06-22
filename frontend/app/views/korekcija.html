@@ -1,0 +1,30 @@
+<div class="col-sm-9">
+  <h3><i class="glyphicon glyphicon-dashboard"></i> Korekcija kolicine artikla </h3>  
+   <hr>
+	<form ng-submit="addCor(newValue)">
+        <div class="form-group">
+            <label>Naziv:</label>
+			<label>{{hello}}</label>
+        </div>
+        <div class="form-group">
+            <label>Kolicina:</label>
+			<label>{{articled.pocetnoStanjeKol+articled.kolUlaza-articled.kolIzlaza}}</label>
+        </div>
+        <div class="form-group">
+            <label>Vrednost:</label>
+			<label>{{articled.pocetnoStanjeVr+articled.vrUlaza-articled.vrIzlaza}}</label>
+        </div>
+        <div class="form-group">
+            <label>Nova kolicina:</label>
+            <input class="form-control" ng-model="newQuantity"></input>
+        </div>
+        <div class="form-group">
+            <label>Vrednost posle korekcije:</label>
+			<label>{{articled.pocetnoStanjeVr+articled.vrUlaza+newQuantity-articled.vrIzlaza}}</label>
+        </div>
+		<input type="submit" value="Update"/>
+    </form>	
+</div>
+<div class="modal-footer">
+    <button class="btn" ng-click="cancel()">Cancel</button>
+</div>
