@@ -1,14 +1,15 @@
 <div class="col-sm-9">
-    
+  
    <h3><i class="glyphicon glyphicon-dashboard"></i> Stanje magacina </h3>  
    <hr>
-
+ 
 
   <select ng-model="selected" ng-click="insertOrEditInvoice(selected.idMagacin)" ng-options="opt as opt.nazivMagacina for opt in options"  ng-init="selected=''"></select>
-    <div>Selektovan Magacin: <span ng-bind="selected"></span>
+   <div id="printThis">
+    <div>Selektovan Magacin: <span ng-bind="selected.nazivMagacina"></span>
     </div>
 
-  <table class="table table-striped">
+  <table class="table table-striped" >
     <thead>
       <tr>
           <th> <a ng-click = "orderProp = 'artikal.sifraArtikla'; reverseSort = !reverseSort">Sifra</th> 
@@ -34,7 +35,24 @@
           <td>{{article.prosecnaCena}}</td>
       </tr>
     </tbody>
+</table>
+  
+    <div class="modifyMe"></div>
+</div>
+
+
     <div class="form-group">
       <button class="btn btn-default" ng-click="koriguj()">Koriguj</button>
+      <button class="btn btn-default" id="btnPrint">Print</button>
     </div>
+
+
+
+<hr />
+
+
+   
+
+
+
 </div>

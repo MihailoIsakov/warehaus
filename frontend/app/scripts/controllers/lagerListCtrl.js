@@ -35,7 +35,30 @@ if($routeParams.invoiceId!='new'){
  		}
 	};
 
-	
+	document.getElementById("btnPrint").onclick = function () {
+    printElement(document.getElementById("printThis"));
+    
+    var modThis = document.querySelector("#printSection .modifyMe");
+ 
+    
+    window.print();
+}
+
+function printElement(elem) {
+    var domClone = elem.cloneNode(true);
+    
+    var $printSection = document.getElementById("printSection");
+    
+    if (!$printSection) {
+        var $printSection = document.createElement("div");
+        $printSection.id = "printSection";
+        document.body.appendChild($printSection);
+    }
+    
+    $printSection.innerHTML = "";
+    
+    $printSection.appendChild(domClone);
+}
 
 $scope.setSelected = function (selectedDoc) {
    $scope.selectedDoc = selectedDoc;
