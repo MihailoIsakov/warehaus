@@ -21,8 +21,8 @@ import rs.ac.uns.ftn.xws.util.Authenticate;
 import daoBean.AnalitikaMagacinskeKarticeDaoLocal;
 import daoBean.MagacinskaKarticaDaoLocal;
 
-@Path("/magacinska-kartica")
-public class MagacinskaKarticaService {
+@Path("/magacinska-karticaN")
+public class MagacinskaKarticaServiceNiv {
 	private static Logger log = Logger.getLogger(MagacinskaKarticaService.class);
 	
 	@EJB
@@ -44,7 +44,7 @@ public class MagacinskaKarticaService {
 		}
 		return retVal;
     }
-	
+	 
 	 @SuppressWarnings("static-access")
 	 @PUT
      @Path("{id}")
@@ -52,27 +52,33 @@ public class MagacinskaKarticaService {
      @Produces(MediaType.APPLICATION_JSON)
 	 @Authenticate
      public MagacinskaKartica update(MagacinskaKartica entity) {
-    	log.info("PUT Mag Kartica");
+    	log.info("PUT Mag Kartica N");
     	MagacinskaKartica retVal = null;
     	MagacinskaKartica before = mkDao.findByMagCardId(entity.getIdMagacinskaKartica());
-    	//STARA KOLICINA UKUPNO articled.pocetnoStanjeKol+articled.kolUlaza-articled.kolIzlaza
+    	
+    	//STARA VREDNOST UKUPNO articled.pocetnoStanjeVr+articled.vrUlaza-articled.vrIzlaza
+    	BigDecimal oldValue = before.getPocetnoStanjeVr().add(before.getVrUlaza());
+    	oldValue = oldValue.subtract(before.getVrIzlaza());
+    	//Ukupna kolicina
     	BigDecimal quantity = before.getPocetnoStanjeKol().add(before.getKolUlaza());
     	quantity = quantity.subtract(before.getKolIzlaza());
-    	//NOVA KOLICINA UKUPNO
-    	BigDecimal newQuantity = entity.getPocetnoStanjeKol().add(entity.getKolUlaza());
-    	newQuantity = newQuantity.subtract(entity.getKolIzlaza());
-    	//KOLICINA NA ANALITICI
-    	BigDecimal diff = quantity.subtract(newQuantity).abs();
+    	//Nova vrednost
+    	BigDecimal newValue = entity.getPocetnoStanjeVr().add(entity.getVrUlaza());
+    	newValue = newValue.subtract(entity.getVrIzlaza());
+    	
+    	//VREDNOST NA ANALITICI
+    	BigDecimal niv = oldValue.subtract(newValue).abs();
         try {
         	retVal = mkDao.merge(entity);
+        	
         	AnalitikaMagacinskeKartice a = new AnalitikaMagacinskeKartice();
         	a.setCena(entity.getProsecnaCena());
         	a.setDatumPromene(new Date());
-        	a.setKolicina(diff);
+        	a.setKolicina(quantity);
         	a.setMagacinskaKartica(entity);
         	//a.setRedniBroj(redniBroj);
-        	a.setSifraDokumenta("KOR");
-        	if(quantity.compareTo(newQuantity) == -1){
+        	a.setSifraDokumenta("NIV");
+        	if(oldValue.compareTo(newValue) == -1){
         		//Nova je veca, povecava se kolUlaz
             	a.setSmer(a.getSmer().U);
         	}else {
@@ -80,9 +86,7 @@ public class MagacinskaKarticaService {
             	a.setSmer(a.getSmer().I);
         	}
         	a.setStavkaPrometnogDokumenta(null);
-        	//VREDNOST korekcije
-        	BigDecimal value = diff.multiply(entity.getProsecnaCena());
-        	a.setVrednost(value);
+        	a.setVrednost(niv);
         	anDao.persist(a);
         } catch (Exception e) {
 			log.error(e.getMessage(), e);

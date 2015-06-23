@@ -1,5 +1,5 @@
 <div class="col-sm-9">
-  <h3><i class="glyphicon glyphicon-dashboard"></i> Korekcija kolicine artikla </h3>  
+  <h3><i class="glyphicon glyphicon-dashboard"></i> Nivelacija cene artikla </h3>  
    <hr>
 	<form ng-submit="addCor(newValue)" id="form1">
         <div class="form-group">
@@ -11,16 +11,22 @@
 			<label>{{articled.pocetnoStanjeKol+articled.kolUlaza-articled.kolIzlaza}}</label>
         </div>
         <div class="form-group">
+            <label>Prosecna cena:</label>
+			<label>{{articled.prosecnaCena}}</label>
+        </div>
+        <div class="form-group">
             <label>Vrednost:</label>
 			<label>{{articled.pocetnoStanjeVr+articled.vrUlaza-articled.vrIzlaza}}</label>
         </div>
         <div class="form-group">
-            <label>Korekcija kolicine:</label>
+            <label>Korekcija cene:</label>
             <input class="form-control" ng-model="newQuantity"></input>
         </div>
         <div class="form-group">
-            <label>Vrednost nakon korekcije:</label>
-			<label ng-show="newQuantity != null">{{articled.pocetnoStanjeVr+articled.vrUlaza + (newQuantity * articled.prosecnaCena)-articled.vrIzlaza}}</label>
+            <label>Vrednost nakon nivelacije:</label>
+			<label ng-show="newQuantity != null">
+			{{articled.pocetnoStanjeVr+(articled.vrUlaza+(((articled.pocetnoStanjeKol+articled.kolUlaza-articled.kolIzlaza)*newQuantity)-(articled.pocetnoStanjeVr+articled.vrUlaza-articled.vrIzlaza)))-articled.vrIzlaza}}
+			</label>
 			<label ng-show="newQuantity == null">{{articled.pocetnoStanjeVr+articled.vrUlaza-articled.vrIzlaza}}</label>
         </div>
 		<label style="color:red">{{error}}</label>
