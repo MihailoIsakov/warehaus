@@ -1,10 +1,10 @@
 <div class="col-sm-9">
   <h3><i class="glyphicon glyphicon-dashboard"></i> Korekcija kolicine artikla </h3>  
    <hr>
-	<form ng-submit="addCor(newValue)">
+	<form ng-submit="addCor(newValue)" id="form1">
         <div class="form-group">
             <label>Naziv:</label>
-			<label>{{hello}}</label>
+			<label>{{articled.artikal.nazivArtikla}}</label>
         </div>
         <div class="form-group">
             <label>Kolicina:</label>
@@ -15,16 +15,18 @@
 			<label>{{articled.pocetnoStanjeVr+articled.vrUlaza-articled.vrIzlaza}}</label>
         </div>
         <div class="form-group">
-            <label>Nova kolicina:</label>
+            <label>Korekcija kolicine:</label>
             <input class="form-control" ng-model="newQuantity"></input>
         </div>
         <div class="form-group">
             <label>Vrednost posle korekcije:</label>
-			<label>{{articled.pocetnoStanjeVr+articled.vrUlaza+newQuantity-articled.vrIzlaza}}</label>
+			<label ng-show="newQuantity != null">{{articled.pocetnoStanjeVr+articled.vrUlaza + (newQuantity * articled.prosecnaCena)-articled.vrIzlaza}}</label>
+			<label ng-show="newQuantity == null">{{articled.pocetnoStanjeVr+articled.vrUlaza-articled.vrIzlaza}}</label>
         </div>
-		<input type="submit" value="Update"/>
+		<label style="color:red">{{error}}</label>
+		<div class="modal-footer">
+			<button class="btn" type="submit" form="form1" value="Submit">Submit</button>
+			<button class="btn" ng-click="cancel()">Cancel</button>
+		</div>
     </form>	
-</div>
-<div class="modal-footer">
-    <button class="btn" ng-click="cancel()">Cancel</button>
 </div>

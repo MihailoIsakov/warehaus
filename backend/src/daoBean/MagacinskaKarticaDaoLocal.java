@@ -11,6 +11,8 @@ public interface MagacinskaKarticaDaoLocal extends GenericDao<MagacinskaKartica,
 
 
 	public List<Object> findByMagacin(Integer id);
+	
+	public MagacinskaKartica findByMagCardId(Integer id);
 
 	public MagacinskaKartica findByMagaciniArtikaliPG(int idMagacin, int idArtikal, int idPG) throws Exception;
 

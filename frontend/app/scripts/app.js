@@ -26,7 +26,8 @@
   'user',
   'resource.user',
   'resource.promDoc',
-  'resource.artikale'
+  'resource.artikale',
+  'resource.magacinska'
   ])
  .config(function ($routeProvider) {
   $routeProvider

@@ -31,8 +31,7 @@ public class ArtikalService {
     public Artikal findById(@PathParam("id") String id) {
 		Artikal retVal = new Artikal();
 		try {
-			
-			retVal = artikalDao.findById(Long.parseLong(id));
+			retVal = artikalDao.findById(Integer.parseInt(id));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}

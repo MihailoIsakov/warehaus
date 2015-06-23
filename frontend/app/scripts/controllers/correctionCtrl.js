@@ -1,29 +1,26 @@
 'use strict';
 
-angular.module('correction', ['resource.artikale', 'angular-md5'])
+angular.module('correction', ['resource.artikale', 'resource.magacinska'])
 
-.controller('correctionCtrl', function (Artikale, $scope, $modalInstance) {
-	
-	Artikale.query({'id':1}).$promise.then(function (data) {
-			$scope.articled = data;
-		});
-	$scope.hello = 'Hello world';
-	if(invoiceItem){
-		$scope.invoiceItem = invoiceItem;
-	}
-	else{
-		$scope.invoiceItem = {};	
-	}
-	$scope.ok = function () {
-		$modalInstance.close({'invoiceItem':$scope.invoiceItem,
-								'action':'save'});
-	};
-
-	$scope.cancel = function () {
-		$modalInstance.dismiss('cancel');
-	};
-	
+.controller('correctionCtrl', function (Artikale, $scope, Kartica, $location) {
+	$scope.articled = Artikale.findByMagCardId({'id': 1});
+	$scope.isVisible = false;
+	$scope.error = "";
 	$scope.addCor = function (newValue) {
-		
+		var temp = $scope.articled;
+		var a = isNaN(parseInt($scope.newQuantity, 10)) ? 0 : parseInt($scope.newQuantity, 10);
+		if(a === 0){
+			$scope.isVisible = true;
+			$scope.error = "Nije validan unos. Morate uneti broj.";
+		} 
+		else {
+			$scope.isVisible = false;
+			$scope.error = "";
+		}
+		$scope.articled.pocetnoStanjeKol = temp.pocetnoStanjeKol + a;
+		$scope.articled.vrUlaza = temp.vrUlaza + (a * temp.prosecnaCena);
+		Kartica.update($scope.articled);
+		var magacin = parseInt($scope.articled.magacin.idMagacin);
+		$location.path('/lager-list/'+magacin);
 	};
 });

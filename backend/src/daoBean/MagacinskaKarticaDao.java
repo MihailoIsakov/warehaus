@@ -8,14 +8,15 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 
-import org.apache.log4j.Logger;
-
 import model.AnalitikaMagacinskeKartice;
 import model.AnalitikaMagacinskeKartice.smer;
 import model.Magacin;
 import model.MagacinskaKartica;
 import model.PrometniDokument;
 import model.StavkaPrometnogDokumenta;
+
+import org.apache.log4j.Logger;
+
 import rs.ac.uns.ftn.xws.entities.payments.Invoice;
 import rs.ac.uns.ftn.xws.sessionbeans.common.GenericDaoBean;
 
@@ -38,6 +39,14 @@ public class MagacinskaKarticaDao extends
 
 		q.setParameter("id", id);
 		return q.getResultList();
+	}
+	
+	@Override
+	public MagacinskaKartica findByMagCardId(Integer id){
+		Query q = em.createNamedQuery("MagacinskaKartica.findByMagCardId");
+
+		q.setParameter("id", id);
+		return (MagacinskaKartica) q.getSingleResult();
 	}
 
 	@Override

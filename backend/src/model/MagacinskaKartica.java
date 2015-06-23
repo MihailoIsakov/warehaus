@@ -30,6 +30,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Table(name="magacinska_kartica")
 @NamedQueries({
 @NamedQuery(name="MagacinskaKartica.findAll", query="SELECT m FROM MagacinskaKartica m"),
+@NamedQuery(name="MagacinskaKartica.findByMagCardId", query="SELECT m FROM MagacinskaKartica m WHERE m.idMagacinskaKartica like :id"),
 @NamedQuery(name="MagacinskaKartica.findByMagacin", query="SELECT k FROM MagacinskaKartica k WHERE k.magacin.idMagacin like :id"),
 @NamedQuery(name="MagacinskaKartica.findByMagaciniArtikaliPG", query="FROM MagacinskaKartica k WHERE k.magacin.idMagacin like :idMagacin and k.artikal.idArtikal like :idArtikal and k.poslovnaGodina.idPoslovnaGodina like :idPG")
 })
