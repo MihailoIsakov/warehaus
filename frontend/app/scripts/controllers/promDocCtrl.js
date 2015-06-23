@@ -21,12 +21,7 @@ if($routeParams.invoiceId!='new'){
 		$scope.promDoc.invoiceItems = [];
 	
 }
-	//funkcija koja otvara datepicker
-	$scope.openDatepicker = function($event, opened) {
-		$event.preventDefault();
-		$event.stopPropagation();
-		$scope[opened] = true;
-	};
+
 
 	//modalni dijalog za stavku fakutre
 	$scope.openModal = function (invoiceItem, size) {

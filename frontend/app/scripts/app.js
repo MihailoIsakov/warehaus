@@ -49,7 +49,7 @@
     templateUrl: 'views/prometni-dokumenti.html',
     controller: 'promDocCtrl'
   })
-   .when('/korekcija', {
+   .when('/korekcija/:karticaId', {
     templateUrl: 'views/korekcija.html',
     controller: 'correctionCtrl'
   })

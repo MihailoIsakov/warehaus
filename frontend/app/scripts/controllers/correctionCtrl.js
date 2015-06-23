@@ -2,8 +2,8 @@
 
 angular.module('correction', ['resource.artikale', 'resource.magacinska'])
 
-.controller('correctionCtrl', function (Artikale, $scope, Kartica, $location) {
-	$scope.articled = Artikale.findByMagCardId({'id': 1});
+.controller('correctionCtrl', function (Artikale, $scope, Kartica, $routeParams,$location) {
+	$scope.articled = Artikale.findByMagCardId({'id': $routeParams.karticaId});
 	$scope.isVisible = false;
 	$scope.error = "";
 	
