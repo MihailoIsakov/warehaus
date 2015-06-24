@@ -2,8 +2,8 @@
 
 angular.module('nivelation', ['resource.artikale', 'resource.magacinskaN'])
 
-.controller('nivCtrl', function (Artikale, $scope, KarticaN, $location) {
-	$scope.articled = Artikale.findByMagCardId({'id': 1});
+.controller('nivCtrl', function (Artikale, $scope, KarticaN,$routeParams, $location) {
+	$scope.articled = Artikale.findByMagCardId({'id': $routeParams.karticaId});
 	var temp = $scope.articled;
 	$scope.isVisible = false;
 	$scope.error = "";

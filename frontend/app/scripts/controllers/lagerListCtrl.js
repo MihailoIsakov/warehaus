@@ -23,16 +23,17 @@ if($routeParams.invoiceId!='new'){
 		$scope.articles.invoiceItems = [];
 	}
 }
-	//funkcija koja otvara datepicker
-	
-	//modalni dijalog za stavku fakutre
 	$scope.koriguj = function () {
 		if($scope.selectedDoc){
  			$location.path('/korekcija/'+$scope.selectedDoc.idMagacinskaKartica);
  		}
- 		else{
-			$location.path('/invoice/new');
+ 		
+	};
+$scope.nivelisi = function () {
+		if($scope.selectedDoc){
+ 			$location.path('/nivelacija/'+$scope.selectedDoc.idMagacinskaKartica);
  		}
+ 		
 	};
 
 	document.getElementById("btnPrint").onclick = function () {

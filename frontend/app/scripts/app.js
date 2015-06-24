@@ -53,7 +53,7 @@
     templateUrl: 'views/korekcija.html',
     controller: 'correctionCtrl'
   })
-   .when('/nivelacija', {
+   .when('/nivelacija/:karticaId', {
     templateUrl: 'views/nivelacija.html',
     controller: 'nivCtrl'
   })
