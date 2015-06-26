@@ -23,13 +23,17 @@
   'invoice',
   'correction',
   'nivelation',
+  'primka',
   'stonPrim',
   'user',
+  'partner',
   'resource.user',
   'resource.promDoc',
   'resource.artikale',
   'resource.magacinska',
-  'resource.magacinskaN'
+  'resource.magacinskaN',
+  'resource.primka',
+  'resource.partner'
   ])
  .config(function ($routeProvider) {
   $routeProvider
@@ -56,6 +60,22 @@
    .when('/nivelacija/:karticaId', {
     templateUrl: 'views/nivelacija.html',
     controller: 'nivCtrl'
+  })
+   .when('/primka/:primkaId', {
+    templateUrl: 'views/primka.html',
+    controller: 'primkaCtrl'
+  })
+   .when('/primka', {
+    templateUrl: 'views/primka.html',
+    controller: 'primkaCtrl'
+  })
+   .when('/poslovni-partner', {
+    templateUrl: 'views/poslovni-partner.html',
+    controller: 'partnerCtrl'
+  })
+   .when('/poslovni-partner/:partnerId', {
+    templateUrl: 'views/poslovni-partner.html',
+    controller: 'partnerCtrl'
   })
   .when('/login', {
     templateUrl: 'views/login.html',
