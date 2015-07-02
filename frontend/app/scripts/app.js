@@ -42,7 +42,8 @@
   'resource.poslGodina',
   'poslGodina',
   'resource.preduzeca',
-  'preduzeca',
+  'resource.stavkaPD',
+  'stavkaPD',
   'resource.zaposleni',
   'resource.magacinska',
   'resource.magacinskaKartica',
@@ -90,9 +91,13 @@
     templateUrl: 'views/poslovni-partner.html',
     controller: 'partnerCtrl'
   })
-   .when('/poslovni-partner/:partnerId', {
-    templateUrl: 'views/poslovni-partner.html',
-    controller: 'partnerCtrl'
+   .when('/stavkaPD', {
+    templateUrl: 'views/stavkaPD.html',
+    controller: 'stavkaPDCtrl'
+  })
+   .when('/drzave', {
+    templateUrl: 'views/drzave.html',
+    controller: 'drzaveCtrl'
   })
   .when('/login', {
     templateUrl: 'views/login.html',

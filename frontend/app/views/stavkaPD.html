@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <h3><i class="modal-title"></i> Stavke prometnog dokumenta </h3>  
+</div>
+<div class="modal-body">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+	      <th> <a ng-click = "orderProp = 'stavka.artikal.nazivArtikla'; reverseSort = !reverseSort">Naziv artikla</th> 
+          <th> <a ng-click = "orderProp = 'stavka.cenaStavke'; reverseSort = !reverseSort">Cena</th> 
+          <th> <a ng-click = "orderProp = 'stavka.kolicinaPrDokumenta'; reverseSort = !reverseSort">Kolicina</th> 
+          <th> <a ng-click = "orderProp = 'stavka.vrednostStavke'; reverseSort = !reverseSort">Vrednost</th>  		  
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-click="setSelected(stavka)" ng-class="{selected: stavka === selectedStavka}" ng-repeat="stavka in stavke  | filter:query | orderBy:orderProp : reverseSort ">
+          <td>{{stavka.artikal.nazivArtikla}}</td>
+          <td>{{stavka.cenaStavke}}</td>
+          <td>{{stavka.kolicinaPrDokumenta}}</td>
+          <td>{{stavka.vrednostStavke}}</td>
+      </tr>
+	</tbody> 
+  </table>
+</div>
+		<div class="modal-footer">
+		  <button class="btn btn-default" ng-click="izmena()">Izmeni</button>
+		  <button class="btn btn-default" ng-click="dodavanje()">Kreiraj novog</button>
+		  <button class="btn btn-default" ng-click="brisanje()">Obrisi</button>
+		</div>
+</div>
