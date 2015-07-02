@@ -38,6 +38,7 @@
   'drzave',
   'resource.mesta',
   'mesta',
+  'modal',
   'resource.poslGodina',
   'poslGodina',
   'resource.preduzeca',
