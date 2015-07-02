@@ -1,34 +1,28 @@
 'use strict';
 
- angular.module('partner', ['resource.partner',
+ angular.module('stavkaPD', ['resource.stavkaPD',
  	'angular-md5'])
 
- .controller('partnerCtrl', function (Partner, $scope, $routeParams, $modal, $log, $location) {
+ .controller('stavkaPDCtrl', function (StavkaPD, $scope, $routeParams, $modal, $log, $location) {
 
-$scope.setSelected = function (selectedPartner) {
-   $scope.selectedPartner = selectedPartner;
+$scope.setSelected = function (selectedStavka) {
+   $scope.selectedStavka = selectedStavka;
 };
 
-	$scope.partners = Partner.query().$promise.then(function(data) {
-		$scope.partners = data;
+	$scope.stavke = StavkaPD.query().$promise.then(function(data) {
+		$scope.stavke = data;
 		}, function(error) {
 			console.log(error);
 		}); 
 	
-	$scope.izmena = function() {
-		if($scope.selectedPartner!=null){
- 			$scope.openModal($scope.selectedPartner);
- 		}
-	}
-	
-	$scope.dodavanje = function (partner, size) {
+	$scope.dodavanje = function (stavka, size) {
 
-		$scope.item = new Partner();
+		$scope.item = new StavkaPD();
 		var modalInstance = $modal.open({
-			templateUrl: 'views/partnerDetail.html',
+			templateUrl: 'views/stavkaPDDetail.html',
 			controller: 'genericModalCtrl',
 			size: size,
-			scope: $scope ,
+			scope: $scope,
 			resolve: {
 				item: function () {
 					return $scope.item;
@@ -36,23 +30,19 @@ $scope.setSelected = function (selectedPartner) {
 			}
 		});
 		modalInstance.result.then(function (data) {
-			var partner = data.item;
+			var stavka = data.item;
 			
 			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
 			if( data.action==='sacuvaj'){
-				partner.$create(function () {
-				$route.reload();
-
-			},
-            function (response) {
-                if (response.status === 500) {
-                    $scope.greska = "greska";
-                }
-               
-            }
-		);
-				$route.reload();
-					
+				stavka.$create(function () {
+									$route.reload();
+								},
+							   function (response) {
+									if (response.status === 500) {
+										$scope.greska = "greska";
+									} 
+								}
+				);	
 			}
 			//ako stavka treba da se obrise izbaci se iz niza
 			
@@ -61,12 +51,12 @@ $scope.setSelected = function (selectedPartner) {
 		});
 	};
 	
-	$scope.izmena = function (partner, size) {
+	$scope.izmena = function (stavka, size) {
 
-		if($scope.selectedPartner){
-			$scope.item = $scope.selectedPartner;
+		if($scope.selectedStavka){
+			$scope.item = $scope.selectedStavka;
 		var modalInstance = $modal.open({
-			templateUrl: 'views/partnerDetail.html',
+			templateUrl: 'views/stavkaPDDetail.html',
 			controller: 'genericModalCtrl',
 			size: size,
 			scope: $scope ,
@@ -77,10 +67,10 @@ $scope.setSelected = function (selectedPartner) {
 			}
 		});
 		modalInstance.result.then(function (data) {
-			var partner = data.item;
+			var stavka = data.item;
 			
 			if( data.action==='sacuvaj'){
-				partner.$update({partnerId:$scope.item}, function () {
+				stavka.$update({stavkaId:$scope.item}, function () {
 				$route.reload();
 			},
             function (response) {
@@ -100,7 +90,7 @@ $scope.setSelected = function (selectedPartner) {
 	
 	$scope.brisanje = function () {
 
-	Partner.delete({partnerId:$scope.selectedPartner.idPoslovniPartner},function () {
+	StavkaPD.delete({stavkaId:$scope.selectedStavka.idStavke},function () {
 			$route.reload();
 		},
             function (response) {
@@ -111,12 +101,12 @@ $scope.setSelected = function (selectedPartner) {
 		);
 	}
 
- 	$scope.insertOrEditPartner = function (idPartnera) {
- 		if(idPartnera){
- 			$location.path('/poslovni-partner/'+idPartnera);
+ 	$scope.insertOrEditStavka = function (idStavke) {
+ 		if(idStavke){
+ 			$location.path('/stavkaPD/'+idStavke);
  		}
  		else{
-			$location.path('/poslovni-partner/new');
+			$location.path('/stavkaPD/new');
  		}
  	}
 });

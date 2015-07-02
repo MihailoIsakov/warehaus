@@ -3,7 +3,7 @@
    <h3><i class="glyphicon glyphicon-dashboard"></i> Poslovni partneri </h3>  
    <hr>
  
-  <table class="table table-striped" ng-init="insertOrEditPartner()">
+  <table class="table table-striped">
     <thead>
       <tr>
 	      <th> <a ng-click = "orderProp = 'partner.sifraPartnera'; reverseSort = !reverseSort">Sifra partnera</th> 
@@ -12,13 +12,12 @@
           <th> <a ng-click = "orderProp = 'partner.brojTelefona'; reverseSort = !reverseSort">Telefon</th> 
           <th> <a ng-click = "orderProp = 'partner.kontaktOsoba'; reverseSort = !reverseSort">Kontakt osoba</th>
           <th> <a ng-click = "orderProp = 'partner.mailAdresa'; reverseSort = !reverseSort">Mail</th> 
-          <th> <a ng-click = "orderProp = 'partner.vrstaPartnera'; reverseSort = !reverseSort">Vrsta</th> 
-          <th> <a ng-click = "orderProp = 'partner.mesto.nazivMesta'; reverseSort = !reverseSort">Mesto</th> 
-          
+          <th> <a ng-click = "orderProp = 'partner.vrstaPartnera'; reverseSort = !reverseSort">Vrsta</th>   
+		  <th> <a ng-click = "orderProp = 'partner.mesto.nazivMesta'; reverseSort = !reverseSort">Mesto</th>  		  
       </tr>
     </thead>
     <tbody>
-      <tr ng-click="setSelected(item)" ng-class="{selected: item === selectedDoc}" ng-repeat="partner in partners  | filter:query | orderBy:orderProp : reverseSort ">
+      <tr ng-click="setSelected(partner)" ng-class="{selected: partner === selectedPartner}" ng-repeat="partner in partners  | filter:query | orderBy:orderProp : reverseSort ">
           <td>{{partner.sifraPartnera}}</td>
           <td>{{partner.nazivPartnera}}</td>
           <td>{{partner.adresaPartnera}}</td>
@@ -26,7 +25,7 @@
           <td>{{partner.kontaktOsoba}}</td>
           <td>{{partner.mailAdresa}}</td>
           <td>{{partner.vrstaPartnera}}</td>
-          <td>{{partner.mesto.nazivMesta}}</td>
+		  <td>{{partner.mesto.nazivMesta}}</td>
       </tr>
     </tbody>
 </table>
@@ -35,5 +34,11 @@
 </div>
 
 <hr />
+
+    <div class="form-group">
+      <button class="btn btn-default" ng-click="izmena()">Izmeni</button>
+      <button class="btn btn-default" ng-click="dodavanje()">Kreiraj novog</button>
+	  <button class="btn btn-default" ng-click="brisanje()">Obrisi</button>
+    </div>
 
 </div>
