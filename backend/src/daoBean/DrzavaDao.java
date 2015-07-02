@@ -8,6 +8,6 @@ import rs.ac.uns.ftn.xws.sessionbeans.common.GenericDaoBean;
 
 @Stateless
 @Local(DrzavaDaoLocal.class)
-public class DrzavaDao extends GenericDaoBean<Drzava, Long> implements DrzavaDaoLocal{
+public class DrzavaDao extends GenericDaoBean<Drzava, Integer> implements DrzavaDaoLocal{
 
 }

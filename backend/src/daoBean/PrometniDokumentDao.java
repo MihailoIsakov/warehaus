@@ -34,7 +34,6 @@ public class PrometniDokumentDao extends
 	@Override
 	public PrometniDokument persistSaKreiranjemStavki(PrometniDokument entity) throws NoSuchFieldException {
 		PrometniDokument retVal = null;
-
 		try {
 			retVal = persist(entity);
 
@@ -59,15 +58,14 @@ public class PrometniDokumentDao extends
 		// postoji kartica za taj artikal u tom magacinu
 		// dodaj novu analitiku magacinske kartice za oba magacina sa promenom
 		// koja se desila nad magacinskim karticama oba magacina
-		
-		try {
+			try {
 			if (entity.getMagacin1() != null) {
 			
 		
 				mkDao.update(entity, entity.getMagacin1(),1);
 			
 		}
-		if(entity.getMagacin2() != null){
+			if(entity.getMagacin2() != null){
 			mkDao.update(entity, entity.getMagacin2(),2);
 		}
 		} catch (Exception e) {

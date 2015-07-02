@@ -8,6 +8,6 @@ import rs.ac.uns.ftn.xws.sessionbeans.common.GenericDaoBean;
 
 @Stateless
 @Local(PoslovnaGodinaDaoLocal.class)
-public class PoslovnaGodinaDao extends GenericDaoBean<PoslovnaGodina, Long> implements PoslovnaGodinaDaoLocal{
+public class PoslovnaGodinaDao extends GenericDaoBean<PoslovnaGodina, Integer> implements PoslovnaGodinaDaoLocal{
 
 }

@@ -8,6 +8,6 @@ import rs.ac.uns.ftn.xws.sessionbeans.common.GenericDaoBean;
 
 @Stateless
 @Local(PreduzeceDaoLocal.class)
-public class PreduzeceDao extends GenericDaoBean<Preduzece, Long> implements PreduzeceDaoLocal{
+public class PreduzeceDao extends GenericDaoBean<Preduzece, Integer> implements PreduzeceDaoLocal{
 
 }

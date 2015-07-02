@@ -1,0 +1,33 @@
+<div class="col-sm-9">
+    
+   <h3><i class="glyphicon glyphicon-dashboard"></i>Preduzeća</h3>  
+   <hr>
+
+  <table class="table table-striped table-bordered table-condensed table-hover">
+    <thead>
+      <tr>
+          <th> <a ng-click = "orderProp = 'sifraPreduzeca'; reverseSort = !reverseSort">Šifra</th> 
+          <th> <a ng-click = "orderProp = 'nazivPreduzeca'; reverseSort = !reverseSort">Naziv</th> 
+          <th> <a ng-click = "orderProp = 'adresa'; reverseSort = !reverseSort">Adresa</th> 
+          <th> <a ng-click = "orderProp = 'fax'; reverseSort = !reverseSort">Fax</th> 
+          <th> <a ng-click = "orderProp = 'telefon'; reverseSort = !reverseSort">Telefon</th> 
+          <th> <a ng-click = "orderProp = 'mesto.nazivMesta'; reverseSort = !reverseSort">Mesto</th>
+            
+      </tr>
+    </thead>
+    <tbody>
+      <tr   ng-click="setSelected(article)" ng-class="{selected: article === selectedDoc}" ng-repeat="article in promDoc  | filter:query | orderBy:orderProp : reverseSort ">
+          <td>{{article.sifraPreduzeca}}</td>
+           <td>{{article.nazivPreduzeca}}</td>
+          <td>{{article.adresa}}</td>
+          <td>{{article.fax}}</td>
+        <td>{{article.telefon}}</td>
+        <td>{{article.mesto.nazivMesta}}</td>
+      </tr>
+    </tbody>
+  <div class="form-group">
+      <button class="btn btn-default" ng-click="add()">Dodaj</button>
+       <button class="btn btn-default" ng-click="delete()">Obriši</button>
+        <button class="btn btn-default" ng-click="update()">Izmeni</button>
+    </div>
+</div>

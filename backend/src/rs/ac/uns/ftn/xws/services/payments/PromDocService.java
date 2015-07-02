@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.xws.services.payments;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -15,6 +16,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import model.PrometniDokument;
+import model.StavkaPrometnogDokumenta;
+import model.PrometniDokument.statusDokumenta;
 import model.VrstaDokumenta;
 
 import org.apache.log4j.Logger;
@@ -78,28 +81,21 @@ public class PromDocService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
 	public PrometniDokument create(PrometniDokument entity) throws Exception {
-		log.info("POST");
 		entity = promDocDao.findById(entity.getIdPrometniDokument());
-		if (entity.getStatusDokumenta().equals("proknjizen")) {
+		if (entity.getStatusDokumenta().equals(statusDokumenta.proknjizen)) {
 			entity.setIdPrometniDokument(0);
-			VrstaDokumenta vd = new VrstaDokumenta();
-			if (entity.getVrstaDokumenta().getNazivVrste().equals("primka")) {
-				vd.setIdVrstaDokumenta(2);
-				vd.setNazivVrste("otpremnica");
-				vd.setSifraVrste("2");
-			} else {
-				vd.setIdVrstaDokumenta(1);
-				vd.setNazivVrste("primka");
-				vd.setSifraVrste("1");
+			Iterator<StavkaPrometnogDokumenta> stavke = entity.getStavke()
+					.iterator();
+			while (stavke.hasNext()) {
+				StavkaPrometnogDokumenta stavkaPrometnogDokumenta = (StavkaPrometnogDokumenta) stavke
+						.next();
+				stavkaPrometnogDokumenta.setKolicinaPrDokumenta(stavkaPrometnogDokumenta.getKolicinaPrDokumenta().negate());
 			}
-			entity.setVrstaDokumenta(vd);
-
 			PrometniDokument retVal = null;
 			try {
 				retVal = promDocDao.persistSaKreiranjemStavki(entity);
 				promDocDao.proknjiziDokument(retVal);
 			} catch (Exception e) {
-
 				throw e;
 
 			}
