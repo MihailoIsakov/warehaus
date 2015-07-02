@@ -13,29 +13,27 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import model.Artikal;
+import model.Magacin;
 
 import org.apache.log4j.Logger;
 
 import rs.ac.uns.ftn.xws.util.Authenticate;
-import daoBean.ArtikalDaoLocal;
+import daoBean.MagacinDao;
 
-@Path("/artikal")
-public class ArtikalService {
-	
-	private static Logger log = Logger.getLogger(ArtikalService.class);
+@Path("/magacin")
+public class MagacinService {
+private static Logger log = Logger.getLogger(MagacinService.class);
 	
 	@EJB
-	private ArtikalDaoLocal artikalDao;
-	
+	private MagacinDao magacinDao;
+	 
 	@GET 
-	@Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-	@Authenticate
-    public Artikal findById(@PathParam("id") String id) {
-		Artikal retVal = new Artikal();
+//	@Authenticate
+    public List<Magacin> findAll() {
+		List<Magacin> retVal = null;
 		try {
-			retVal = artikalDao.findById(Integer.parseInt(id));
+			retVal = magacinDao.findAll();
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -43,12 +41,13 @@ public class ArtikalService {
     }
 	
 	@GET 
+	@Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-//	@Authenticate
-    public List<Artikal> findAll() {
-		List<Artikal> retVal = null;
+	@Authenticate
+    public Magacin findById(@PathParam("id") String id) {
+		Magacin retVal = null;
 		try {
-			retVal = artikalDao.findAll();
+			retVal = magacinDao.findById(Long.getLong(id));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -59,12 +58,12 @@ public class ArtikalService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public Artikal create(Artikal entity) {
+    public Magacin create(Magacin entity) {
 		log.info("POST");
-		Artikal retVal = null;
+		Magacin retVal = null;
 		try {
 			System.out.println("entity: "+entity);
-			retVal = artikalDao.persist(entity);
+			retVal = magacinDao.persist(entity);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -76,11 +75,11 @@ public class ArtikalService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public Artikal update(Artikal entity) {
+    public Magacin update(Magacin entity) {
     	log.info("PUT");
-    	Artikal retVal = null;
+    	Magacin retVal = null;
         try {
-        	retVal = artikalDao.merge(entity);
+        	retVal = magacinDao.merge(entity);
         } catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -92,10 +91,10 @@ public class ArtikalService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public void delete(Artikal entity) {
+    public void delete(Magacin entity) {
     	log.info("DELETE");
         try {
-        	artikalDao.remove(entity);
+        	magacinDao.remove(entity);
         } catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}

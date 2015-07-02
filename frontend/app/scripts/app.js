@@ -33,7 +33,15 @@
   'resource.magacinska',
   'resource.magacinskaN',
   'resource.primka',
-  'resource.partner'
+  'resource.partner',
+  'resource.zaposleni',
+  'resource.magacinska',
+  'resource.magacinskaKartica',
+  'resource.magacin',
+  'resource.jedinicaMere',
+  'resource.radnoMesto',
+  'resource.grupaArtikala',
+  'resource.praviArtikal'
   ])
  .config(function ($routeProvider) {
   $routeProvider

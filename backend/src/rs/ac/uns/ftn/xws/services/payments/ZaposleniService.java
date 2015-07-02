@@ -13,29 +13,26 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import model.Artikal;
+import model.Zaposleni;
 
 import org.apache.log4j.Logger;
 
 import rs.ac.uns.ftn.xws.util.Authenticate;
-import daoBean.ArtikalDaoLocal;
+import daoBean.ZaposleniDao;
 
-@Path("/artikal")
-public class ArtikalService {
-	
-	private static Logger log = Logger.getLogger(ArtikalService.class);
-	
+@Path("/zaposleni")
+public class ZaposleniService {
+	private static Logger log = Logger.getLogger(ZaposleniService.class);
 	@EJB
-	private ArtikalDaoLocal artikalDao;
-	
+	private ZaposleniDao zaposleniDao;
+	 
 	@GET 
-	@Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-	@Authenticate
-    public Artikal findById(@PathParam("id") String id) {
-		Artikal retVal = new Artikal();
+//	@Authenticate
+    public List<Zaposleni> findAll() {
+		List<Zaposleni> retVal = null;
 		try {
-			retVal = artikalDao.findById(Integer.parseInt(id));
+			retVal = zaposleniDao.findAll();
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -43,12 +40,13 @@ public class ArtikalService {
     }
 	
 	@GET 
+	@Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-//	@Authenticate
-    public List<Artikal> findAll() {
-		List<Artikal> retVal = null;
+	@Authenticate
+    public Zaposleni findById(@PathParam("id") String id) {
+		Zaposleni retVal = null;
 		try {
-			retVal = artikalDao.findAll();
+			retVal = zaposleniDao.findById(Long.getLong(id));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -59,12 +57,12 @@ public class ArtikalService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public Artikal create(Artikal entity) {
+    public Zaposleni create(Zaposleni entity) {
 		log.info("POST");
-		Artikal retVal = null;
+		Zaposleni retVal = null;
 		try {
 			System.out.println("entity: "+entity);
-			retVal = artikalDao.persist(entity);
+			retVal = zaposleniDao.persist(entity);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -76,11 +74,11 @@ public class ArtikalService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public Artikal update(Artikal entity) {
+    public Zaposleni update(Zaposleni entity) {
     	log.info("PUT");
-    	Artikal retVal = null;
+    	Zaposleni retVal = null;
         try {
-        	retVal = artikalDao.merge(entity);
+        	retVal = zaposleniDao.merge(entity);
         } catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -92,12 +90,13 @@ public class ArtikalService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public void delete(Artikal entity) {
+    public void delete(Zaposleni entity) {
     	log.info("DELETE");
         try {
-        	artikalDao.remove(entity);
+        	zaposleniDao.remove(entity);
         } catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
     }
+
 }

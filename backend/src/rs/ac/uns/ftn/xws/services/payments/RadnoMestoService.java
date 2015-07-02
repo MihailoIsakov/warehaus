@@ -13,29 +13,26 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import model.Artikal;
+import model.RadnoMesto;
 
 import org.apache.log4j.Logger;
 
 import rs.ac.uns.ftn.xws.util.Authenticate;
-import daoBean.ArtikalDaoLocal;
+import daoBean.RadnoMestoDao;
 
-@Path("/artikal")
-public class ArtikalService {
-	
-	private static Logger log = Logger.getLogger(ArtikalService.class);
-	
+@Path("/radno-mesto")
+public class RadnoMestoService {
+	private static Logger log = Logger.getLogger(RadnoMestoService.class);
 	@EJB
-	private ArtikalDaoLocal artikalDao;
-	
+	private  RadnoMestoDao radnoMestoDao;
+	 
 	@GET 
-	@Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-	@Authenticate
-    public Artikal findById(@PathParam("id") String id) {
-		Artikal retVal = new Artikal();
+//	@Authenticate
+    public List<RadnoMesto> findAll() {
+		List<RadnoMesto> retVal = null;
 		try {
-			retVal = artikalDao.findById(Integer.parseInt(id));
+			retVal = radnoMestoDao.findAll();
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -43,12 +40,13 @@ public class ArtikalService {
     }
 	
 	@GET 
+	@Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-//	@Authenticate
-    public List<Artikal> findAll() {
-		List<Artikal> retVal = null;
+	@Authenticate
+    public RadnoMesto findById(@PathParam("id") String id) {
+		RadnoMesto retVal = null;
 		try {
-			retVal = artikalDao.findAll();
+			retVal = radnoMestoDao.findById(Long.getLong(id));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -59,12 +57,12 @@ public class ArtikalService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public Artikal create(Artikal entity) {
+    public RadnoMesto create(RadnoMesto entity) {
 		log.info("POST");
-		Artikal retVal = null;
+		RadnoMesto retVal = null;
 		try {
 			System.out.println("entity: "+entity);
-			retVal = artikalDao.persist(entity);
+			retVal = radnoMestoDao.persist(entity);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -76,11 +74,11 @@ public class ArtikalService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public Artikal update(Artikal entity) {
+    public RadnoMesto update(RadnoMesto entity) {
     	log.info("PUT");
-    	Artikal retVal = null;
+    	RadnoMesto retVal = null;
         try {
-        	retVal = artikalDao.merge(entity);
+        	retVal = radnoMestoDao.merge(entity);
         } catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -92,12 +90,13 @@ public class ArtikalService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public void delete(Artikal entity) {
+    public void delete(RadnoMesto entity) {
     	log.info("DELETE");
         try {
-        	artikalDao.remove(entity);
+        	radnoMestoDao.remove(entity);
         } catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
     }
+
 }

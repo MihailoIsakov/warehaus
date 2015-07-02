@@ -1,92 +1,102 @@
 package rs.ac.uns.ftn.xws.services.payments;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import model.AnalitikaMagacinskeKartice;
 import model.MagacinskaKartica;
 
 import org.apache.log4j.Logger;
 
 import rs.ac.uns.ftn.xws.util.Authenticate;
-import daoBean.AnalitikaMagacinskeKarticeDaoLocal;
-import daoBean.MagacinskaKarticaDaoLocal;
+import daoBean.MagacinskaKarticaDao;
 
 @Path("/magacinska-kartica")
 public class MagacinskaKarticaService {
 	private static Logger log = Logger.getLogger(MagacinskaKarticaService.class);
 	
 	@EJB
-	private MagacinskaKarticaDaoLocal mkDao;
-	
-	@EJB
-	private AnalitikaMagacinskeKarticeDaoLocal anDao;
+	private MagacinskaKarticaDao magacinskaKarticaDao;
 	
 	@GET 
-	@Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-	@Authenticate
-    public MagacinskaKartica findByMagCardId(@PathParam("id") String id) {
-		MagacinskaKartica retVal = new MagacinskaKartica();
+//	@Authenticate
+    public List<MagacinskaKartica> findAll() {
+		List<MagacinskaKartica> retVal = null;
 		try {
-			retVal = mkDao.findByMagCardId(Integer.parseInt(id));
+			retVal = magacinskaKarticaDao.findAll();
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
 		return retVal;
     }
 	
-	 @SuppressWarnings("static-access")
-	 @PUT
-     @Path("{id}")
-     @Consumes(MediaType.APPLICATION_JSON)
-     @Produces(MediaType.APPLICATION_JSON)
-	 @Authenticate
-     public MagacinskaKartica update(MagacinskaKartica entity) {
-    	log.info("PUT Mag Kartica");
+	@GET 
+	@Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+	@Authenticate
+    public MagacinskaKartica findById(@PathParam("id") String id) {
+		MagacinskaKartica retVal = null;
+		try {
+			retVal = magacinskaKarticaDao.findById(Long.getLong(id));
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+		return retVal;
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	@Authenticate
+    public MagacinskaKartica create(MagacinskaKartica entity) {
+		log.info("POST");
+		MagacinskaKartica retVal = null;
+		try {
+			System.out.println("entity: "+entity);
+			retVal = magacinskaKarticaDao.persist(entity);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+		return retVal;
+    }
+    
+    @PUT
+    @Path("{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	@Authenticate
+    public MagacinskaKartica update(MagacinskaKartica entity) {
+    	log.info("PUT");
     	MagacinskaKartica retVal = null;
-    	MagacinskaKartica before = mkDao.findByMagCardId(entity.getIdMagacinskaKartica());
-    	//STARA KOLICINA UKUPNO articled.pocetnoStanjeKol+articled.kolUlaza-articled.kolIzlaza
-    	BigDecimal quantity = before.getPocetnoStanjeKol().add(before.getKolUlaza());
-    	quantity = quantity.subtract(before.getKolIzlaza());
-    	//NOVA KOLICINA UKUPNO
-    	BigDecimal newQuantity = entity.getPocetnoStanjeKol().add(entity.getKolUlaza());
-    	newQuantity = newQuantity.subtract(entity.getKolIzlaza());
-    	//KOLICINA NA ANALITICI
-    	BigDecimal diff = quantity.subtract(newQuantity).abs();
         try {
-        	retVal = mkDao.merge(entity);
-        	AnalitikaMagacinskeKartice a = new AnalitikaMagacinskeKartice();
-        	a.setCena(entity.getProsecnaCena());
-        	a.setDatumPromene(new Date());
-        	a.setKolicina(diff);
-        	a.setMagacinskaKartica(entity);
-        	//a.setRedniBroj(redniBroj);
-        	a.setSifraDokumenta("KOR");
-        	if(quantity.compareTo(newQuantity) == -1){
-        		//Nova je veca, povecava se kolUlaz
-            	a.setSmer(a.getSmer().U);
-        	}else {
-        		//Stara je veca, povecava se kolIzlaz
-            	a.setSmer(a.getSmer().I);
-        	}
-        	a.setStavkaPrometnogDokumenta(null);
-        	//VREDNOST korekcije
-        	BigDecimal value = diff.multiply(entity.getProsecnaCena());
-        	a.setVrednost(value);
-        	anDao.persist(a);
+        	retVal = magacinskaKarticaDao.merge(entity);
         } catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
 		return retVal;
-     }
+    }
+    
+    @DELETE
+    @Path("{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	@Authenticate
+    public void delete(MagacinskaKartica entity) {
+    	log.info("DELETE");
+        try {
+        	magacinskaKarticaDao.remove(entity);
+        } catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+    }
 }
