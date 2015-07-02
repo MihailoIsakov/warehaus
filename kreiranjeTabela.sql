@@ -253,9 +253,9 @@ create table PROMETNI_DOKUMENT
 /*==============================================================*/
 create table RADNO_MESTO
 (
-   SIFRA_RADNOG_MESTA   varchar(5) not null AUTO_INCREMENT,
+   SIFRA_RADNOG_MESTA   varchar(5) not null,
    NAZIV_RADNOG_MESTA   varchar(30) not null,
-   ID_RADNO_MESTO       int not null,
+   ID_RADNO_MESTO       int not null AUTO_INCREMENT,
    primary key (ID_RADNO_MESTO)
 );
 
