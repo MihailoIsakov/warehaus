@@ -12,3 +12,8 @@ hs_err_pid*
 
 *.swp
 *.log
+
+backend/.classpath
+backend/.project
+frontend/Gruntfile.js
+node_modules/*
