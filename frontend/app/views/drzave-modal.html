@@ -11,7 +11,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr   ng-click="setSelected(article)" ng-class="{selected: article === selectedDoc}" ng-repeat="article in promDoc  | filter:query | orderBy:orderProp : reverseSort ">
+      <tr   ng-click="setSelected(article)" ng-class="{selected: article === selectedDoc}" ng-repeat="article in drzaveDoc  | filter:query | orderBy:orderProp : reverseSort ">
           <td>{{article.sifraDrzave}}</td>
           <td>{{article.nazivDrzave}}</td>
       
@@ -21,6 +21,7 @@
   <div class="form-group">
       <button class="btn btn-default" ng-click="add()">Dodaj</button>
        <button class="btn btn-default" ng-click="delete()">Obriši</button>
-        <button class="btn btn-default" ng-click="update()">Selektuj</button>
+        <button class="btn btn-default" ng-click="update()">Izmeni</button>
+        <button class="btn btn-default" ng-click="selektuj()">Selektuj</button>
     </div>
 </div>

@@ -19,7 +19,7 @@ angular.module('poslGodNew', [])
 		
 		var modalInstance = $modal.open({
 			templateUrl: 'views/preduzece-modal.html',
-			controller: 'preduzecaCtrl',
+			controller: 'preduzecaModalCtrl',
 			size: size,
 			scope: $scope ,
 			resolve: {

@@ -19,7 +19,7 @@ angular.module('preduzeceNew', [])
 		
 		var modalInstance = $modal.open({
 			templateUrl: 'views/mesto-modal.html',
-			controller: 'mestoCtrl',
+			controller: 'mestaModalCtrl',
 			size: size,
 			scope: $scope ,
 			resolve: {
@@ -30,7 +30,7 @@ angular.module('preduzeceNew', [])
 		});
 		modalInstance.result.then(function (data) {
 			
-			var selectedMesto = data.selectedDoc;
+			var selectedMesto = data.selectedMesto;
 			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
 
 			if( data.action==='save')

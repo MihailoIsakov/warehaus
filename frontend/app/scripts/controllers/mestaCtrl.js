@@ -11,14 +11,14 @@ if($routeParams.invoiceId!='new'){
 		
 		//preuzimanje fakure sa servera. Posto smo u Invoice factory rutu definisali kao '...invoice/:invoiceId' invoiceId ce se proslediti kao parametar rute na server 
 		Mesta.query({'invoiceId':invoiceId}).$promise.then(function (data) {
-			$scope.promDoc = data;
+			$scope.mestaDoc = data;
 		});
 	}
 
 	//ako kreiramo novu fakutru
 	else{
-		$scope.promDoc = new Mesta();
-		$scope.promDoc.invoiceItems = [];
+		$scope.mestaDoc = new Mesta();
+		$scope.mestaDoc.invoiceItems = [];
 	
 }
 
@@ -120,9 +120,9 @@ $scope.setSelected = function (selectedMesto) {
 };
 
 
-$scope.promDoc = "";
+$scope.mestaDoc = "";
 	$scope.options = Mesta.query();
-	$log.info($scope.promDoc.length);//0
+	$log.info($scope.mestaDoc.length);//0
 	//kada smo kliknuli na red u tabeli prelazimo na stranicu za editovanje fakture sa zadatim id-om
  	
 });

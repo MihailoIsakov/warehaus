@@ -3,7 +3,7 @@
  angular.module('preduzeca', ['resource.preduzeca',
  	'angular-md5'])
 
- .controller('preduzecaCtrl', function (Preduzeca, $scope, $routeParams, $modal, $modalInstance, $log, $location, InvoiceItem ,$route) {
+ .controller('preduzecaCtrl', function (Preduzeca, $scope, $routeParams, $modal,  $log, $location, InvoiceItem ,$route) {
 
 if($routeParams.invoiceId!='new'){
 		//preuzimanje parametra iz URL
@@ -11,14 +11,14 @@ if($routeParams.invoiceId!='new'){
 		
 		//preuzimanje fakure sa servera. Posto smo u Invoice factory rutu definisali kao '...invoice/:invoiceId' invoiceId ce se proslediti kao parametar rute na server 
 		Preduzeca.query({'invoiceId':invoiceId}).$promise.then(function (data) {
-			$scope.promDoc = data;
+			$scope.preduzDoc = data;
 		});
 	}
 
 	//ako kreiramo novu fakutru
 	else{
-		$scope.promDoc = new Preduzeca();
-		$scope.promDoc.invoiceItems = [];
+		$scope.preduzDoc = new Preduzeca();
+		$scope.preduzDoc.invoiceItems = [];
 	
 }
 
@@ -122,9 +122,9 @@ $scope.setSelected = function (selectedPreduzece) {
    $scope.selectedPreduzece = selectedPreduzece;
 };
 
-$scope.promDoc = "";
+$scope.preduzDoc = "";
 	$scope.options = Preduzeca.query();
-	$log.info($scope.promDoc.length);//0
+	$log.info($scope.preduzDoc.length);//0
 	//kada smo kliknuli na red u tabeli prelazimo na stranicu za editovanje fakture sa zadatim id-om
  	
 });

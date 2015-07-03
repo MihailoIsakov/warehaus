@@ -11,14 +11,14 @@ if($routeParams.invoiceId!='new'){
 		
 		//preuzimanje fakure sa servera. Posto smo u Invoice factory rutu definisali kao '...invoice/:invoiceId' invoiceId ce se proslediti kao parametar rute na server 
 		Drzave.query({'invoiceId':invoiceId}).$promise.then(function (data) {
-			$scope.promDoc = data;
+			$scope.drzaveDoc = data;
 		});
 	}
 
 	//ako kreiramo novu fakutru
 	else{
-		$scope.promDoc = new Drzave();
-		$scope.promDoc.invoiceItems = [];
+		$scope.drzaveDoc = new Drzave();
+		$scope.drzaveDoc.invoiceItems = [];
 	
 }
 
@@ -44,7 +44,7 @@ if($routeParams.invoiceId!='new'){
 			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
 			if( data.action==='save'){
 				selectedDoc.$create(function () {
-				$route.reload();
+				$scope.drzaveDoc.push(selectedDoc);
 
 			},
             function (response) {
@@ -54,7 +54,7 @@ if($routeParams.invoiceId!='new'){
                
             }
 		);
-				$route.reload();
+				
 					
 			}
 			//ako stavka treba da se obrise izbaci se iz niza
@@ -124,9 +124,9 @@ $scope.setSelected = function (selectedDoc) {
 };
 
 
-$scope.promDoc = "";
+$scope.drzaveDoc = "";
 	$scope.options = Drzave.query();
-	$log.info($scope.promDoc.length);//0
+	$log.info($scope.drzaveDoc.length);//0
 	//kada smo kliknuli na red u tabeli prelazimo na stranicu za editovanje fakture sa zadatim id-om
  	
 });

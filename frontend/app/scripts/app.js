@@ -60,7 +60,10 @@
   'resource.radnoMesto',
   'resource.grupaArtikala',
   'resource.kartica', 
-  'resource.praviArtikal'
+  'resource.praviArtikal',
+
+  'preduzecaM',
+  'mestaM'
   ])
  .config(function ($routeProvider) {
   $routeProvider
