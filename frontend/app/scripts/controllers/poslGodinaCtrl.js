@@ -62,44 +62,16 @@ if($routeParams.invoiceId!='new'){
 		});
 	};
 	
+
+
+	
+
 	$scope.update = function (invoiceItem, size) {
 
-		if($scope.selectedPoslGod){
-		var modalInstance = $modal.open({
-			templateUrl: 'views/dodaj-poslgod.html',
-			controller: 'poslgodNewCtrl',
-			size: size,
-			scope: $scope ,
-			resolve: {
-				invoiceItem: function () {
-					return $scope.invoiceItem;
-				}
-			}
-		});
-		modalInstance.result.then(function (data) {
-			var selectedPoslGod = data.selectedPoslGod;
-			
-			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
-			if( data.action==='save'){
-				selectedPoslGod.$update({invoiceItemId:$scope.selectedPoslGod}, function () {
+		
+				$scope.selectedPoslGod.$update({invoiceItemId:$scope.selectedPoslGod},function () {
 				$route.reload();
-
-			},
-            function (response) {
-                if (response.status === 500) {
-                    $scope.greska = "greska";
-                }
-               
-            }
-		);
-				$route.reload();
-					
-			}
-			//ako stavka treba da se obrise izbaci se iz niza
-			
-		}, function () {
-			$log.info('Modal dismissed at: ' + new Date());
-		});}
+			});
 	};
 
 	//modalni dijalog za stavku fakutre

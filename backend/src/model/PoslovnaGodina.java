@@ -62,5 +62,13 @@ public class PoslovnaGodina implements Serializable {
 		this.zakljucenaGodina = zakljucenaGodina;
 	}
 
+	public Preduzece getPreduzece() {
+		return preduzece;
+	}
+
+	public void setPreduzece(Preduzece preduzece) {
+		this.preduzece = preduzece;
+	}
+
 
 }

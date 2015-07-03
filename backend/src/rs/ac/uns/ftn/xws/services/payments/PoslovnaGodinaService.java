@@ -26,7 +26,7 @@ public class PoslovnaGodinaService {
 	private static Logger log = Logger.getLogger(PoslovnaGodinaService.class);
 	
 	@EJB
-	private PoslovnaGodinaDaoLocal drzavaDao;
+	private PoslovnaGodinaDaoLocal poslGodDao;
 	 
 	@GET 
     @Produces(MediaType.APPLICATION_JSON)
@@ -34,7 +34,7 @@ public class PoslovnaGodinaService {
     public List<PoslovnaGodina> findAll() {
 		List<PoslovnaGodina> retVal = null;
 		try {
-			retVal = drzavaDao.findAll();
+			retVal = poslGodDao.findAll();
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -48,7 +48,7 @@ public class PoslovnaGodinaService {
     public PoslovnaGodina findById(@PathParam("id") String id) {
 		PoslovnaGodina retVal = null;
 		try {
-			retVal = drzavaDao.findById(Integer.parseInt(id));
+			retVal = poslGodDao.findById(Integer.parseInt(id));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -64,7 +64,7 @@ public class PoslovnaGodinaService {
 		PoslovnaGodina retVal = null;
 		try {
 			
-			retVal = drzavaDao.persist(entity);
+			retVal = poslGodDao.persist(entity);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -78,9 +78,10 @@ public class PoslovnaGodinaService {
 	@Authenticate
     public PoslovnaGodina update(PoslovnaGodina entity) {
     	log.info("PUT");
+    	entity.setZakljucenaGodina(true);
     	PoslovnaGodina retVal = null;
         try {
-        	retVal = drzavaDao.merge(entity);
+        	retVal = poslGodDao.merge(entity);
         } catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -93,7 +94,7 @@ public class PoslovnaGodinaService {
 	@Authenticate
 	public void removeItem(@PathParam("id") Integer id) {
     	try {
-    		drzavaDao.remove(id);
+    		poslGodDao.remove(id);
         } catch (Exception e) {
         	log.error(e.getMessage(), e);
         }
