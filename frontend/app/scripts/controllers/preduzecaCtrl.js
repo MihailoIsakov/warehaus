@@ -3,7 +3,7 @@
  angular.module('preduzeca', ['resource.preduzeca',
  	'angular-md5'])
 
- .controller('preduzecaCtrl', function (Preduzeca, $scope, $routeParams, $modal, $log, $location, InvoiceItem ) {
+ .controller('preduzecaCtrl', function (Preduzeca, $scope, $routeParams, $modal, $modalInstance, $log, $location, InvoiceItem ,$route) {
 
 if($routeParams.invoiceId!='new'){
 		//preuzimanje parametra iz URL
@@ -26,10 +26,10 @@ if($routeParams.invoiceId!='new'){
 	//modalni dijalog za stavku fakutre
 	$scope.add = function (invoiceItem, size) {
 
-
+		$scope.selectedPreduzece = new Preduzeca();
 		var modalInstance = $modal.open({
-			templateUrl: 'views/storniraj-primku.html',
-			controller: 'stonPrimCtrl',
+			templateUrl: 'views/dodaj-preduzece.html',
+			controller: 'preduzeceNewCtrl',
 			size: size,
 			scope: $scope ,
 			resolve: {
@@ -39,12 +39,51 @@ if($routeParams.invoiceId!='new'){
 			}
 		});
 		modalInstance.result.then(function (data) {
-			var selectedDoc = data.selectedDoc;
+		var selectedPreduzece = data.selectedPreduzece;
+			
+				if( data.action==='save'){
+				selectedPreduzece.$create(function () {
+					$route.reload();
+			},
+            function (response) {
+                if (response.status === 500) {
+                    $scope.greska = "greska";
+                }
+               
+            }
+		);
+			$route.reload();
+					
+			}
+			//ako stavka treba da se obrise izbaci se iz niza
+			
+		}, function () {
+			$log.info('Modal dismissed at: ' + new Date());
+		});
+	};
+	
+	
+	$scope.update = function (invoiceItem, size) {
+
+		if($scope.selectedPreduzece){
+		var modalInstance = $modal.open({
+			templateUrl: 'views/dodaj-preduzece.html',
+			controller: 'preduzeceNewCtrl',
+			size: size,
+			scope: $scope ,
+			resolve: {
+				invoiceItem: function () {
+					return $scope.invoiceItem;
+				}
+			}
+		});
+		modalInstance.result.then(function (data) {
+			var selectedPreduzece = data.selectedPreduzece;
 			
 			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
 			if( data.action==='save'){
-				selectedDoc.$create(function () {
-				$location.path('/prometni-dokumenti');
+				selectedPreduzece.$update({invoiceItemId:$scope.selectedPreduzece}, function () {
+				$route.reload();
 
 			},
             function (response) {
@@ -54,30 +93,35 @@ if($routeParams.invoiceId!='new'){
                
             }
 		);
-				$location.path('/prometni-dokumenti');
+				$route.reload();
 					
 			}
 			//ako stavka treba da se obrise izbaci se iz niza
 			
 		}, function () {
 			$log.info('Modal dismissed at: ' + new Date());
-		});
+		});}
 	};
 
-	
+	//modalni dijalog za stavku fakutre
+	$scope.delete = function () {
 
-$scope.setSelected = function (selectedDoc) {
-   $scope.selectedDoc = selectedDoc;
+		Preduzeca.delete({invoiceItemId:$scope.selectedPreduzece.idPreduzece},function () {
+				$route.reload();
+			});
+	}
+
+$scope.selektuj = function () {
+
+			
+		$modalInstance.close({'selectedPreduzece':$scope.selectedPreduzece,
+								'action':'save'});
+	
+	}
+$scope.setSelected = function (selectedPreduzece) {
+   $scope.selectedPreduzece = selectedPreduzece;
 };
 
-$scope.ok = function () {
-		$modalInstance.close({'invoiceItem':$scope.invoiceItem,
-								'action':'save'});
-	};
-
-	$scope.cancel = function () {
-		$modalInstance.dismiss('cancel');
-	};
 $scope.promDoc = "";
 	$scope.options = Preduzeca.query();
 	$log.info($scope.promDoc.length);//0

@@ -3,7 +3,7 @@
  angular.module('poslGodina', ['resource.poslGodina',
  	'angular-md5'])
 
- .controller('poslGodinaCtrl', function (PoslovnaGodina, $scope, $routeParams, $modal, $log, $location, InvoiceItem ) {
+ .controller('poslGodinaCtrl', function (PoslovnaGodina, $scope, $routeParams, $modal, $log, $location, InvoiceItem ,$route ) {
 
 if($routeParams.invoiceId!='new'){
 		//preuzimanje parametra iz URL
@@ -26,10 +26,10 @@ if($routeParams.invoiceId!='new'){
 	//modalni dijalog za stavku fakutre
 	$scope.add = function (invoiceItem, size) {
 
-
+		$scope.selectedPoslGod = new PoslovnaGodina();
 		var modalInstance = $modal.open({
-			templateUrl: 'views/storniraj-primku.html',
-			controller: 'stonPrimCtrl',
+			templateUrl: 'views/dodaj-poslgod.html',
+			controller: 'poslgodNewCtrl',
 			size: size,
 			scope: $scope ,
 			resolve: {
@@ -39,12 +39,50 @@ if($routeParams.invoiceId!='new'){
 			}
 		});
 		modalInstance.result.then(function (data) {
-			var selectedDoc = data.selectedDoc;
+			var selectedPoslGod = data.selectedPoslGod;
+			
+				if( data.action==='save'){
+				selectedPoslGod.$create(function () {
+					$route.reload();
+			},
+            function (response) {
+                if (response.status === 500) {
+                    $scope.greska = "greska";
+                }
+               
+            }
+		);
+			$route.reload();
+					
+			}
+			//ako stavka treba da se obrise izbaci se iz niza
+			
+		}, function () {
+			$log.info('Modal dismissed at: ' + new Date());
+		});
+	};
+	
+	$scope.update = function (invoiceItem, size) {
+
+		if($scope.selectedPoslGod){
+		var modalInstance = $modal.open({
+			templateUrl: 'views/dodaj-poslgod.html',
+			controller: 'poslgodNewCtrl',
+			size: size,
+			scope: $scope ,
+			resolve: {
+				invoiceItem: function () {
+					return $scope.invoiceItem;
+				}
+			}
+		});
+		modalInstance.result.then(function (data) {
+			var selectedPoslGod = data.selectedPoslGod;
 			
 			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
 			if( data.action==='save'){
-				selectedDoc.$create(function () {
-				$location.path('/prometni-dokumenti');
+				selectedPoslGod.$update({invoiceItemId:$scope.selectedPoslGod}, function () {
+				$route.reload();
 
 			},
             function (response) {
@@ -54,30 +92,29 @@ if($routeParams.invoiceId!='new'){
                
             }
 		);
-				$location.path('/prometni-dokumenti');
+				$route.reload();
 					
 			}
 			//ako stavka treba da se obrise izbaci se iz niza
 			
 		}, function () {
 			$log.info('Modal dismissed at: ' + new Date());
-		});
+		});}
 	};
 
-	
+	//modalni dijalog za stavku fakutre
+	$scope.delete = function () {
 
-$scope.setSelected = function (selectedDoc) {
-   $scope.selectedDoc = selectedDoc;
+		PoslovnaGodina.delete({invoiceItemId:$scope.selectedPoslGod.idPoslovnaGodina},function () {
+				$route.reload();
+			});
+	}
+
+
+$scope.setSelected = function (selectedPoslGod) {
+   $scope.selectedPoslGod = selectedPoslGod;
 };
 
-$scope.ok = function () {
-		$modalInstance.close({'invoiceItem':$scope.invoiceItem,
-								'action':'save'});
-	};
-
-	$scope.cancel = function () {
-		$modalInstance.dismiss('cancel');
-	};
 $scope.promDoc = "";
 	$scope.options = PoslovnaGodina.query();
 	$log.info($scope.promDoc.length);//0

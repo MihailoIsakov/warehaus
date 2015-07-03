@@ -3,7 +3,7 @@
  angular.module('drzave', ['resource.drzave',
  	'angular-md5'])
 
- .controller('drzaveCtrl', function (Drzave, $scope, $routeParams,$route, $modal, $log, $location, InvoiceItem ) {
+ .controller('drzaveCtrl', function (Drzave, $scope, $routeParams,$route, $modal,  $log, $location, InvoiceItem ) {
 
 if($routeParams.invoiceId!='new'){
 		//preuzimanje parametra iz URL
@@ -111,6 +111,13 @@ if($routeParams.invoiceId!='new'){
 			});
 	}
 
+	$scope.selektuj = function () {
+
+			
+		$modalInstance.close({'selectedDoc':$scope.selectedDoc,
+								'action':'save'});
+	
+	}
 
 $scope.setSelected = function (selectedDoc) {
    $scope.selectedDoc = selectedDoc;

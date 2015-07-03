@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h3 class="modal-title">Država</h3>
+</div>
+<div class="modal-body">
+  <table class="table table-striped table-bordered table-condensed table-hover">
+    <thead>
+      <tr>
+          <th> <a ng-click = "orderProp = 'sifraDrzave'; reverseSort = !reverseSort">Šifra</th> 
+          <th> <a ng-click = "orderProp = 'nazivDrzave'; reverseSort = !reverseSort">Naziv</th> 
+         
+      </tr>
+    </thead>
+    <tbody>
+      <tr   ng-click="setSelected(article)" ng-class="{selected: article === selectedDoc}" ng-repeat="article in promDoc  | filter:query | orderBy:orderProp : reverseSort ">
+          <td>{{article.sifraDrzave}}</td>
+          <td>{{article.nazivDrzave}}</td>
+      
+        
+      </tr>
+    </tbody>
+  <div class="form-group">
+      <button class="btn btn-default" ng-click="add()">Dodaj</button>
+       <button class="btn btn-default" ng-click="delete()">Obriši</button>
+        <button class="btn btn-default" ng-click="update()">Izmeni</button>
+        <button class="btn btn-default" ng-click="selektuj()">Selektuj</button>
+    </div>
+</div>

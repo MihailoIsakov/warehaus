@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr   ng-click="setSelected(article)" ng-class="{selected: article === selectedDoc}" ng-repeat="article in promDoc  | filter:query | orderBy:orderProp : reverseSort ">
+      <tr   ng-click="setSelected(article)" ng-class="{selected: article === selectedPoslGod}" ng-repeat="article in promDoc  | filter:query | orderBy:orderProp : reverseSort ">
           <td>{{article.brojGodine}}</td>
            <td>{{article.zakljucenaGodina}}</td>
           <td>{{article.preduzece.nazivPreduzeca}}</td>

@@ -42,6 +42,12 @@
   'modal',
   'resource.poslGodina',
   'poslGodina',
+    'resource.preduzeca',
+  'preduzeca',
+  'mestoNew',
+  'drzaveM',
+  'preduzeceNew',
+  'poslGodNew',
   'resource.preduzeca',
   'resource.stavkaPD',
   'stavkaPD',
@@ -81,6 +87,14 @@
     templateUrl: 'views/nivelacija.html',
     controller: 'nivCtrl'
   })
+   .when('/primka/:primkaId', {
+    templateUrl: 'views/primka.html',
+    controller: 'primkaCtrl'
+  })
+   .when('/primka', {
+    templateUrl: 'views/primka.html',
+    controller: 'primkaCtrl'
+  })
    .when('/poslovni-partner', {
     templateUrl: 'views/poslovni-partner.html',
     controller: 'partnerCtrl'
@@ -92,6 +106,22 @@
    .when('/drzave', {
     templateUrl: 'views/drzave.html',
     controller: 'drzaveCtrl'
+  })
+      .when('/drzave', {
+    templateUrl: 'views/drzave.html',
+    controller: 'drzaveCtrl'
+  })
+    .when('/mesta', {
+    templateUrl: 'views/mesta.html',
+    controller: 'mestaCtrl'
+  }) 
+    .when('/poslovna-godina', {
+    templateUrl: 'views/poslovna-godina.html',
+    controller: 'poslGodinaCtrl'
+  })  
+  .when('/preduzeca', {
+    templateUrl: 'views/preduzeca.html',
+    controller: 'preduzecaCtrl'
   })
   .when('/login', {
     templateUrl: 'views/login.html',

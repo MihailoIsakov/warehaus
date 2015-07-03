@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h3 class="modal-title">Poslovna Godina</h3>
+</div>
+<div class="modal-body">
+    <form>
+        <div class="form-group">
+            <label>Broj Godine:</label>
+            <input class="form-control" ng-model="selectedPoslGod.brojGodine" ></input>
+        </div>
+        <div class="form-group">
+            <label>Zakljucena:</label>
+            <input type="checkbox"  class="form-control" ng-model="selectedPoslGod.zakljucenaGodina" ></input>
+        </div>
+       
+         <div class="form-group">
+            <label>Preduzece:</label>
+            <input class="form-control"  ng-model="selectedPoslGod.preduzece.nazivPreduzeca" ></input>
+             <button class="btn" ng-click="selektujPreduzece()">Selektuj</button>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button class="btn" ng-click="ok()">OK</button>
+    <button class="btn" ng-click="cancel()">Cancel</button>
+   
+</div>
