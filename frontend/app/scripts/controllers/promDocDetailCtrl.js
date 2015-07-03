@@ -81,6 +81,36 @@
 	$scope.odustani = function () {
 		$modalInstance.dismiss('cancel');
 	};
+	
+	$scope.dodajStavkuPD = function() {
+		
+		var modalInstance = $modal.open({
+			templateUrl: 'views/stavkaPDDetail.html',
+			controller: 'stavkaPDCtrl',
+			scope: $scope,
+			resolve: {
+				stavka: function () {
+					return $scope.item;
+				}
+			}
+		});
+		modalInstance.result.then(function (data) {
+			var stavka = data.stavka;
+			
+			if( data.action==='sacuvaj')
+				$scope.item.stavke.push(stavka);
+			},
+            function (response) {
+                if (response.status === 500) {
+                    $scope.greska = "greska";
+                }
+			$route.reload();
+			//ako stavka treba da se obrise izbaci se iz niza
+			
+		}, function () {
+			$log.info('Modal dismissed at: ' + new Date());
+		});}
+	
 	}
 	
 );

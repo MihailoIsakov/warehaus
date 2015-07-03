@@ -8,5 +8,10 @@ public interface PrometniDokumentDaoLocal extends GenericDao<PrometniDokument, I
 	PrometniDokument persistSaKreiranjemStavki(PrometniDokument entity) throws NoSuchFieldException;
 
 	PrometniDokument proknjiziDokument(PrometniDokument entity) throws Exception;
+
+	PrometniDokument persistSaKreiranjemStavkiDodavanjeBroja(
+			PrometniDokument entity) throws NoSuchFieldException;
+	
+	boolean proveriPrometniDokument(PrometniDokument entity);
 	
 }
