@@ -1,9 +1,10 @@
 'use strict';
 
  angular.module('article', ['resource.invoice',
+    'resource.kartica',
  	'angular-md5'])
 
- .controller('lagerListCtrl', function (Artikal, $scope, $routeParams, $modal, $log, $location, InvoiceItem) {
+ .controller('lagerListCtrl', function (Artikal, MagacinskaKartica, $scope, $routeParams, $modal, $log, $location, InvoiceItem) {
 
 if($routeParams.invoiceId!='new'){
 		//preuzimanje parametra iz URL
@@ -64,6 +65,21 @@ function printElement(elem) {
 $scope.setSelected = function (selectedDoc) {
    $scope.selectedDoc = selectedDoc;
 };
+
+$scope.showCard = function(article, size) {
+    MagacinskaKartica.findById({'idMagacinskaKartica' : article.idMagacinskaKartica}).$promise.then(function(data) {
+        $scope.kartice = [data];
+    });
+    $scope.query= "";
+    $scope.orderProp= "idMagacinskaKartica";
+    $scope.reverseSort = false;
+	var modalInstance = $modal.open({
+		templateUrl: 'views/kartica.html',
+		controller: 'karticaCtrl',
+		size: size,
+        scope: $scope
+	});
+}
 
 $scope.articles = "";
 	$scope.options = Artikal.query();
