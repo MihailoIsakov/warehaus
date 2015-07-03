@@ -105,7 +105,7 @@ public class PrometniDokumentDao extends
 		if (entity.getStavke().size()<=0) {
 			return false;
 		}
-		if (entity.getPoslovnaGodina().getZakljucenaGodina()==1) {
+		if (entity.getPoslovnaGodina().getZakljucenaGodina()) {
 			return false;
 		} 
 		Date now = new Date();

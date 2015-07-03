@@ -28,7 +28,7 @@ public class PoslovnaGodina implements Serializable {
 	private int brojGodine;
 
 	@Column(name="ZAKLJUCENA_GODINA")
-	private byte zakljucenaGodina;
+	private boolean zakljucenaGodina;
 	
 	//bi-directional many-to-one association to Preduzece
 	@ManyToOne
@@ -54,11 +54,11 @@ public class PoslovnaGodina implements Serializable {
 		this.brojGodine = brojGodine;
 	}
 
-	public byte getZakljucenaGodina() {
+	public boolean getZakljucenaGodina() {
 		return this.zakljucenaGodina;
 	}
 
-	public void setZakljucenaGodina(byte zakljucenaGodina) {
+	public void setZakljucenaGodina(boolean zakljucenaGodina) {
 		this.zakljucenaGodina = zakljucenaGodina;
 	}
 

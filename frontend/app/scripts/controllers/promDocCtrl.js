@@ -3,7 +3,7 @@
  angular.module('promDoc', ['resource.promDoc',
  	'angular-md5'])
 
- .controller('promDocCtrl', function (Documents, $scope, $routeParams, $modal, $log, $location ) {
+ .controller('promDocCtrl', function (Documents, $scope, $routeParams, $modal, $route, $log, $location ) {
 	
 if($routeParams.invoiceId!='new'){
 		//preuzimanje parametra iz URL
@@ -42,8 +42,8 @@ if($routeParams.invoiceId!='new'){
 			
 			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
 			if( data.action==='save'){
-				selectedDoc.$create(function () {
-				
+				selectedDoc.$update(function () {
+				$route.reload();
 			},
             function (response) {
                 if (response.status === 500) {
@@ -52,7 +52,7 @@ if($routeParams.invoiceId!='new'){
                
             }
 		);
-				$location.path('/prometni-dokumenti');
+				$route.reload();
 					
 			}
 			//ako stavka treba da se obrise izbaci se iz niza
@@ -92,7 +92,7 @@ if($routeParams.invoiceId!='new'){
                
             }
 		);
-				$location.path('/prometni-dokumenti');
+				$route.reload();
 					
 			}
 			//ako stavka treba da se obrise izbaci se iz niza

@@ -83,28 +83,7 @@ public class PromDocService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-	public PrometniDokument create(PrometniDokument entity) throws Exception {
-		entity = promDocDao.findById(entity.getIdPrometniDokument());
-		if (entity.getStatusDokumenta().equals(statusDokumenta.proknjizen)) {
-			entity.setIdPrometniDokument(0);
-			Iterator<StavkaPrometnogDokumenta> stavke = entity.getStavke()
-					.iterator();
-			while (stavke.hasNext()) {
-				StavkaPrometnogDokumenta stavkaPrometnogDokumenta = (StavkaPrometnogDokumenta) stavke
-						.next();
-				stavkaPrometnogDokumenta.setKolicinaPrDokumenta(stavkaPrometnogDokumenta.getKolicinaPrDokumenta().negate());
-			}
-			PrometniDokument retVal = null;
-			try {
-				retVal = promDocDao.persistSaKreiranjemStavki(entity);
-				promDocDao.proknjiziDokument(retVal);
-			} catch (Exception e) {
-				throw e;
-
-			}
-
-			return retVal;
-		}
+	public PrometniDokument create(PrometniDokument entity) {
 		return null;
 	}
 	
@@ -137,19 +116,29 @@ public class PromDocService {
 	}
 
 	@PUT
-	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-	public PrometniDokument update(PrometniDokument entity) {
-		if (!entity.getStatusDokumenta().equals(statusDokumenta.proknjizen)) {
-	
+	public PrometniDokument update(PrometniDokument entity) throws Exception {
+		entity = promDocDao.findById(entity.getIdPrometniDokument());
+		if (entity.getStatusDokumenta().equals(statusDokumenta.proknjizen)&& !entity.getPoslovnaGodina().getZakljucenaGodina()) {
+			entity.setIdPrometniDokument(0);
+			Iterator<StavkaPrometnogDokumenta> stavke = entity.getStavke()
+					.iterator();
+			while (stavke.hasNext()) {
+				StavkaPrometnogDokumenta stavkaPrometnogDokumenta = (StavkaPrometnogDokumenta) stavke
+						.next();
+				stavkaPrometnogDokumenta.setKolicinaPrDokumenta(stavkaPrometnogDokumenta.getKolicinaPrDokumenta().negate());
+			}
 			PrometniDokument retVal = null;
 			try {
-				retVal = promDocDao.merge(entity);
+				retVal = promDocDao.persistSaKreiranjemStavki(entity);
+				promDocDao.proknjiziDokument(retVal);
 			} catch (Exception e) {
-				log.error(e.getMessage(), e);
+				throw e;
+
 			}
+
 			return retVal;
 		}
 		return null;
