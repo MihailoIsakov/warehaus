@@ -1,0 +1,69 @@
+<div class="modal-header">
+    <h3 class="modal-title">Prometni dokument - pregled</h3>
+</div>
+<div class="modal-body">
+    <form>
+        <div class="form-group">
+            <label>Broj:</label>
+            <input class="form-control" ng-model="item.broj" readonly></input>
+        </div>
+        <div class="form-group">
+            <label>Status Dokumenta:</label>
+            <input class="form-control" ng-model="item.statusDokumenta" readonly></input>
+        </div>
+        <div class="form-group">
+            <label>Magacin otpremnice:</label>
+            <input class="form-control" ng-model="item.magacin1.nazivMagacina" readonly></input>
+        </div>
+        <div class="form-group">
+            <label>Magacin primke:</label>
+            <input class="form-control" ng-model="item.magacin2.nazivMagacina" readonly></input>
+        </div>
+        <div class="form-group">
+            <label>Poslovna godina:</label>
+            <input class="form-control" ng-model="item.poslovnaGodina.brojGodine" readonly></input>
+        </div>
+        <div class="form-group">
+            <label>Poslovni partner:</label>
+            <input class="form-control" ng-model="item.poslovniPartner.nazivPartnera" readonly></input>
+        </div>
+        <div class="form-group">
+            <label>Datum nastanka:</label>
+            <input class="form-control" ng-model="item.datumNastanka" readonly></input>
+        </div>
+        <div class="form-group">
+            <label>Datum knjiženja:</label>
+            <input class="form-control" ng-model="selectedDoc.datumKnjizenja" readonly></input>
+        </div>
+         <table class="table table-striped">
+    <thead>
+      <tr>
+          <th> <a ng-click = "orderProp = 'artikal.sifraArtikla'; reverseSort = !reverseSort">Sifra</th> 
+          <th> <a ng-click = "orderProp = 'artikal.nazivArtikla'; reverseSort = !reverseSort">Naziv</th> 
+          <th> <a ng-click = "orderProp = 'artikal.pakovanje'; reverseSort = !reverseSort">Pakovanje</th> 
+          <th> <a ng-click = "orderProp = 'artikal.jedinicaMere.nazivJediniceMere'; reverseSort = !reverseSort">Jedinica Mere</th>
+          <th> <a ng-click = "orderProp = 'kolicinaPrDokumenta'; reverseSort = !reverseSort">Kolicina</th> 
+          <th> <a ng-click = "orderProp = 'vrednostStavke'; reverseSort = !reverseSort">Vrednost</th> 
+          <th> <a ng-click = "orderProp = 'cenaStavke'; reverseSort = !reverseSort">Prosecna Cena</th> 
+          
+      </tr>
+    </thead>
+    <tbody>
+      <tr  ng-repeat="stavka in item.stavke  | filter:query | orderBy:orderProp : reverseSort ">
+          <td>{{stavka.artikal.sifraArtikla}}</td>
+          <td>{{stavka.artikal.nazivArtikla}}</td>
+          <td>{{stavka.artikal.pakovanje}}</td>
+          <td>{{stavka.artikal.jedinicaMere.nazivJediniceMere}}</td>
+          <td>{{stavka.kolicinaPrDokumenta}}</td>
+          <td>{{stavka.vrednostStavke}}</td>
+          <td>{{stavka.cenaStavke}}</td>
+      </tr>
+    </tbody>
+    </table>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button class="btn" ng-click="odustani()">OK</button>
+   
+</div>

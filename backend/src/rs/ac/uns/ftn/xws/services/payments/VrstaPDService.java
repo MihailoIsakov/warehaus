@@ -13,30 +13,29 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import model.PoslovniPartner;
+import model.VrstaDokumenta;
 
 import org.apache.log4j.Logger;
 
 import rs.ac.uns.ftn.xws.util.Authenticate;
-import daoBean.PoslovniPartnerDaoLocal;
+import daoBean.VrstaDokumentaDaoLocal;
 
-@Path("/poslovni-partner")
-public class PoslovniPartnerService {
-	private static Logger log = Logger.getLogger(PoslovniPartnerService.class);
+@Path("/vrstaPD")
+public class VrstaPDService {
+
+	private static Logger log = Logger.getLogger(DrzaveService.class);
 	
 	@EJB
-	private PoslovniPartnerDaoLocal partnerDao;
+	private VrstaDokumentaDaoLocal vrstaDao;
 	 
 	@GET 
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public List<PoslovniPartner> findAll() {
-		System.out.println("MAN DOWN!");
-		List<PoslovniPartner> retVal = null;
+    public List<VrstaDokumenta> findAll() {
+		List<VrstaDokumenta> retVal = null;
 		try {
-			retVal = partnerDao.findAll();
+			retVal = vrstaDao.findAll();
 		} catch (Exception e) {
-			System.out.println("/nPUKO/n");
 			log.error(e.getMessage(), e);
 		}
 		return retVal;
@@ -46,11 +45,10 @@ public class PoslovniPartnerService {
 	@Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public PoslovniPartner findById(@PathParam("id") String id) {
-		System.out.println("MAN DOWN 1!");
-		PoslovniPartner retVal = null;
+    public VrstaDokumenta findById(@PathParam("id") String id) {
+		VrstaDokumenta retVal = null;
 		try {
-			retVal = partnerDao.findById(Long.getLong(id));
+			retVal = vrstaDao.findById(Long.parseLong(id));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -61,13 +59,12 @@ public class PoslovniPartnerService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public PoslovniPartner create(PoslovniPartner entity) {
-    	System.out.println("MAN DOWN 2!");
+    public VrstaDokumenta create(VrstaDokumenta entity) {
 		log.info("POST");
-		PoslovniPartner retVal = null;
+		VrstaDokumenta retVal = null;
 		try {
-			System.out.println("entity: "+entity);
-			retVal = partnerDao.persist(entity);
+			
+			retVal = vrstaDao.persist(entity);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -79,12 +76,11 @@ public class PoslovniPartnerService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public PoslovniPartner update(PoslovniPartner entity) {
-    	System.out.println("MAN DOWN 3!");
+    public VrstaDokumenta update(VrstaDokumenta entity) {
     	log.info("PUT");
-    	PoslovniPartner retVal = null;
+    	VrstaDokumenta retVal = null;
         try {
-        	retVal = partnerDao.merge(entity);
+        	retVal = vrstaDao.merge(entity);
         } catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -93,10 +89,11 @@ public class PoslovniPartnerService {
     
     @DELETE 
     @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-	public void delete(@PathParam("id") Integer id) {
+	public void remove(@PathParam("id") Integer id) {
     	try {
-    		partnerDao.remove(new Long(id));
+    		vrstaDao.remove(new Long(id));
         } catch (Exception e) {
         	log.error(e.getMessage(), e);
         }

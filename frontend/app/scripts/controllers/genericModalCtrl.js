@@ -2,7 +2,7 @@
 
  angular.module('modal',[])
 
- .controller('genericModalCtrl', function ($scope, $modalInstance) {
+ .controller('genericModalCtrl', function ($scope, $modal, $modalInstance) {
 
 	$scope.sacuvaj = function() {
 		$modalInstance.close({'item':$scope.item, 

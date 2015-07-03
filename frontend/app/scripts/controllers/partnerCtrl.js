@@ -3,23 +3,21 @@
  angular.module('partner', ['resource.partner',
  	'angular-md5'])
 
- .controller('partnerCtrl', function (Partner, $scope, $routeParams, $modal, $log, $location) {
+ .controller('partnerCtrl', function (Partner, $scope, $routeParams, $modalInstance, $modal, $log, $location) {
 
 $scope.setSelected = function (selectedPartner) {
    $scope.selectedPartner = selectedPartner;
 };
+	$scope.odabir = function() {
+				$modalInstance.close({'partner':$scope.selectedPartner,
+								'action':'odabir'});
+	}
 
 	$scope.partners = Partner.query().$promise.then(function(data) {
 		$scope.partners = data;
 		}, function(error) {
 			console.log(error);
 		}); 
-	
-	$scope.izmena = function() {
-		if($scope.selectedPartner!=null){
- 			$scope.openModal($scope.selectedPartner);
- 		}
-	}
 	
 	$scope.dodavanje = function (partner, size) {
 
@@ -111,6 +109,7 @@ $scope.setSelected = function (selectedPartner) {
 		);
 	}
 
+	
  	$scope.insertOrEditPartner = function (idPartnera) {
  		if(idPartnera){
  			$location.path('/poslovni-partner/'+idPartnera);
