@@ -51,6 +51,7 @@
   'resource.jedinicaMere',
   'resource.radnoMesto',
   'resource.grupaArtikala',
+  'resource.kartica', 
   'resource.praviArtikal'
   ])
  .config(function ($routeProvider) {
