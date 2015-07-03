@@ -81,14 +81,6 @@
     templateUrl: 'views/nivelacija.html',
     controller: 'nivCtrl'
   })
-   .when('/primka/:primkaId', {
-    templateUrl: 'views/primka.html',
-    controller: 'primkaCtrl'
-  })
-   .when('/primka', {
-    templateUrl: 'views/primka.html',
-    controller: 'primkaCtrl'
-  })
    .when('/poslovni-partner', {
     templateUrl: 'views/poslovni-partner.html',
     controller: 'partnerCtrl'
