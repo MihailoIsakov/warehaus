@@ -134,4 +134,10 @@ public class MagacinskaKarticaDao extends
 		}
 		return null;
 	}
+
+	@Override
+	public int findMaxRedniBroj() {
+		Query q = em.createNamedQuery("MagacinskaKartica.findMaxRedniBroj");
+		return (int) q.getSingleResult();
+	}
 }

@@ -19,4 +19,6 @@ public interface MagacinskaKarticaDaoLocal extends GenericDao<MagacinskaKartica,
 	void update(PrometniDokument entity, Magacin magacin, int brMagacina) throws Exception;
 	
 	public MagacinskaKartica findByArtikalId(Integer id);
+	
+	public int findMaxRedniBroj();
 }

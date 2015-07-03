@@ -22,10 +22,11 @@ angular.module('correction', ['resource.artikale', 'resource.magacinska'])
 		$scope.articled.vrUlaza = temp.vrUlaza + (a * temp.prosecnaCena);
 		Kartica.update($scope.articled);
 		var magacin = parseInt($scope.articled.magacin.idMagacin);
-		$location.path('/lager-list/'+magacin);
+        window.location = '#/lager-list/' + magacin;
+        window.location.reload();
 	};
 	
 	$scope.cancel = function () {
-		$location.path('/lager-list/'+magacin);
+        window.location = '#/lager-list/' + magacin;
 	};
 });
