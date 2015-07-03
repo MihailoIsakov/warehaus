@@ -50,7 +50,7 @@ public class PoslovniPartnerService {
 		System.out.println("MAN DOWN 1!");
 		PoslovniPartner retVal = null;
 		try {
-			retVal = partnerDao.findById(Long.getLong(id));
+			retVal = partnerDao.findById(Integer.parseInt(id));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -95,8 +95,11 @@ public class PoslovniPartnerService {
     @Path("{id}")
 	@Authenticate
 	public void delete(@PathParam("id") Integer id) {
+    	System.out.println("/n/nDELETE/n/n");
+    	PoslovniPartner p = partnerDao.findById(id);
+    	
     	try {
-    		partnerDao.remove(new Long(id));
+    		partnerDao.remove(p);
         } catch (Exception e) {
         	log.error(e.getMessage(), e);
         }

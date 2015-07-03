@@ -8,6 +8,6 @@ import rs.ac.uns.ftn.xws.sessionbeans.common.GenericDaoBean;
 
 @Stateless
 @Local(PoslovniPartnerDaoLocal.class)
-public class PoslovniPartnerDao extends GenericDaoBean<PoslovniPartner, Long> implements PoslovniPartnerDaoLocal{
+public class PoslovniPartnerDao extends GenericDaoBean<PoslovniPartner, Integer> implements PoslovniPartnerDaoLocal{
 
 }

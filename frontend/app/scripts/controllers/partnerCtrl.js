@@ -3,16 +3,16 @@
  angular.module('partner', ['resource.partner',
  	'angular-md5'])
 
- .controller('partnerCtrl', function (Partner, $scope, $routeParams, $modalInstance, $modal, $log, $location) {
+ .controller('partnerCtrl', function (Partner, $scope, $routeParams, $modal, $log, $location, $route) {
 
 $scope.setSelected = function (selectedPartner) {
    $scope.selectedPartner = selectedPartner;
 };
-	$scope.odabir = function() {
+/*	$scope.odabir = function() {
 				$modalInstance.close({'partner':$scope.selectedPartner,
 								'action':'odabir'});
 	}
-
+*/
 	$scope.partners = Partner.query().$promise.then(function(data) {
 		$scope.partners = data;
 		}, function(error) {
@@ -98,7 +98,7 @@ $scope.setSelected = function (selectedPartner) {
 	
 	$scope.brisanje = function () {
 
-	Partner.delete({partnerId:$scope.selectedPartner.idPoslovniPartner},function () {
+	Partner.delete({'partnerId':$scope.selectedPartner.idPoslovniPartner},function () {
 			$route.reload();
 		},
             function (response) {
