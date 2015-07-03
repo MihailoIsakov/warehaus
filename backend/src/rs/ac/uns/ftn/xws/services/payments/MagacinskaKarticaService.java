@@ -47,7 +47,7 @@ public class MagacinskaKarticaService {
     public MagacinskaKartica findById(@PathParam("id") String id) {
 		MagacinskaKartica retVal = null;
 		try {
-			retVal = magacinskaKarticaDao.findById(Long.getLong(id));
+			retVal = magacinskaKarticaDao.findById(Integer.parseInt(id));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}

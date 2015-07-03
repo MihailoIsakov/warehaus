@@ -23,7 +23,7 @@ import rs.ac.uns.ftn.xws.sessionbeans.common.GenericDaoBean;
 @Stateless
 @Local(MagacinskaKarticaDaoLocal.class)
 public class MagacinskaKarticaDao extends
-		GenericDaoBean<MagacinskaKartica, Long> implements
+		GenericDaoBean<MagacinskaKartica, Integer> implements
 		MagacinskaKarticaDaoLocal {
 	private static Logger log = Logger.getLogger(Invoice.class);
 
@@ -122,5 +122,16 @@ public class MagacinskaKarticaDao extends
 		} catch (Exception e) {
 			throw e;
 		}
+	}
+
+	@Override
+	public MagacinskaKartica findByArtikalId(Integer id) {
+		List<MagacinskaKartica> m = findAll();
+		for(MagacinskaKartica k: m){
+			if(k.getArtikal().getIdArtikal() == id){
+				return k;
+			}
+		}
+		return null;
 	}
 }

@@ -4,9 +4,13 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
-
-import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
@@ -15,7 +19,10 @@ import java.util.Set;
  */
 @Entity
 @Table(name="vrsta_dokumenta")
-@NamedQuery(name="VrstaDokumenta.findAll", query="SELECT v FROM VrstaDokumenta v")
+@NamedQueries({
+	@NamedQuery(name="VrstaDokumenta.findAll", query="SELECT v FROM VrstaDokumenta v"),
+	@NamedQuery(name="VrstaDokumenta.findByName", query="SELECT v FROM VrstaDokumenta v WHERE v.nazivVrste like :name")
+})
 public class VrstaDokumenta implements Serializable {
 	private static final long serialVersionUID = 1L;
 

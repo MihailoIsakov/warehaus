@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.xws.services.payments;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,22 +14,21 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
+import model.MagacinskaKartica;
 import model.PrometniDokument;
-import model.StavkaPrometnogDokumenta;
 import model.PrometniDokument.statusDokumenta;
+import model.StavkaPrometnogDokumenta;
 import model.VrstaDokumenta;
 
 import org.apache.log4j.Logger;
 
 import rs.ac.uns.ftn.xws.entities.payments.Invoice;
 import rs.ac.uns.ftn.xws.util.Authenticate;
-
-import com.sun.xml.internal.stream.Entity;
-
+import daoBean.MagacinskaKarticaDaoLocal;
 import daoBean.PrometniDokumentDaoLocal;
 import daoBean.StavkaPrometnogDokumentaDaoLocal;
+import daoBean.VrstaDokumentaDaoLocal;
 
 @Path("/prometni-dokumenti")
 public class PromDocService {
@@ -40,6 +40,10 @@ public class PromDocService {
 
 	@EJB
 	private StavkaPrometnogDokumentaDaoLocal stavkaDao;
+	@EJB
+	private MagacinskaKarticaDaoLocal magCardDao;
+	@EJB
+	private VrstaDokumentaDaoLocal vrstaDao;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -142,6 +146,54 @@ public class PromDocService {
 			return retVal;
 		}
 		return null;
+	}
+	
+	public boolean updateStanjaMagacina(PrometniDokument p){
+		VrstaDokumenta primka = vrstaDao.findByName("primka");
+		if(p.getVrstaDokumenta().getIdVrstaDokumenta() == primka.getIdVrstaDokumenta()){
+			for(StavkaPrometnogDokumenta sp: p.getStavke()){
+				MagacinskaKartica m = magCardDao.findByArtikalId(sp.getArtikal().getIdArtikal());
+				if(m == null)
+					return false;
+				BigDecimal ukupnaVr = m.getPocetnoStanjeVr().add(m.getVrUlaza()).subtract(m.getVrIzlaza());
+				BigDecimal ukupnaKol = m.getPocetnoStanjeKol().add(m.getKolUlaza()).subtract(m.getKolIzlaza());
+				BigDecimal cena = ukupnaVr.add(sp.getCenaStavke().multiply(sp.getKolicinaPrDokumenta()));
+				cena = cena.divide(sp.getKolicinaPrDokumenta().add(ukupnaKol));
+				m.setProsecnaCena(cena);
+				m.setKolUlaza(m.getKolUlaza().add(sp.getKolicinaPrDokumenta()));
+				m.setVrUlaza(m.getVrUlaza().add(sp.getVrednostStavke()));
+				try {
+					magCardDao.merge(m);
+				} catch (NoSuchFieldException e) {
+					e.printStackTrace();
+					return false;
+				}
+			}
+			return true;
+		}
+		VrstaDokumenta ot = vrstaDao.findByName("otpremnica");
+		if(p.getVrstaDokumenta().getIdVrstaDokumenta() == ot.getIdVrstaDokumenta()){
+			for(StavkaPrometnogDokumenta sp: p.getStavke()){
+				MagacinskaKartica m = magCardDao.findByArtikalId(sp.getArtikal().getIdArtikal());
+				if(m == null)
+					return false;
+				BigDecimal ukupnaVr = m.getPocetnoStanjeVr().add(m.getVrUlaza()).subtract(m.getVrIzlaza());
+				BigDecimal ukupnaKol = m.getPocetnoStanjeKol().add(m.getKolUlaza()).subtract(m.getKolIzlaza());
+				BigDecimal cena = ukupnaVr.add(sp.getCenaStavke().multiply(sp.getKolicinaPrDokumenta()));
+				cena = cena.divide(sp.getKolicinaPrDokumenta().add(ukupnaKol));
+				m.setProsecnaCena(cena);
+				m.setKolIzlaza(m.getKolIzlaza().add(sp.getKolicinaPrDokumenta()));
+				m.setVrIzlaza(m.getVrIzlaza().add(sp.getVrednostStavke()));
+				try {
+					magCardDao.merge(m);
+				} catch (NoSuchFieldException e) {
+					e.printStackTrace();
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
 	}
 
 }
