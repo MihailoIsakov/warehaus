@@ -1,19 +1,15 @@
 package daoBean;
 
+import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 
-import org.apache.log4j.Logger;
-
-import model.AnalitikaMagacinskeKartice;
-import model.AnalitikaMagacinskeKartice.smer;
-import model.MagacinskaKartica;
 import model.PrometniDokument;
 import model.StavkaPrometnogDokumenta;
-import rs.ac.uns.ftn.xws.entities.payments.Invoice;
 import rs.ac.uns.ftn.xws.sessionbeans.common.GenericDaoBean;
 
 @Stateless
@@ -21,11 +17,12 @@ import rs.ac.uns.ftn.xws.sessionbeans.common.GenericDaoBean;
 public class PrometniDokumentDao extends
 		GenericDaoBean<PrometniDokument, Integer> implements
 		PrometniDokumentDaoLocal {
-	private static Logger log = Logger.getLogger(Invoice.class);
-
 
 	@EJB
 	StavkaPrometnogDokumentaDaoLocal spdDao;
+	
+	@EJB
+	PrometniDokumentDaoLocal dokumentDao;
 
 	@EJB
 	MagacinskaKarticaDaoLocal mkDao;
@@ -51,6 +48,35 @@ public class PrometniDokumentDao extends
 		}
 		return retVal;
 	}
+	
+	@Override
+	public PrometniDokument persistSaKreiranjemStavkiDodavanjeBroja(PrometniDokument entity) throws NoSuchFieldException {
+		PrometniDokument retVal = null;
+		List<PrometniDokument> list = dokumentDao.findAll();
+		int maxBr = 0;
+		for (PrometniDokument pd : list) {
+			if (pd.getBroj()>maxBr) {
+				maxBr = pd.getBroj();
+			}
+		}
+		entity.setBroj(++maxBr);
+		try {
+
+			Iterator<StavkaPrometnogDokumenta> stavke = entity.getStavke()
+					.iterator();
+			while (stavke.hasNext()) {
+				StavkaPrometnogDokumenta stavkaPrometnogDokumenta = (StavkaPrometnogDokumenta) stavke
+						.next();
+				stavkaPrometnogDokumenta.setPrometniDokument(entity);
+				spdDao.persist(stavkaPrometnogDokumenta);
+			}
+			retVal = persist(entity);
+		} catch (NoSuchFieldException e) {
+			throw e;
+		}
+		return retVal;
+	}
+	
 	@Override
 	public PrometniDokument proknjiziDokument(PrometniDokument entity) throws Exception {
 		// reci da je proknjizen
@@ -73,5 +99,31 @@ public class PrometniDokumentDao extends
 		}
 		return null;
 	}
+
+	@Override
+	public boolean proveriPrometniDokument(PrometniDokument entity) {
+		if (entity.getStavke().size()<=0) {
+			return false;
+		}
+		if (entity.getPoslovnaGodina().getZakljucenaGodina()==1) {
+			return false;
+		} 
+		Date now = new Date();
+		if (entity.getDatumNastanka().after(now)) {
+			return false;
+		}
+		if (entity.getVrstaDokumenta().getIdVrstaDokumenta()!=1) {
+			Iterator<StavkaPrometnogDokumenta> stavke = entity.getStavke().iterator();
+			while (stavke.hasNext()) {
+				StavkaPrometnogDokumenta stavkaPrometnogDokumenta = (StavkaPrometnogDokumenta) stavke.next();
+				//Porediti sa sadrzajem magacina
+				//magacin-kartica-artikal-kolicina
+			//	if (stavkaPrometnogDokumenta.getKolicinaPrDokumenta().compareTo())
+				//spdDao.persist(stavkaPrometnogDokumenta);
+			}
+		}
+		return false;
+	}
+	
 
 }

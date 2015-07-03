@@ -19,17 +19,18 @@ import org.apache.log4j.Logger;
 
 import rs.ac.uns.ftn.xws.util.Authenticate;
 import daoBean.MagacinDao;
+import daoBean.MagacinDaoLocal;
 
 @Path("/magacin")
 public class MagacinService {
 private static Logger log = Logger.getLogger(MagacinService.class);
 	
 	@EJB
-	private MagacinDao magacinDao;
+	private MagacinDaoLocal magacinDao;
 	 
 	@GET 
     @Produces(MediaType.APPLICATION_JSON)
-//	@Authenticate
+	@Authenticate
     public List<Magacin> findAll() {
 		List<Magacin> retVal = null;
 		try {

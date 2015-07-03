@@ -27,6 +27,7 @@
   'stonPrim',
   'user',
   'partner',
+  'promDocDetail',
   'resource.user',
   'resource.promDoc',
   'resource.artikale',
@@ -44,6 +45,7 @@
   'resource.preduzeca',
   'resource.stavkaPD',
   'stavkaPD',
+  'resource.vrstaPD',
   'resource.zaposleni',
   'resource.magacinska',
   'resource.magacinskaKartica',
@@ -79,14 +81,6 @@
    .when('/nivelacija/:karticaId', {
     templateUrl: 'views/nivelacija.html',
     controller: 'nivCtrl'
-  })
-   .when('/primka/:primkaId', {
-    templateUrl: 'views/primka.html',
-    controller: 'primkaCtrl'
-  })
-   .when('/primka', {
-    templateUrl: 'views/primka.html',
-    controller: 'primkaCtrl'
   })
    .when('/poslovni-partner', {
     templateUrl: 'views/poslovni-partner.html',

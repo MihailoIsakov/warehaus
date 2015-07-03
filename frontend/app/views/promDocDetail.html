@@ -1,0 +1,86 @@
+<div class="modal-header">
+    <h3 class="modal-title">Kreiranje prometnog dokumenta</h3>
+</div>
+<div class="modal-body">
+    <form>
+	    <div class="form-group">
+            <label>Vrsta prometnog dokumenta:</label>
+            <select ng-model="item.vrstaDokumenta" ng-options="opt as opt.nazivVrste for opt in vrste"></select>
+        </div>
+	  
+        <div class="form-group">
+            <label>Status dokumenta:</label>
+            <input class="form-control" ng-model="selectedDoc.statusDokumenta"></input>
+        </div>
+		<div class="form-group">
+            <label>Magacin primke:</label>
+            <select ng-model="item.magacin1" ng-options="opt as opt.nazivMagacina for opt in magacini"></select>
+        </div>
+		<div class="form-group">
+            <label>Magacin otpremnice:</label>
+            <select ng-model="item.magacin2" ng-options="opt as opt.nazivMagacina for opt in magacini"></select>
+        </div>
+        <div class="form-group">
+            <label>Poslovna godina:</label>
+            <select ng-model="item.poslovnaGodina" ng-options="opt as opt.brojGodine for opt in poslovneGodine"></select>
+        </div>
+        <div class="form-group">
+            <label>Poslovni partner:</label>
+            <input class="form-control" ng-model="item.poslovniPartner.nazivPartnera"></input>
+			<button class="btn" ng-click="odabirPoslovnogPartnera()">...</button>
+        </div>
+		<div class="form-group">
+            <label>Datum knjiženja:</label>
+			<div class="input-group">
+				<input type="text" class="form-control" datepicker-popup="dd.MM.yyyy." ng-model="primka.datumKnjizenja" is-open="datumKnjizenjaOpened" close-text="Close" />
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default" ng-click="openDatumKnjizenjaDatepicker($event, 'datumKnjizenjaOpened')"><i class="glyphicon glyphicon-calendar"></i></button>
+				</span>
+			</div>
+        </div>
+		<div class="form-group">
+            <label>Datum nastanka:</label>
+			<div class="input-group">
+				<input type="text" class="form-control" datepicker-popup="dd.MM.yyyy." ng-model="primka.datumNastanka" is-open="datumNastankaOpened" close-text="Close" />
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default" ng-click="openDatumNastankaDatepicker($event, 'datumNastankaOpened')"><i class="glyphicon glyphicon-calendar"></i></button>
+				</span>
+			</div>
+        </div>
+         <table class="table table-striped">
+    <thead>
+      <tr>
+          <th> <a ng-click = "orderProp = 'artikal.sifraArtikla'; reverseSort = !reverseSort">Sifra</th> 
+          <th> <a ng-click = "orderProp = 'artikal.nazivArtikla'; reverseSort = !reverseSort">Naziv</th> 
+          <th> <a ng-click = "orderProp = 'artikal.pakovanje'; reverseSort = !reverseSort">Pakovanje</th> 
+          <th> <a ng-click = "orderProp = 'artikal.jedinicaMere.nazivJediniceMere'; reverseSort = !reverseSort">Jedinica Mere</th>
+          <th> <a ng-click = "orderProp = 'kolicinaPrDokumenta'; reverseSort = !reverseSort">Kolicina</th> 
+          <th> <a ng-click = "orderProp = 'vrednostStavke'; reverseSort = !reverseSort">Vrednost</th> 
+          <th> <a ng-click = "orderProp = 'cenaStavke'; reverseSort = !reverseSort">Prosecna Cena</th> 
+          
+      </tr>
+    </thead>
+    <tbody>
+      <tr  ng-repeat="article in selectedDoc.stavke  | filter:query | orderBy:orderProp : reverseSort ">
+          <td>{{article.artikal.sifraArtikla}}</td>
+          <td>{{article.artikal.nazivArtikla}}</td>
+          <td>{{article.artikal.pakovanje}}</td>
+          <td>{{article.artikal.jedinicaMere.nazivJediniceMere}}</td>
+          <td>{{article.kolicinaPrDokumenta}}</td>
+          <td>{{article.vrednostStavke}}</td>
+          <td>{{article.cenaStavke}}</td>
+      </tr>
+    </tbody>
+    </table>
+    </form>
+	</hr>
+	<button class="btn" ng-click="dodajStavkuPD()">Dodaj stavku</button>
+    <button class="btn" ng-click="obrisiStavkuPD()">Obrisi stavku</button>
+	<button class="btn" ng-click="izmeniStavkuPD()">Izmeni stavku</button>
+</div>
+
+<div class="modal-footer">
+    <button class="btn" ng-click="sacuvaj()">Sacuvaj</button>
+    <button class="btn" ng-click="odustani()">Odustani</button>
+   
+</div>

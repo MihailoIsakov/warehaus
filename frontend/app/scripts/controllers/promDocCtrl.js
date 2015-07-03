@@ -3,8 +3,8 @@
  angular.module('promDoc', ['resource.promDoc',
  	'angular-md5'])
 
- .controller('promDocCtrl', function (Documents, $scope, $routeParams, $modal, $log, $location, InvoiceItem ) {
-
+ .controller('promDocCtrl', function (Documents, $scope, $routeParams, $modal, $log, $location ) {
+	
 if($routeParams.invoiceId!='new'){
 		//preuzimanje parametra iz URL
 		var invoiceId = $routeParams.invoiceId;
@@ -24,8 +24,7 @@ if($routeParams.invoiceId!='new'){
 
 
 	//modalni dijalog za stavku fakutre
-	$scope.openModal = function (invoiceItem, size) {
-
+	$scope.storniranje = function (invoiceItem, size) {
 
 		var modalInstance = $modal.open({
 			templateUrl: 'views/storniraj-primku.html',
@@ -63,6 +62,63 @@ if($routeParams.invoiceId!='new'){
 		});
 	};
 
+		//modalni dijalog za stavku fakutre
+	$scope.dodavanje = function (size) {
+	
+		$scope.item = new Documents();
+		var modalInstance = $modal.open({
+			templateUrl: 'views/promDocDetail.html',
+			controller: 'promDocDetailCtrl',
+			size: size,
+			scope: $scope,
+			resolve: {
+				item: function () {
+					return $scope.item;
+				}
+			}
+		});
+		modalInstance.result.then(function (data) {
+			var item = data.item;
+			
+			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
+			if( data.action==='save'){
+				item.$create(function () {
+					$route.reload();
+			},
+            function (response) {
+                if (response.status === 500) {
+                    $scope.greska = "greska";
+                }
+               
+            }
+		);
+				$location.path('/prometni-dokumenti');
+					
+			}
+			//ako stavka treba da se obrise izbaci se iz niza
+			
+		}, function () {
+			$log.info('Modal dismissed at: ' + new Date());
+		});
+	};
+	
+	
+			//modalni dijalog za stavku fakutre
+	$scope.pregled = function (size) {
+	
+		$scope.item = $scope.selectedDoc;
+		var modalInstance = $modal.open({
+			templateUrl: 'views/pregledPD.html',
+			controller: 'promDocDetailCtrl',
+			size: size,
+			scope: $scope,
+			resolve: {
+				item: function () {
+					return $scope.item;
+				}
+			}
+		});
+	};
 	
 
 $scope.setSelected = function (selectedDoc) {

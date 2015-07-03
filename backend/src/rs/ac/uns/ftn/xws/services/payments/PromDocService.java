@@ -28,6 +28,7 @@ import rs.ac.uns.ftn.xws.util.Authenticate;
 import com.sun.xml.internal.stream.Entity;
 
 import daoBean.PrometniDokumentDaoLocal;
+import daoBean.StavkaPrometnogDokumentaDaoLocal;
 
 @Path("/prometni-dokumenti")
 public class PromDocService {
@@ -37,12 +38,14 @@ public class PromDocService {
 	@EJB
 	private PrometniDokumentDaoLocal promDocDao;
 
+	@EJB
+	private StavkaPrometnogDokumentaDaoLocal stavkaDao;
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
 	public List<PrometniDokument> findByAll() {
 		List<PrometniDokument> retVal = new ArrayList<PrometniDokument>();
-		// Magacin a = new Magacin();
 
 		try {
 			log.error("usao");
@@ -104,6 +107,34 @@ public class PromDocService {
 		}
 		return null;
 	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Authenticate
+	public PrometniDokument createNew(PrometniDokument entity) throws Exception {
+		if (entity.getStatusDokumenta().equals(statusDokumenta.proknjizen)) {
+			Iterator<StavkaPrometnogDokumenta> stavke = entity.getStavke()
+					.iterator();
+			while (stavke.hasNext()) {
+				StavkaPrometnogDokumenta stavkaPrometnogDokumenta = (StavkaPrometnogDokumenta) stavke
+						.next();
+				stavkaDao.persist(stavkaPrometnogDokumenta);
+				
+			}
+			PrometniDokument retVal = null;
+			try {
+				retVal = promDocDao.persistSaKreiranjemStavki(entity);
+				promDocDao.proknjiziDokument(retVal);
+			} catch (Exception e) {
+				throw e;
+
+			}
+
+			return retVal;
+		}
+		return null;
+	}
 
 	@PUT
 	@Path("{id}")
@@ -111,15 +142,17 @@ public class PromDocService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
 	public PrometniDokument update(PrometniDokument entity) {
-		log.info("PUT");
-
-		PrometniDokument retVal = null;
-		try {
-			retVal = promDocDao.merge(entity);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
+		if (!entity.getStatusDokumenta().equals(statusDokumenta.proknjizen)) {
+	
+			PrometniDokument retVal = null;
+			try {
+				retVal = promDocDao.merge(entity);
+			} catch (Exception e) {
+				log.error(e.getMessage(), e);
+			}
+			return retVal;
 		}
-		return retVal;
+		return null;
 	}
 
 }
