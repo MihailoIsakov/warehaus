@@ -1,0 +1,31 @@
+
+<div class="modal-header">
+    <h3 class="modal-title">Magacin</h3>
+</div>
+<div class="modal-body">
+  <table class="table table-striped table-bordered table-condensed table-hover">
+    <thead>
+      <tr>
+
+          <th> <a ng-click = "orderProp = 'sifraMagacina'; reverseSort = !reverseSort">Šifra</th> 
+          <th> <a ng-click = "orderProp = 'nazivMagacina'; reverseSort = !reverseSort">Naziv</th> 
+          <th> <a ng-click = "orderProp = 'adresaMagacina'; reverseSort = !reverseSort">Adresa</th> 
+          <th> <a ng-click = "orderProp = 'mesto.nazivMesta'; reverseSort = !reverseSort">Mesto</th>
+            
+      </tr>
+    </thead>
+    <tbody>
+      <tr   ng-click="setSelected(article)" ng-class="{selected: article === selectedMagacin}" ng-repeat="article in magaciniDoc  | filter:query | orderBy:orderProp : reverseSort ">
+         <td>{{article.sifraMagacina}}</td>
+        <td>{{article.nazivMagacina}}</td>
+        <td>{{article.adresaMagacina}}</td>
+        <td>{{article.mesto.nazivMesta}}</td>
+      </tr>
+    </tbody>
+  <div class="form-group">
+      <button class="btn btn-default" ng-click="add()">Dodaj</button>
+       <button class="btn btn-default" ng-click="delete()">Obriši</button>
+        <button class="btn btn-default" ng-click="update()">Izmeni</button>
+        <button class="btn btn-default" ng-click="selektuj()">Selektuj</button>
+    </div>
+</div>

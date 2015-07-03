@@ -38,6 +38,9 @@
   'drzave',
   'resource.mesta',
   'mesta',
+  'magacin',
+  'magacini',
+  'magaciniModal',
   'modal',
   'resource.poslGodina',
   'poslGodina',
@@ -125,6 +128,10 @@
   .when('/preduzeca', {
     templateUrl: 'views/preduzeca.html',
     controller: 'preduzecaCtrl'
+  })
+   .when('/magacini', {
+    templateUrl: 'views/magacini.html',
+    controller: 'magaciniCtrl'
   })
   .when('/login', {
     templateUrl: 'views/login.html',

@@ -1,4 +1,4 @@
-<div class="modal-header">
+﻿<div class="modal-header">
     <h3 class="modal-title">Kreiranje prometnog dokumenta</h3>
 </div>
 <div class="modal-body">
@@ -27,21 +27,14 @@
         <div class="form-group">
             <label>Poslovni partner:</label>
             <input class="form-control" ng-model="item.poslovniPartner.nazivPartnera"></input>
-			<button class="btn" ng-click="odabirPoslovnogPartnera()">...</button>
-        </div>
-		<div class="form-group">
-            <label>Datum knji�enja:</label>
-			<div class="input-group">
-				<input type="text" class="form-control" datepicker-popup="dd.MM.yyyy." ng-model="primka.datumKnjizenja" is-open="datumKnjizenjaOpened" close-text="Close" />
-				<span class="input-group-btn">
-					<button type="button" class="btn btn-default" ng-click="openDatumKnjizenjaDatepicker($event, 'datumKnjizenjaOpened')"><i class="glyphicon glyphicon-calendar"></i></button>
-				</span>
-			</div>
+			<span class="input-group-btn">
+				<button type="button" class="btn btn-default" ng-click="odabirPoslovnogPartnera()"><i>...</i></button>
+			</span>
         </div>
 		<div class="form-group">
             <label>Datum nastanka:</label>
 			<div class="input-group">
-				<input type="text" class="form-control" datepicker-popup="dd.MM.yyyy." ng-model="primka.datumNastanka" is-open="datumNastankaOpened" close-text="Close" />
+				<input type="text" class="form-control" datepicker-popup="dd.MM.yyyy." ng-model="primka.datumNastanka" is-open="datumNastankaOpened" close-text="Zatvori" />
 				<span class="input-group-btn">
 					<button type="button" class="btn btn-default" ng-click="openDatumNastankaDatepicker($event, 'datumNastankaOpened')"><i class="glyphicon glyphicon-calendar"></i></button>
 				</span>
@@ -50,13 +43,13 @@
          <table class="table table-striped">
     <thead>
       <tr>
-          <th> <a ng-click = "orderProp = 'artikal.sifraArtikla'; reverseSort = !reverseSort">Sifra</th> 
+          <th> <a ng-click = "orderProp = 'artikal.sifraArtikla'; reverseSort = !reverseSort">Šifra</th> 
           <th> <a ng-click = "orderProp = 'artikal.nazivArtikla'; reverseSort = !reverseSort">Naziv</th> 
           <th> <a ng-click = "orderProp = 'artikal.pakovanje'; reverseSort = !reverseSort">Pakovanje</th> 
           <th> <a ng-click = "orderProp = 'artikal.jedinicaMere.nazivJediniceMere'; reverseSort = !reverseSort">Jedinica Mere</th>
-          <th> <a ng-click = "orderProp = 'kolicinaPrDokumenta'; reverseSort = !reverseSort">Kolicina</th> 
+          <th> <a ng-click = "orderProp = 'kolicinaPrDokumenta'; reverseSort = !reverseSort">Količina</th> 
           <th> <a ng-click = "orderProp = 'vrednostStavke'; reverseSort = !reverseSort">Vrednost</th> 
-          <th> <a ng-click = "orderProp = 'cenaStavke'; reverseSort = !reverseSort">Prosecna Cena</th> 
+          <th> <a ng-click = "orderProp = 'cenaStavke'; reverseSort = !reverseSort">Prosečna Cena</th> 
           
       </tr>
     </thead>
@@ -75,12 +68,12 @@
     </form>
 	</hr>
 	<button class="btn" ng-click="dodajStavkuPD()">Dodaj stavku</button>
-    <button class="btn" ng-click="obrisiStavkuPD()">Obrisi stavku</button>
+    <button class="btn" ng-click="obrisiStavkuPD()">Obriši stavku</button>
 	<button class="btn" ng-click="izmeniStavkuPD()">Izmeni stavku</button>
 </div>
 
 <div class="modal-footer">
-    <button class="btn" ng-click="sacuvaj()">Sacuvaj</button>
+    <button class="btn" ng-click="sacuvaj()">Sačuvaj</button>
     <button class="btn" ng-click="odustani()">Odustani</button>
    
 </div>

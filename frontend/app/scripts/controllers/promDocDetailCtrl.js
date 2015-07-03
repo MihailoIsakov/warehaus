@@ -12,6 +12,9 @@
 	 //magacini za drop down
 	Magacin.query().$promise.then(function (data) {
 			$scope.magacini = data;
+			var magNull = new Magacin();
+			magNull.nazivMagacina = "";
+			$scope.magacini.push(magNull);
 	});
 	
 	//poslovneGodine za drop down
@@ -47,8 +50,8 @@
 	$scope.odabirPoslovnogPartnera = function(size) {
 		
 		var modalInstance = $modal.open({
-			templateUrl: 'views/poslovni-partner.html',
-			controller: 'partnerCtrl',
+			templateUrl: 'views/poslovniPartnerModal.html',
+			controller: 'partnerModalCtrl',
 			scope: $scope,
 			resolve: {
 				partner: function () {
