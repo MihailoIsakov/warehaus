@@ -1,0 +1,28 @@
+<div class="col-sm-9">
+    
+   <h3><i class="glyphicon glyphicon-dashboard"></i>Sektor</h3>  
+   <hr>
+
+  <table class="table table-striped table-bordered table-condensed table-hover">
+    <thead>
+      <tr>
+          <th> <a ng-click = "orderProp = 'sifraSektora'; reverseSort = !reverseSort">Šifra</th> 
+          <th> <a ng-click = "orderProp = 'nazivSektora'; reverseSort = !reverseSort">Naziv</th> 
+          <th> <a ng-click = "orderProp = 'preduzece.nazivPreduzeca'; reverseSort = !reverseSort">Preduzeće</th> 
+              
+      </tr>
+    </thead>
+    <tbody>
+      <tr   ng-click="setSelected(article)" ng-class="{selected: article === selectedSektor}" ng-repeat="article in sektorDoc  | filter:query | orderBy:orderProp : reverseSort ">
+          <td>{{article.sifraSektora}}</td>
+           <td>{{article.nazivSektora}}</td>
+          <td>{{article.preduzece.nazivPreduzeca}}</td>
+     
+      </tr>
+    </tbody>
+  <div class="form-group">
+      <button class="btn btn-default" ng-click="add()">Dodaj</button>
+       <button class="btn btn-default" ng-click="delete()">Obriši</button>
+        <button class="btn btn-default" ng-click="update()">Izmeni</button>
+    </div>
+</div>

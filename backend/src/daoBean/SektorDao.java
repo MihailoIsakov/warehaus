@@ -8,6 +8,6 @@ import rs.ac.uns.ftn.xws.sessionbeans.common.GenericDaoBean;
 
 @Stateless
 @Local(SektorDaoLocal.class)
-public class SektorDao extends GenericDaoBean<Sektor, Long> implements SektorDaoLocal{
+public class SektorDao extends GenericDaoBean<Sektor, Integer> implements SektorDaoLocal{
 
 }

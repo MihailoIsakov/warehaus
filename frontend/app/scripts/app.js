@@ -59,13 +59,21 @@
   'resource.magacinskaKartica',
   'resource.magacin',
   'resource.jedinicaMere',
-  'resource.radnoMesto',
+
   'resource.grupaArtikala',
   'resource.kartica', 
   'resource.praviArtikal',
 
   'preduzecaM',
-  'mestaM'
+  'mestaM',
+  'sektor',
+  'resource.sektor',
+  'sektorNew',
+  'resource.radnoMesto',
+  'radnoMesto',
+   'zaposleni',
+   'zaposleniNew',
+   'radnoMestoM'
   ])
  .config(function ($routeProvider) {
   $routeProvider
@@ -117,9 +125,21 @@
     templateUrl: 'views/drzave.html',
     controller: 'drzaveCtrl'
   })
+            .when('/radno-mesto', {
+    templateUrl: 'views/radno-mesto.html',
+    controller: 'radnoMestoCtrl'
+  })
     .when('/mesta', {
     templateUrl: 'views/mesta.html',
     controller: 'mestaCtrl'
+  }) 
+     .when('/sektor', {
+    templateUrl: 'views/sektor.html',
+    controller: 'sektorCtrl'
+  }) 
+          .when('/zaposleni', {
+    templateUrl: 'views/zaposleni.html',
+    controller: 'zaposleniCtrl'
   }) 
     .when('/poslovna-godina', {
     templateUrl: 'views/poslovna-godina.html',

@@ -13,27 +13,33 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import model.Zaposleni;
+import model.Sektor;
 
 import org.apache.log4j.Logger;
 
 import rs.ac.uns.ftn.xws.util.Authenticate;
-import daoBean.ZaposleniDaoLocal;
+import daoBean.MagacinskaKarticaDaoLocal;
+import daoBean.PrometniDokumentDaoLocal;
+import daoBean.SektorDaoLocal;
 
-@Path("/zaposleni")
-public class ZaposleniService {
-	private static Logger log = Logger.getLogger(ZaposleniService.class);
+@Path("/sektor")
+public class SektorService {
+	private static Logger log = Logger.getLogger(SektorService.class);
 	
 	@EJB
-	private ZaposleniDaoLocal zaposleniDao;
+	private SektorDaoLocal sektorDao;
+	@EJB
+	private PrometniDokumentDaoLocal promDocDao;
+	@EJB
+	private MagacinskaKarticaDaoLocal magCardDao;
 	 
 	@GET 
     @Produces(MediaType.APPLICATION_JSON)
 //	@Authenticate
-    public List<Zaposleni> findAll() {
-		List<Zaposleni> retVal = null;
+    public List<Sektor> findAll() {
+		List<Sektor> retVal = null;
 		try {
-			retVal = zaposleniDao.findAll();
+			retVal = sektorDao.findAll();
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -44,10 +50,10 @@ public class ZaposleniService {
 	@Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public Zaposleni findById(@PathParam("id") String id) {
-		Zaposleni retVal = null;
+    public Sektor findById(@PathParam("id") String id) {
+		Sektor retVal = null;
 		try {
-			retVal = zaposleniDao.findById(Integer.parseInt(id));
+			retVal = sektorDao.findById(Integer.parseInt(id));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -58,12 +64,12 @@ public class ZaposleniService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public Zaposleni create(Zaposleni entity) {
+    public Sektor create(Sektor entity) {
 		
-		Zaposleni retVal = null;
+		Sektor retVal = null;
 		try {
 			
-			retVal = zaposleniDao.persist(entity);
+			retVal = sektorDao.persist(entity);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -75,24 +81,28 @@ public class ZaposleniService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public Zaposleni update(Zaposleni entity) {
+    public Sektor update(Sektor entity) {
     	log.info("PUT");
-    	Zaposleni retVal = null;
+    	
+    	Sektor retVal = null;
         try {
-        	retVal = zaposleniDao.merge(entity);
+        	retVal = sektorDao.merge(entity);
         } catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
 		return retVal;
     }
     
-    @DELETE 
+    
+
+	@DELETE 
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
 	public void removeItem(@PathParam("id") Integer id) {
+    	Sektor p = sektorDao.findById(id);
     	try {
-    		zaposleniDao.remove(id);
+    		sektorDao.remove(p);
         } catch (Exception e) {
         	log.error(e.getMessage(), e);
         }

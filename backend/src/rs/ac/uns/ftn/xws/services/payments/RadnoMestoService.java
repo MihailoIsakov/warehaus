@@ -14,17 +14,19 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import model.RadnoMesto;
+import model.RadnoMesto;
 
 import org.apache.log4j.Logger;
 
 import rs.ac.uns.ftn.xws.util.Authenticate;
-import daoBean.RadnoMestoDao;
+import daoBean.RadnoMestoDaoLocal;
 
 @Path("/radno-mesto")
 public class RadnoMestoService {
 	private static Logger log = Logger.getLogger(RadnoMestoService.class);
+	
 	@EJB
-	private  RadnoMestoDao radnoMestoDao;
+	private RadnoMestoDaoLocal radnoMestoDao;
 	 
 	@GET 
     @Produces(MediaType.APPLICATION_JSON)
@@ -46,7 +48,7 @@ public class RadnoMestoService {
     public RadnoMesto findById(@PathParam("id") String id) {
 		RadnoMesto retVal = null;
 		try {
-			retVal = radnoMestoDao.findById(Long.getLong(id));
+			retVal = radnoMestoDao.findById(Integer.parseInt(id));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -58,10 +60,10 @@ public class RadnoMestoService {
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
     public RadnoMesto create(RadnoMesto entity) {
-		log.info("POST");
+		
 		RadnoMesto retVal = null;
 		try {
-			System.out.println("entity: "+entity);
+			
 			retVal = radnoMestoDao.persist(entity);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -85,18 +87,16 @@ public class RadnoMestoService {
 		return retVal;
     }
     
-    @DELETE
+    @DELETE 
     @Path("{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public void delete(RadnoMesto entity) {
-    	log.info("DELETE");
-        try {
-        	radnoMestoDao.remove(entity);
+	public void removeItem(@PathParam("id") Integer id) {
+    	try {
+    		radnoMestoDao.remove(id);
         } catch (Exception e) {
-			log.error(e.getMessage(), e);
-		}
+        	log.error(e.getMessage(), e);
+        }
+    	
     }
-
 }

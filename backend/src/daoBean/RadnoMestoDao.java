@@ -8,6 +8,6 @@ import rs.ac.uns.ftn.xws.sessionbeans.common.GenericDaoBean;
 
 @Stateless
 @Local(RadnoMestoDaoLocal.class)
-public class RadnoMestoDao extends GenericDaoBean<RadnoMesto, Long> implements RadnoMestoDaoLocal{
+public class RadnoMestoDao extends GenericDaoBean<RadnoMesto, Integer> implements RadnoMestoDaoLocal{
 
 }

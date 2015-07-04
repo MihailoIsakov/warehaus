@@ -1,24 +1,24 @@
 'use strict';
 
- angular.module('mestaM', ['resource.mesta',
+ angular.module('zaposleni', ['resource.zaposleni',
  	'angular-md5'])
 
- .controller('mestaModalCtrl', function (Mesta, $scope, $routeParams,$route, $modalInstance, $modal, $log, $location, InvoiceItem ) {
+ .controller('zaposleniCtrl', function (Zaposleni, $scope, $routeParams, $modal, $log, $location, InvoiceItem ,$route ) {
 
 if($routeParams.invoiceId!='new'){
 		//preuzimanje parametra iz URL
 		var invoiceId = $routeParams.invoiceId;
 		
 		//preuzimanje fakure sa servera. Posto smo u Invoice factory rutu definisali kao '...invoice/:invoiceId' invoiceId ce se proslediti kao parametar rute na server 
-		Mesta.query({'invoiceId':invoiceId}).$promise.then(function (data) {
-			$scope.mestaDoc = data;
+		Zaposleni.query({'invoiceId':invoiceId}).$promise.then(function (data) {
+			$scope.zaposleniDoc = data;
 		});
 	}
 
 	//ako kreiramo novu fakutru
 	else{
-		$scope.mestaDoc = new Mesta();
-		$scope.mestaDoc.invoiceItems = [];
+		$scope.zaposleniDoc = new Zaposleni();
+		$scope.zaposleniDoc.invoiceItems = [];
 	
 }
 
@@ -26,12 +26,10 @@ if($routeParams.invoiceId!='new'){
 	//modalni dijalog za stavku fakutre
 	$scope.add = function (invoiceItem, size) {
 
-		
-		
-		$scope.selectedMesto = new Mesta();
+		$scope.selectedZaposleni = new Zaposleni();
 		var modalInstance = $modal.open({
-			templateUrl: 'views/dodaj-mesto.html',
-			controller: 'mestoNewCtrl',
+			templateUrl: 'views/dodaj-zaposleni.html',
+			controller: 'zaposleniNewCtrl',
 			size: size,
 			scope: $scope ,
 			resolve: {
@@ -41,13 +39,11 @@ if($routeParams.invoiceId!='new'){
 			}
 		});
 		modalInstance.result.then(function (data) {
+			var selectedZaposleni = data.selectedZaposleni;
 			
-			var selectedMesto = data.selectedMesto;
-			
-			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
-			if( data.action==='save'){
-				selectedMesto.$create(function () {
-					$scope.mestaDoc.push(selectedMesto);
+				if( data.action==='save'){
+				selectedZaposleni.$create(function () {
+					$route.reload();
 			},
             function (response) {
                 if (response.status === 500) {
@@ -56,7 +52,7 @@ if($routeParams.invoiceId!='new'){
                
             }
 		);
-			
+			$route.reload();
 					
 			}
 			//ako stavka treba da se obrise izbaci se iz niza
@@ -66,12 +62,17 @@ if($routeParams.invoiceId!='new'){
 		});
 	};
 	
+
+
+	
+
 	$scope.update = function (invoiceItem, size) {
 
-		if($scope.selectedMesto){
+		
+		
 		var modalInstance = $modal.open({
-			templateUrl: 'views/dodaj-mesto.html',
-			controller: 'mestoNewCtrl',
+			templateUrl: 'views/dodaj-zaposleni.html',
+			controller: 'zaposleniNewCtrl',
 			size: size,
 			scope: $scope ,
 			resolve: {
@@ -81,12 +82,12 @@ if($routeParams.invoiceId!='new'){
 			}
 		});
 		modalInstance.result.then(function (data) {
-			var selectedMesto = data.selectedMesto;
+			var selectedZaposleni = data.selectedZaposleni;
 			
-			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
-			if( data.action==='save'){
-				selectedMesto.$update({invoiceItemId:$scope.selectedMesto}, function () {
-				
+				if( data.action==='save'){
+				selectedZaposleni.$update({invoiceItemId:$scope.selectedZaposleni}, function () {
+				$route.reload();
+
 			},
             function (response) {
                 if (response.status === 500) {
@@ -95,38 +96,32 @@ if($routeParams.invoiceId!='new'){
                
             }
 		);
-			
+			$route.reload();
+					
 			}
 			//ako stavka treba da se obrise izbaci se iz niza
 			
 		}, function () {
 			$log.info('Modal dismissed at: ' + new Date());
-		});}
+		});
 	};
 
 	//modalni dijalog za stavku fakutre
 	$scope.delete = function () {
 
-		Mesta.delete({invoiceItemId:$scope.selectedMesto.idMesto},function () {
-			$scope.mestaDoc.splice($scope.mestaDoc.indexOf($scope.selectedMesto),1);
+		Zaposleni.delete({invoiceItemId:$scope.selectedZaposleni.idZaposleni},function () {
+				$route.reload();
 			});
 	}
 
-$scope.selektuj = function () {
 
-			
-		$modalInstance.close({'selectedMesto':$scope.selectedMesto,
-								'action':'save'});
-	
-	}
-$scope.setSelected = function (selectedMesto) {
-   $scope.selectedMesto = selectedMesto;
+$scope.setSelected = function (selectedZaposleni) {
+   $scope.selectedZaposleni = selectedZaposleni;
 };
 
-
-$scope.mestaDoc = "";
-	$scope.options = Mesta.query();
-	$log.info($scope.mestaDoc.length);//0
+$scope.zaposleniDoc = "";
+	$scope.options = Zaposleni.query();
+	$log.info($scope.zaposleniDoc.length);//0
 	//kada smo kliknuli na red u tabeli prelazimo na stranicu za editovanje fakture sa zadatim id-om
  	
 });

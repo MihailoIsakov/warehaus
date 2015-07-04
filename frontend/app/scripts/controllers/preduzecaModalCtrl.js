@@ -83,7 +83,7 @@ if($routeParams.invoiceId!='new'){
 			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
 			if( data.action==='save'){
 				selectedPreduzece.$update({invoiceItemId:$scope.selectedPreduzece}, function () {
-				$route.reload();
+				
 
 			},
             function (response) {
@@ -93,7 +93,7 @@ if($routeParams.invoiceId!='new'){
                
             }
 		);
-				$route.reload();
+				
 					
 			}
 			//ako stavka treba da se obrise izbaci se iz niza
@@ -107,7 +107,7 @@ if($routeParams.invoiceId!='new'){
 	$scope.delete = function () {
 
 		Preduzeca.delete({invoiceItemId:$scope.selectedPreduzece.idPreduzece},function () {
-				$route.reload();
+					$scope.preduzDoc.splice($scope.preduzDoc.indexOf($scope.selectedPreduzece),1);
 			});
 	}
 
