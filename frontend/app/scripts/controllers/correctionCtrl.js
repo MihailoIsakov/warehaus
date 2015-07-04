@@ -18,7 +18,7 @@ angular.module('correction', ['resource.artikale', 'resource.magacinska'])
 			$scope.isVisible = false;
 			$scope.error = "";
 		}
-		$scope.articled.pocetnoStanjeKol = temp.pocetnoStanjeKol + a;
+		$scope.articled.kolUlaza = temp.kolUlaza + a;
 		$scope.articled.vrUlaza = temp.vrUlaza + (a * temp.prosecnaCena);
 		Kartica.update($scope.articled);
 		var magacin = parseInt($scope.articled.magacin.idMagacin);

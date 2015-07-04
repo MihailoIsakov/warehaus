@@ -25,7 +25,7 @@
         <div class="form-group">
             <label>Vrednost nakon nivelacije:</label>
 			<label ng-show="newQuantity != null">
-			{{articled.pocetnoStanjeVr+(articled.vrUlaza+(((articled.pocetnoStanjeKol+articled.kolUlaza-articled.kolIzlaza)*newQuantity)-(articled.pocetnoStanjeVr+articled.vrUlaza-articled.vrIzlaza)))-articled.vrIzlaza}}
+				{{(articled.pocetnoStanjeKol+articled.kolUlaza-articled.kolIzlaza)*newQuantity}}
 			</label>
 			<label ng-show="newQuantity == null">{{articled.pocetnoStanjeVr+articled.vrUlaza-articled.vrIzlaza}}</label>
         </div>

@@ -28,7 +28,7 @@ angular.module('nivelation', ['resource.artikale', 'resource.magacinskaN'])
 		$scope.articled.prosecnaCena = a;
 		if(niv <= 0) {
 			//povecavamo izlaz
-			$scope.articled.vrIzlaza = temp.vrIzlaza + niv;
+			$scope.articled.vrIzlaza = temp.vrIzlaza - niv;
 		}
 		else {
 			//povecavamo ulaz
