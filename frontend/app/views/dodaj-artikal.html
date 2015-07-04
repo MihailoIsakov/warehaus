@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <h3 class="modal-title">Artikal</h3>
+</div>
+<div class="modal-body">
+    <form>
+        <div class="form-group">
+            <label>Šifra:</label>
+            <input class="form-control" ng-model="selectedArtikal.sifraArtikla" ></input>
+        </div>
+        <div class="form-group">
+            <label>Naziv:</label>
+            <input class="form-control" ng-model="selectedArtikal.nazivArtikla" ></input>
+        </div>
+		<div class="form-group">
+            <label>Grupa artikala:</label>
+            <input class="form-control" ng-model="selectedArtikal.grupaArtikala.nazivGrupe" readonly>
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default" ng-click="selektujGrupuArtikala()">Izaberi</button>
+				</span>
+			</input>
+        </div>
+		<div class="form-group">
+            <label>Pakovanje:</label>
+            <input class="form-control" type="number" ng-model="selectedArtikal.pakovanje"></input>
+        </div>
+		<div class="form-group">
+            <label>Jedinica mere:</label>
+            <input class="form-control" ng-model="selectedArtikal.jedinicaMere.nazivJediniceMere" readonly>
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default" ng-click="selektujJedinicuMere()">Izaberi</button>
+				</span>
+			</input>
+        </div>
+        
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button class="btn" ng-click="ok()">Potvrdi</button>
+    <button class="btn" ng-click="cancel()">Otkaži</button>
+   
+</div>

@@ -53,6 +53,17 @@
   'resource.preduzeca',
   'resource.stavkaPD',
   'stavkaPD',
+  'grupeArtikala',
+  'grupaArtikala',  
+  'grupeArtikalaModal',  
+  'artikli',
+  'artikal',  
+  'artikliModal',  
+  'jediniceMere',
+  'jedinicaMere',  
+  'jediniceMereModal', 
+  'resource.radnoMesto',
+  'mestaM',
   'resource.vrstaPD',
   'resource.zaposleni',
   'resource.magacinska',
@@ -152,6 +163,18 @@
    .when('/magacini', {
     templateUrl: 'views/magacini.html',
     controller: 'magaciniCtrl'
+  })
+   .when('/grupe-artikala', {
+    templateUrl: 'views/grupe-artikala.html',
+    controller: 'grupeArtikalaCtrl'
+  })
+   .when('/artikli', {
+    templateUrl: 'views/artikli.html',
+    controller: 'artikliCtrl'
+  })
+   .when('/jedinice-mere', {
+    templateUrl: 'views/jedinice-mere.html',
+    controller: 'jediniceMereCtrl'
   })
   .when('/login', {
     templateUrl: 'views/login.html',
