@@ -8,6 +8,6 @@ import rs.ac.uns.ftn.xws.sessionbeans.common.GenericDaoBean;
 
 @Stateless
 @Local(AnalitikaMagacinskeKarticeDaoLocal.class)
-public class AnalitikaMagacinskeKarticeDao extends GenericDaoBean<AnalitikaMagacinskeKartice, Long> implements AnalitikaMagacinskeKarticeDaoLocal{
+public class AnalitikaMagacinskeKarticeDao extends GenericDaoBean<AnalitikaMagacinskeKartice, Integer> implements AnalitikaMagacinskeKarticeDaoLocal{
 
 }

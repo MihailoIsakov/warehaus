@@ -18,13 +18,13 @@ import model.GrupaArtikala;
 import org.apache.log4j.Logger;
 
 import rs.ac.uns.ftn.xws.util.Authenticate;
-import daoBean.GrupaArtikalaDao;
+import daoBean.GrupaArtikalaDaoLocal;
 
 @Path("/grupa-artikala")
 public class GrupaArtikalaService {
 	private static Logger log = Logger.getLogger(GrupaArtikalaService.class);
 	@EJB
-	private  GrupaArtikalaDao grupaArtikalaDao;
+	private  GrupaArtikalaDaoLocal grupaArtikalaDao;
 	 
 	@GET 
     @Produces(MediaType.APPLICATION_JSON)
@@ -46,7 +46,7 @@ public class GrupaArtikalaService {
     public GrupaArtikala findById(@PathParam("id") String id) {
 		GrupaArtikala retVal = null;
 		try {
-			retVal = grupaArtikalaDao.findById(Long.getLong(id));
+			retVal = grupaArtikalaDao.findById(Integer.parseInt(id));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -85,15 +85,14 @@ public class GrupaArtikalaService {
 		return retVal;
     }
     
-    @DELETE
+    @DELETE 
     @Path("{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public void delete(GrupaArtikala entity) {
+    public void delete(@PathParam("id") Integer id) {
     	log.info("DELETE");
+    	GrupaArtikala p = grupaArtikalaDao.findById(id);
         try {
-        	grupaArtikalaDao.remove(entity);
+        	grupaArtikalaDao.remove(p);
         } catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}

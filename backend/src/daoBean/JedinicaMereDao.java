@@ -8,6 +8,6 @@ import rs.ac.uns.ftn.xws.sessionbeans.common.GenericDaoBean;
 
 @Stateless
 @Local(JedinicaMereDaoLocal.class)
-public class JedinicaMereDao extends GenericDaoBean<JedinicaMere, Long> implements JedinicaMereDaoLocal{
+public class JedinicaMereDao extends GenericDaoBean<JedinicaMere, Integer> implements JedinicaMereDaoLocal{
 
 }

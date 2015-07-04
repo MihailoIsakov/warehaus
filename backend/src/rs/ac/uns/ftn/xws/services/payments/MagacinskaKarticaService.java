@@ -18,14 +18,14 @@ import model.MagacinskaKartica;
 import org.apache.log4j.Logger;
 
 import rs.ac.uns.ftn.xws.util.Authenticate;
-import daoBean.MagacinskaKarticaDao;
+import daoBean.MagacinskaKarticaDaoLocal;
 
 @Path("/magacinska-kartica")
 public class MagacinskaKarticaService {
 	private static Logger log = Logger.getLogger(MagacinskaKarticaService.class);
 	
 	@EJB
-	private MagacinskaKarticaDao magacinskaKarticaDao;
+	private MagacinskaKarticaDaoLocal magacinskaKarticaDao;
 	
 	@GET 
     @Produces(MediaType.APPLICATION_JSON)

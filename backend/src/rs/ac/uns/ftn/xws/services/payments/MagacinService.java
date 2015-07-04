@@ -18,7 +18,6 @@ import model.Magacin;
 import org.apache.log4j.Logger;
 
 import rs.ac.uns.ftn.xws.util.Authenticate;
-import daoBean.MagacinDao;
 import daoBean.MagacinDaoLocal;
 
 @Path("/magacin")
@@ -48,7 +47,7 @@ private static Logger log = Logger.getLogger(MagacinService.class);
     public Magacin findById(@PathParam("id") String id) {
 		Magacin retVal = null;
 		try {
-			retVal = magacinDao.findById(Long.getLong(id));
+			retVal = magacinDao.findById(Integer.parseInt(id));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -87,15 +86,14 @@ private static Logger log = Logger.getLogger(MagacinService.class);
 		return retVal;
     }
     
-    @DELETE
+    @DELETE 
     @Path("{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public void delete(Magacin entity) {
+    public void delete(@PathParam("id") Integer id) {
     	log.info("DELETE");
+    	Magacin p = magacinDao.findById(id);
         try {
-        	magacinDao.remove(entity);
+        	magacinDao.remove(p);
         } catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}

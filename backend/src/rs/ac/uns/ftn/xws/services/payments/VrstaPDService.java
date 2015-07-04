@@ -48,7 +48,7 @@ public class VrstaPDService {
     public VrstaDokumenta findById(@PathParam("id") String id) {
 		VrstaDokumenta retVal = null;
 		try {
-			retVal = vrstaDao.findById(Long.parseLong(id));
+			retVal = vrstaDao.findById(Integer.parseInt(id));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -89,11 +89,11 @@ public class VrstaPDService {
     
     @DELETE 
     @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
 	public void remove(@PathParam("id") Integer id) {
+    	VrstaDokumenta p = vrstaDao.findById(id);
     	try {
-    		vrstaDao.remove(new Long(id));
+    		vrstaDao.remove(p);
         } catch (Exception e) {
         	log.error(e.getMessage(), e);
         }

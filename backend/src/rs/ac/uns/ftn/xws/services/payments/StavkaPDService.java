@@ -48,7 +48,7 @@ public class StavkaPDService {
     public StavkaPrometnogDokumenta findById(@PathParam("id") String id) {
 		StavkaPrometnogDokumenta retVal = null;
 		try {
-			retVal = stavkaDao.findById(Long.parseLong(id));
+			retVal = stavkaDao.findById(Integer.parseInt(id));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -89,11 +89,11 @@ public class StavkaPDService {
     
     @DELETE 
     @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
 	public void remove(@PathParam("id") Integer id) {
+    	StavkaPrometnogDokumenta p = stavkaDao.findById(id);
     	try {
-    		stavkaDao.remove(new Long(id));
+    		stavkaDao.remove(p);
         } catch (Exception e) {
         	log.error(e.getMessage(), e);
         }

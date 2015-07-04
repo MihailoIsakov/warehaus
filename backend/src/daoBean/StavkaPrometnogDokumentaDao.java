@@ -8,6 +8,6 @@ import rs.ac.uns.ftn.xws.sessionbeans.common.GenericDaoBean;
 
 @Stateless
 @Local(StavkaPrometnogDokumentaDaoLocal.class)
-public class StavkaPrometnogDokumentaDao extends GenericDaoBean<StavkaPrometnogDokumenta, Long> implements StavkaPrometnogDokumentaDaoLocal{
+public class StavkaPrometnogDokumentaDao extends GenericDaoBean<StavkaPrometnogDokumenta, Integer> implements StavkaPrometnogDokumentaDaoLocal{
 
 }

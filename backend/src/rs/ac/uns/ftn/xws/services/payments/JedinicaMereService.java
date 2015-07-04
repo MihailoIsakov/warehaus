@@ -18,13 +18,13 @@ import model.JedinicaMere;
 import org.apache.log4j.Logger;
 
 import rs.ac.uns.ftn.xws.util.Authenticate;
-import daoBean.JedinicaMereDao;
+import daoBean.JedinicaMereDaoLocal;
 
 @Path("/jedinica-mere")
 public class JedinicaMereService {
 	private static Logger log = Logger.getLogger(JedinicaMereService.class);
 	@EJB
-	private JedinicaMereDao jedinicaDao;
+	private JedinicaMereDaoLocal jedinicaDao;
 	 
 	@GET 
     @Produces(MediaType.APPLICATION_JSON)
@@ -46,7 +46,7 @@ public class JedinicaMereService {
     public JedinicaMere findById(@PathParam("id") String id) {
 		JedinicaMere retVal = null;
 		try {
-			retVal = jedinicaDao.findById(Long.getLong(id));
+			retVal = jedinicaDao.findById(Integer.parseInt(id));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -85,15 +85,14 @@ public class JedinicaMereService {
 		return retVal;
     }
     
-    @DELETE
+    @DELETE 
     @Path("{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public void delete(JedinicaMere entity) {
+    public void delete(@PathParam("id") Integer id) {
     	log.info("DELETE");
+    	JedinicaMere p = jedinicaDao.findById(id);
         try {
-        	jedinicaDao.remove(entity);
+        	jedinicaDao.remove(p);
         } catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}

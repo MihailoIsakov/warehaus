@@ -87,15 +87,14 @@ public class ArtikalService {
 		return retVal;
     }
     
-    @DELETE
+    @DELETE 
     @Path("{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-    public void delete(Artikal entity) {
+    public void delete(@PathParam("id") Integer id) {
+    	Artikal p = artikalDao.findById(id);
     	log.info("DELETE");
         try {
-        	artikalDao.remove(entity);
+        	artikalDao.remove(p);
         } catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}

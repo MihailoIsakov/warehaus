@@ -15,7 +15,7 @@ import rs.ac.uns.ftn.xws.sessionbeans.common.GenericDaoBean;
 
 @Stateless
 @Local(MagacinDaoLocal.class)
-public class MagacinDao extends GenericDaoBean<Magacin, Long> implements MagacinDaoLocal{
+public class MagacinDao extends GenericDaoBean<Magacin, Integer> implements MagacinDaoLocal{
 /*
 	@SuppressWarnings("unchecked")
 	@Override

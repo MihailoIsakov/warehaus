@@ -8,6 +8,6 @@ import rs.ac.uns.ftn.xws.sessionbeans.common.GenericDaoBean;
 
 @Stateless
 @Local(PopisnaKomisijaDaoLocal.class)
-public class PopisnaKomisijaItemDao extends GenericDaoBean<PopisnaKomisija, Long> implements PopisnaKomisijaDaoLocal{
+public class PopisnaKomisijaItemDao extends GenericDaoBean<PopisnaKomisija, Integer> implements PopisnaKomisijaDaoLocal{
 
 }

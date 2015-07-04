@@ -9,7 +9,7 @@ import rs.ac.uns.ftn.xws.sessionbeans.common.GenericDaoBean;
 
 @Stateless
 @Local(VrstaDokumentaDaoLocal.class)
-public class VrstaDokumentaDao extends GenericDaoBean<VrstaDokumenta, Long> implements VrstaDokumentaDaoLocal{
+public class VrstaDokumentaDao extends GenericDaoBean<VrstaDokumenta, Integer> implements VrstaDokumentaDaoLocal{
 
 	@Override
 	public VrstaDokumenta findByName(String name) {
