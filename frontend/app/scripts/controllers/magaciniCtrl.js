@@ -44,9 +44,7 @@ if($routeParams.magacinId!='new'){
                 }
                
             }
-		);
-			
-					
+		);		
 			}
 			//ako stavka treba da se obrise izbaci se iz niza
 			

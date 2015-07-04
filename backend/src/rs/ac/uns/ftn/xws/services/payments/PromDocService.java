@@ -92,36 +92,28 @@ public class PromDocService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-	public PrometniDokument create(PrometniDokument entity) {
-		return null;
-	}
-	
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	@Authenticate
-	public PrometniDokument createNew(PrometniDokument entity) throws Exception {
-		if (entity.getStatusDokumenta().equals(statusDokumenta.proknjizen)) {
-			Iterator<StavkaPrometnogDokumenta> stavke = entity.getStavke()
+	public PrometniDokument create(PrometniDokument entity) throws Exception {
+		log.error("TUUUUUUUUUUUUU");
+		log.error(entity.getDatumNastanka());
+		
+		entity.setStatusDokumenta(statusDokumenta.u_fazi_formiranje);
+		Iterator<StavkaPrometnogDokumenta> stavke = entity.getStavke()
 					.iterator();
-			while (stavke.hasNext()) {
-				StavkaPrometnogDokumenta stavkaPrometnogDokumenta = (StavkaPrometnogDokumenta) stavke
-						.next();
-				stavkaDao.persist(stavkaPrometnogDokumenta);
-				
-			}
-			PrometniDokument retVal = null;
-			try {
-				retVal = promDocDao.persistSaKreiranjemStavki(entity);
-				promDocDao.proknjiziDokument(retVal);
-			} catch (Exception e) {
-				throw e;
-
-			}
-
-			return retVal;
+		while (stavke.hasNext()) {
+			StavkaPrometnogDokumenta stavkaPrometnogDokumenta = (StavkaPrometnogDokumenta) stavke
+					.next();
+			stavkaDao.persist(stavkaPrometnogDokumenta);
+			
 		}
-		return null;
+		PrometniDokument retVal = null;
+		try {
+			retVal = promDocDao.persistSaKreiranjemStavki(entity);
+		} catch (Exception e) {
+			throw e;
+
+		}
+		//updateStanjaMagacina(retVal);
+		return retVal;
 	}
 
 	@PUT

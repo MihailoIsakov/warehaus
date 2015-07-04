@@ -65,24 +65,19 @@ if($routeParams.invoiceId!='new'){
 		//modalni dijalog za stavku fakutre
 	$scope.dodavanje = function (size) {
 	
-		$scope.item = new Documents();
+		$scope.selectedDoc = new Documents();
+		$scope.selectedDoc.stavke = [];
 		var modalInstance = $modal.open({
 			templateUrl: 'views/promDocDetail.html',
 			controller: 'promDocDetailCtrl',
 			size: size,
-			scope: $scope,
-			resolve: {
-				item: function () {
-					return $scope.item;
-				}
-			}
+			scope: $scope
 		});
 		modalInstance.result.then(function (data) {
-			var item = data.item;
-			
+			var doc = data.selectedDoc;
 			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
-			if( data.action==='save'){
-				item.$create(function () {
+					if( data.action==='sacuvaj'){
+				doc.$create(function () {
 					$route.reload();
 			},
             function (response) {
@@ -92,7 +87,7 @@ if($routeParams.invoiceId!='new'){
                
             }
 		);
-				$route.reload();
+			$route.reload();
 					
 			}
 			//ako stavka treba da se obrise izbaci se iz niza
@@ -105,8 +100,6 @@ if($routeParams.invoiceId!='new'){
 	
 			//modalni dijalog za stavku fakutre
 	$scope.pregled = function (size) {
-	
-		$scope.item = $scope.selectedDoc;
 		var modalInstance = $modal.open({
 			templateUrl: 'views/pregledPD.html',
 			controller: 'promDocDetailCtrl',

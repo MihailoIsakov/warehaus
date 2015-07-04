@@ -17,20 +17,15 @@ $scope.setSelected = function (selectedStavka) {
 	
 	$scope.dodavanje = function (stavka, size) {
 
-		$scope.item = new StavkaPD();
+		$scope.selectedStavka = new StavkaPD();
 		var modalInstance = $modal.open({
 			templateUrl: 'views/stavkaPDDetail.html',
 			controller: 'genericModalCtrl',
 			size: size,
-			scope: $scope,
-			resolve: {
-				item: function () {
-					return $scope.item;
-				}
-			}
+			scope: $scope
 		});
 		modalInstance.result.then(function (data) {
-			var stavka = data.item;
+			var stavka = data.selectedStavka;
 			
 			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
 			if( data.action==='sacuvaj'){
@@ -54,23 +49,17 @@ $scope.setSelected = function (selectedStavka) {
 	$scope.izmena = function (stavka, size) {
 
 		if($scope.selectedStavka){
-			$scope.item = $scope.selectedStavka;
 		var modalInstance = $modal.open({
 			templateUrl: 'views/stavkaPDDetail.html',
 			controller: 'genericModalCtrl',
 			size: size,
-			scope: $scope ,
-			resolve: {
-				item: function () {
-					return $scope.item;
-				}
-			}
+			scope: $scope
 		});
 		modalInstance.result.then(function (data) {
-			var stavka = data.item;
+			var stavka = data.selectedStavka;
 			
 			if( data.action==='sacuvaj'){
-				stavka.$update({stavkaId:$scope.item}, function () {
+				stavka.$update({stavkaId:$scope.selectedStavka}, function () {
 				$route.reload();
 			},
             function (response) {
@@ -101,6 +90,33 @@ $scope.setSelected = function (selectedStavka) {
 		);
 	}
 
+	$scope.selektujArtikal = function () {	
+		var modalInstance = $modal.open({
+			templateUrl: 'views/artikli-modal.html',
+			controller: 'artikliModalCtrl',
+			scope: $scope
+		});
+		modalInstance.result.then(function (data) {
+			
+			var selectedArtikal = data.selectedArtikal;
+			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
+
+			if( data.action==='save') {
+					selectedArtikal.vrednost = selectedArtikal.cena*selectedArtikal.kolicina;
+					$scope.item.artikal = selectedArtikal;
+				}
+			},
+            function (response) {
+                if (response.status === 500) {
+                    $scope.greska = "greska";
+                }
+			$route.reload();
+			
+		}, function () {
+			$log.info('Modal dismissed at: ' + new Date());
+		});
+		}
+		
  	$scope.insertOrEditStavka = function (idStavke) {
  		if(idStavke){
  			$location.path('/stavkaPD/'+idStavke);

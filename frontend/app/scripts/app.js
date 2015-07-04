@@ -74,7 +74,7 @@
   'resource.grupaArtikala',
   'resource.kartica', 
   'resource.praviArtikal',
-
+	'stavkaModal',
   'preduzecaM',
   'mestaM',
   'sektor',

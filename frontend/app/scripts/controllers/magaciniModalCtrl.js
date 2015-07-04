@@ -9,7 +9,7 @@ if($routeParams.magacinId!='new'){
 		var magacinId = $routeParams.magacinId;
 		
 		//preuzimanje fakure sa servera. Posto smo u Invoice factory rutu definisali kao '...invoice/:invoiceId' invoiceId ce se proslediti kao parametar rute na server 
-		Mesta.query({'magacinId':magacinId}).$promise.then(function (data) {
+		Magacin.query({'magacinId':magacinId}).$promise.then(function (data) {
 			$scope.magaciniDoc = data;
 		});
 	}
@@ -69,8 +69,6 @@ if($routeParams.magacinId!='new'){
 			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
 			if( data.action==='save'){
 				selectedMagacin.$update({magacinId:$scope.selectedMagacin}, function () {
-				$route.reload();
-
 			},
             function (response) {
                 if (response.status === 500) {
@@ -93,12 +91,12 @@ if($routeParams.magacinId!='new'){
 	$scope.delete = function () {
 
 		Magacin.delete({magacinId:$scope.selectedMagacin.idMagacin},function () {
-				$route.reload();
+			var index = $scope.magaciniDoc.indexOf($scope.selectedMagacin);
+			$scope.magaciniDoc.splice(index,1);
 			});
 	}
 
 $scope.selektuj = function () {
-
 			
 		$modalInstance.close({'selectedMagacin':$scope.selectedMagacin,
 								'action':'save'});
@@ -108,11 +106,5 @@ $scope.setSelected = function (selectedMagacin) {
    $scope.selectedMagacin = selectedMagacin;
 };
 
-
-$scope.mestaDoc = "";
-	$scope.options = Mesta.query();
-	$log.info($scope.mestaDoc.length);//0
-	//kada smo kliknuli na red u tabeli prelazimo na stranicu za editovanje fakture sa zadatim id-om
- 	
 });
 

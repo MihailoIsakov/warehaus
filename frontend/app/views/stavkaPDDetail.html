@@ -5,22 +5,27 @@
 	<form id="form1">
 		<div class="form-group">
             <label>Artikal: </label>
-			 <input class="form-control" ng-model="item.artikal.nazivArtikla"></input>
+			<div class="input-group">
+				<input type="text" class="form-control" ng-model="selectedStavka.artikal.nazivArtikla" readonly/>
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default" ng-click="selektujArtikal()"><i>...</i></button>
+				</span>
+			</div>
         </div>
         <div class="form-group">
             <label>Cena:</label>
-			 <input class="form-control" ng-model="item.cenaStavke"></input>
+			 <input class="form-control" ng-model="selectedStavka.cenaStavke"></input>
         </div>
 		<div class="form-group">
             <label>Kolicina:</label>
 			<div class="input-group">
-				<input class="form-control" ng-model="item.kolicinaPrDokumenta"></input>
+				<input class="form-control" ng-model="selectedStavka.kolicinaPrDokumenta"></input>
 			</div>
         </div>
 		<div class="form-group">
             <label>Vrednost:</label>
 			<div class="input-group">
-				<input class="form-control" ng-model="item.vrednostStavke"></input>
+				<input class="form-control" ng-model="selectedStavka.kolicinaPrDokumenta*selectedStavka.cenaStavke" readonly></input>
 			</div>
         </div>		
         
