@@ -45,7 +45,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr  ng-repeat="stavka in item.stavke  | filter:query | orderBy:orderProp : reverseSort ">
+      <tr  ng-repeat="stavka in selectedDoc.stavke  | filter:query | orderBy:orderProp : reverseSort ">
           <td>{{stavka.artikal.sifraArtikla}}</td>
           <td>{{stavka.artikal.nazivArtikla}}</td>
           <td>{{stavka.artikal.pakovanje}}</td>
