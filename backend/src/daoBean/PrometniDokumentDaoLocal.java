@@ -14,4 +14,5 @@ public interface PrometniDokumentDaoLocal extends GenericDao<PrometniDokument, I
 	
 	boolean proveriPrometniDokument(PrometniDokument entity);
 	
+	public int findMaxRB();
 }

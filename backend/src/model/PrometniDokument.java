@@ -1,6 +1,5 @@
 package model;
 
-import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
@@ -17,14 +16,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 
 /**
@@ -33,7 +30,10 @@ import org.hibernate.annotations.FetchMode;
  */
 @Entity
 @Table(name="prometni_dokument")
-@NamedQuery(name="PrometniDokument.findAll", query="SELECT p FROM PrometniDokument p")
+@NamedQueries({
+	@NamedQuery(name="PrometniDokument.findAll", query="SELECT p FROM PrometniDokument p"),
+	@NamedQuery(name="PrometniDokument.findMaxRB", query="SELECT MAX(broj) FROM PrometniDokument")
+})
 public class PrometniDokument implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -2,7 +2,6 @@ package rs.ac.uns.ftn.xws.services.payments;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -97,6 +96,8 @@ public class PromDocService {
 		log.error(entity.getDatumNastanka());
 		
 		entity.setStatusDokumenta(statusDokumenta.u_fazi_formiranje);
+		int rb = promDocDao.findMaxRB();
+		entity.setBroj(rb);
 		Iterator<StavkaPrometnogDokumenta> stavke = entity.getStavke()
 					.iterator();
 		while (stavke.hasNext()) {

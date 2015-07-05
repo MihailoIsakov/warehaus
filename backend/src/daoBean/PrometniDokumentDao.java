@@ -7,6 +7,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 
 import model.PrometniDokument;
 import model.StavkaPrometnogDokumenta;
@@ -123,6 +124,12 @@ public class PrometniDokumentDao extends
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public int findMaxRB() {
+		Query q = em.createNamedQuery("PrometniDokument.findMaxRB");
+		return (int) q.getSingleResult();
 	}
 	
 
