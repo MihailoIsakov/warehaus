@@ -5,7 +5,7 @@
  .controller('stavkaModalCtrl', function ($scope, $modal, $modalInstance) {
 
 	$scope.sacuvaj = function() {
-		$scope.selectedStavka.vrednost = parseInt($scope.selectedStavka.cenaStavke)*parseInt($scope.selectedStavka.kolicinaPrDokumenta);
+		$scope.selectedStavka.vrednostStavke = parseInt($scope.selectedStavka.cenaStavke)*parseInt($scope.selectedStavka.kolicinaPrDokumenta);
 		$modalInstance.close({'selectedStavka':$scope.selectedStavka, 
 							  'action':'sacuvaj'});
 	}
