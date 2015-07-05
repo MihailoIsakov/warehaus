@@ -16,7 +16,10 @@ import java.util.Date;
  */
 @Entity
 @Table(name="analitika_magacinske_kartice")
-@NamedQuery(name="AnalitikaMagacinskeKartice.findAll", query="SELECT a FROM AnalitikaMagacinskeKartice a")
+@NamedQueries({
+	@NamedQuery(name="AnalitikaMagacinskeKartice.findAll", query="SELECT a FROM AnalitikaMagacinskeKartice a"),
+	@NamedQuery(name="AnalitikaMagacinskeKartice.findByMagCardId", query="SELECT a FROM AnalitikaMagacinskeKartice a WHERE a.magacinskaKartica.idMagacinskaKartica like :id")
+})
 public class AnalitikaMagacinskeKartice implements Serializable {
 	private static final long serialVersionUID = 1L;
 

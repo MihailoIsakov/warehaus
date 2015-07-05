@@ -1,7 +1,7 @@
 'use strict';
 
  angular.module('article', ['resource.invoice',
-    'resource.kartica',
+    'resource.magacinskaKartica',
  	'angular-md5'])
 
  .controller('lagerListCtrl', function (Artikal, MagacinskaKartica, $scope, $routeParams, $modal, $log, $location, InvoiceItem) {

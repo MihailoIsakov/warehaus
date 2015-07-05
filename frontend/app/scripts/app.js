@@ -21,6 +21,7 @@
   'article',
   'promDoc',
   'invoice',
+  'karticaA',
   'correction',
   'nivelation',
   'partnerModal',
@@ -44,7 +45,7 @@
   'modal',
   'resource.poslGodina',
   'poslGodina',
-    'resource.preduzeca',
+  'resource.preduzeca',
   'preduzeca',
   'mestoNew',
   'drzaveM',
@@ -70,11 +71,10 @@
   'resource.magacinskaKartica',
   'resource.magacin',
   'resource.jedinicaMere',
-
+  'resource.analitika',
   'resource.grupaArtikala',
-  'resource.kartica', 
   'resource.praviArtikal',
-	'stavkaModal',
+  'stavkaModal',
   'preduzecaM',
   'mestaM',
   'sektor',
@@ -82,9 +82,9 @@
   'sektorNew',
   'resource.radnoMesto',
   'radnoMesto',
-   'zaposleni',
-   'zaposleniNew',
-   'radnoMestoM'
+  'zaposleni',
+  'zaposleniNew',
+  'radnoMestoM'
   ])
  .config(function ($routeProvider) {
   $routeProvider

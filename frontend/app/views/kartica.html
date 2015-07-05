@@ -31,5 +31,30 @@
       </tr>
     </tbody>
   </table>
+  <h3>Analitika kartice</h3>
+  <table class="modal-body table table-striped" >
+    <thead>
+      <tr>
+          <th> <a ng-click = "orderProp = 'analitika.sifraDokumenta'; reverseSort = !reverseSort">Sifra dokumenta</th> 
+          <th> <a ng-click = "orderProp = 'analitika.redniBroj'; reverseSort = !reverseSort">Redni broj</th> 
+          <th> <a ng-click = "orderProp = 'analitika.datumPromene'; reverseSort = !reverseSort">Datum promene</th> 
+          <th> <a ng-click = "orderProp = 'analitika.cena'; reverseSort = !reverseSort">Cena</th> 
+          <th> <a ng-click = "orderProp = 'analitika.smer'; reverseSort = !reverseSort">Smer</th> 
+          <th> <a ng-click = "orderProp = 'analitika.vrednost'; reverseSort = !reverseSort">Vrednost</th>
+          <th> <a ng-click = "orderProp = 'analitika.kolicina'; reverseSort = !reverseSort">Kolicina</th> 
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="analitika in analitics | filter:query | orderBy:orderProp : reverseSort">
+          <td>{{analitika.sifraDokumenta}}</td>
+          <td>{{analitika.redniBroj}}</td>
+          <td>{{analitika.datumPromene}}</td>
+          <td>{{analitika.cena}}</td>
+          <td>{{analitika.smer}}</td>
+          <td>{{analitika.vrednost}}</td>
+          <td>{{analitika.kolicina}}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
   
