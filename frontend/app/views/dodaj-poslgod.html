@@ -3,7 +3,7 @@
 </div>
 <div class="modal-body">
     <form>
-        <div class="form-group">
+        <div class="form-group required">
             <label>Broj Godine:</label>
             <input class="form-control" ng-model="selectedPoslGod.brojGodine" ></input>
         </div>
@@ -14,7 +14,7 @@
        
          <div class="form-group">
             <label>Preduzece:</label>
-            <input class="form-control"  ng-model="selectedPoslGod.preduzece.nazivPreduzeca" ></input>
+            <input class="form-control"  ng-model="selectedPoslGod.preduzece.nazivPreduzeca"readonly ></input>
              <button class="btn" ng-click="selektujPreduzece()">Selektuj</button>
         </div>
     </form>

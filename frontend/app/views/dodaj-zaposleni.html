@@ -3,15 +3,15 @@
 </div>
 <div class="modal-body">
     <form>
-        <div class="form-group">
+        <div class="form-group.required">
             <label>Šifra:</label>
             <input class="form-control" ng-model="selectedZaposleni.sifraZaposlenog" ></input>
         </div>
-        <div class="form-group">
+        <div class="form-group.required">
             <label>Ime:</label>
             <input class="form-control" ng-model="selectedZaposleni.ime" ></input>
         </div>
-        <div class="form-group" >
+        <div class="form-group.required" >
             <label>Prezime:</label>
             <input  class="form-control" ng-model="selectedZaposleni.prezime" ></input>
         </div>
@@ -25,7 +25,7 @@
         </div>
           <div class="form-group">
             <label>Mesto:</label>
-            <input class="form-control"  ng-model="selectedZaposleni.mesto.nazivMesta" ></input>
+            <input class="form-control"  ng-model="selectedZaposleni.mesto.nazivMesta" readonly></input>
              <button class="btn" ng-click="selektujMesto()">Selektuj</button>
         </div>
           <div class="form-group" >
@@ -48,12 +48,12 @@
         </div>
          <div class="form-group">
             <label>Preduzece:</label>
-            <input class="form-control"  ng-model="selectedZaposleni.preduzece.nazivPreduzeca" ></input>
+            <input class="form-control"  ng-model="selectedZaposleni.preduzece.nazivPreduzeca" readonly></input>
              <button class="btn" ng-click="selektujPreduzece()">Selektuj</button>
         </div>
          <div class="form-group">
             <label>Radno Mesto:</label>
-            <input class="form-control"  ng-model="selectedZaposleni.radnoMesto.nazivRadnogMesta" ></input>
+            <input class="form-control"  ng-model="selectedZaposleni.radnoMesto.nazivRadnogMesta" readonly></input>
              <button class="btn" ng-click="selektujRadnoMesto()">Selektuj</button>
         </div>
     </form>

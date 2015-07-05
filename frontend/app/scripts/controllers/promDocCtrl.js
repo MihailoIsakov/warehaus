@@ -22,8 +22,11 @@ if($routeParams.invoiceId!='new'){
 	
 }
 
+$scope.proknjizi = function (invoiceItem, size) {
 
-	//modalni dijalog za stavku fakutre
+			}
+
+
 	$scope.storniranje = function (invoiceItem, size) {
 
 		var modalInstance = $modal.open({

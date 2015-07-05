@@ -3,18 +3,18 @@
 </div>
 <div class="modal-body">
     <form>
-        <div class="form-group">
+        <div class="form-group.required">
             <label>Šifra:</label>
             <input class="form-control" ng-model="selectedSektor.sifraSektora" ></input>
         </div>
-        <div class="form-group" >
+        <div class="form-group.required" >
             <label>Naziv:</label>
             <input  class="form-control" ng-model="selectedSektor.nazivSektora" ></input>
         </div>
        
          <div class="form-group">
             <label>Preduzece:</label>
-            <input class="form-control"  ng-model="selectedSektor.preduzece.nazivPreduzeca" ></input>
+            <input class="form-control"  ng-model="selectedSektor.preduzece.nazivPreduzeca" readonly></input>
              <button class="btn" ng-click="selektujPreduzece()">Selektuj</button>
         </div>
     </form>
