@@ -18,26 +18,26 @@ angular.module('nivelation', ['resource.artikale', 'resource.magacinskaN'])
 		else {
 			$scope.isVisible = false;
 			$scope.error = "";
+			//kolicina = articled.pocetnoStanjeKol+articled.kolUlaza-articled.kolIzlaza
+			var ukupno = temp.pocetnoStanjeKol + temp.kolUlaza - temp.kolIzlaza;
+			//articled.pocetnoStanjeVr+articled.vrUlaza-articled.vrIzlaza
+			var vrednost = temp.pocetnoStanjeVr + temp.vrUlaza - temp.vrIzlaza;
+			//vrednost nivelacije
+			var niv = (ukupno * a) - vrednost;
+			$scope.articled.prosecnaCena = a;
+			if(niv <= 0) {
+				//povecavamo izlaz
+				$scope.articled.vrIzlaza = temp.vrIzlaza - niv;
+			}
+			else {
+				//povecavamo ulaz
+				$scope.articled.vrUlaza = temp.vrUlaza + niv;
+			}
+			KarticaN.update($scope.articled);
+			var magacin = parseInt($scope.articled.magacin.idMagacin);
+			window.location = '#/lager-list/' + magacin;
+			window.location.reload();
 		}
-		//kolicina = articled.pocetnoStanjeKol+articled.kolUlaza-articled.kolIzlaza
-		var ukupno = temp.pocetnoStanjeKol + temp.kolUlaza - temp.kolIzlaza;
-		//articled.pocetnoStanjeVr+articled.vrUlaza-articled.vrIzlaza
-		var vrednost = temp.pocetnoStanjeVr + temp.vrUlaza - temp.vrIzlaza;
-		//vrednost nivelacije
-		var niv = (ukupno * a) - vrednost;
-		$scope.articled.prosecnaCena = a;
-		if(niv <= 0) {
-			//povecavamo izlaz
-			$scope.articled.vrIzlaza = temp.vrIzlaza - niv;
-		}
-		else {
-			//povecavamo ulaz
-			$scope.articled.vrUlaza = temp.vrUlaza + niv;
-		}
-		KarticaN.update($scope.articled);
-		var magacin = parseInt($scope.articled.magacin.idMagacin);
-        window.location = '#/lager-list/' + magacin;
-        window.location.reload();
 	};
 	
 	$scope.cancel = function () {

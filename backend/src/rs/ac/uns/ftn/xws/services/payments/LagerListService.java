@@ -2,6 +2,7 @@ package rs.ac.uns.ftn.xws.services.payments;
 
 
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 
 import model.Artikal;
 import model.Magacin;
+import model.MagacinskaKartica;
 
 import org.apache.log4j.Logger;
 
@@ -79,21 +81,37 @@ public class LagerListService {
 		return retVal;
     }
 
-    @POST
+	@POST
+	@Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-	@Authenticate
-    public Artikal create(Artikal entity) {
+    @Authenticate
+    public void nivelisi(@PathParam("id") String id) {
 		log.info("POST");
-		Artikal a = new Artikal();
-		Artikal retVal = null;
 		try {
-			System.out.println("entity: "+entity);
-			retVal = artikalDao.persist(entity);
+			System.out.println("IDDDD: "+id);
+			List<Object> ret = mkDao.findByMagacin(Integer.parseInt(id));
+			for(Object o: ret){
+				BigDecimal kol = ((MagacinskaKartica) o).getPocetnoStanjeKol().add(((MagacinskaKartica) o).getKolUlaza()).
+						subtract(((MagacinskaKartica) o).getKolIzlaza());
+				BigDecimal beforeVal = kol.multiply(((MagacinskaKartica) o).getProsecnaCena());
+				BigDecimal val = ((MagacinskaKartica) o).getPocetnoStanjeVr().add(((MagacinskaKartica) o).getVrUlaza()).
+						subtract(((MagacinskaKartica) o).getVrIzlaza());
+				if(!beforeVal.equals(val)){
+					BigDecimal niv = beforeVal.subtract(val);
+					if(niv.compareTo(BigDecimal.valueOf(0.0)) == 1) {
+						//povecavamo izlaz
+						((MagacinskaKartica) o).setVrIzlaza(((MagacinskaKartica) o).getVrIzlaza().subtract(niv));
+					}
+					else {
+						//povecavamo ulaz
+						((MagacinskaKartica) o).setVrUlaza(((MagacinskaKartica) o).getVrUlaza().add(niv));
+					}
+					mkDao.merge(((MagacinskaKartica) o));
+				}
+			}
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
-		return retVal;
     }
     
     @PUT

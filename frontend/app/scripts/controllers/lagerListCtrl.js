@@ -30,7 +30,31 @@ if($routeParams.invoiceId!='new'){
  		}
  		
 	};
-$scope.nivelisi = function () {
+	
+	$scope.nivAll = function (size) {
+		$scope.nivArt = [];
+		angular.forEach($scope.articles,function(value,index){
+			var kol = value.pocetnoStanjeKol+value.kolUlaza-value.kolIzlaza;
+			var beforeVal = kol * value.prosecnaCena;
+			var val = value.pocetnoStanjeVr+value.vrUlaza-value.vrIzlaza;
+			if(beforeVal !== val){
+				$scope.nivArt.push(value);
+			}
+		})
+		$scope.modalID = $routeParams.invoiceId;
+		$scope.nivCnt = ($scope.nivArt.length > 0) ? true : false;
+		$scope.query= "";
+		$scope.orderProp= "idMagacinskaKartica";
+		$scope.reverseSort = false;
+		var modalInstance = $modal.open({
+			templateUrl: 'views/nivAll.html',
+			controller: 'nivAllCtrl',
+			size: size,
+			scope: $scope
+		});
+	};
+	
+	$scope.nivelisi = function () {
 		if($scope.selectedDoc){
  			$location.path('/nivelacija/'+$scope.selectedDoc.idMagacinskaKartica);
  		}
