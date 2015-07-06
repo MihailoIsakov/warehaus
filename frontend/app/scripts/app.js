@@ -60,6 +60,7 @@
   'artikli',
   'artikal',  
   'artikliModal',  
+  'niv',
   'jediniceMere',
   'jedinicaMere',  
   'jediniceMereModal', 

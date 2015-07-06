@@ -17,13 +17,13 @@ angular.module('correction', ['resource.artikale', 'resource.magacinska'])
 		else {
 			$scope.isVisible = false;
 			$scope.error = "";
+			$scope.articled.kolUlaza = temp.kolUlaza + a;
+			$scope.articled.vrUlaza = temp.vrUlaza + (a * temp.prosecnaCena);
+			Kartica.update($scope.articled);
+			var magacin = parseInt($scope.articled.magacin.idMagacin);
+			window.location = '#/lager-list/' + magacin;
+			window.location.reload();
 		}
-		$scope.articled.kolUlaza = temp.kolUlaza + a;
-		$scope.articled.vrUlaza = temp.vrUlaza + (a * temp.prosecnaCena);
-		Kartica.update($scope.articled);
-		var magacin = parseInt($scope.articled.magacin.idMagacin);
-        window.location = '#/lager-list/' + magacin;
-        window.location.reload();
 	};
 	
 	$scope.cancel = function () {

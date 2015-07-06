@@ -97,6 +97,7 @@ public class PromDocService {
 		
 		entity.setStatusDokumenta(statusDokumenta.u_fazi_formiranje);
 		int rb = promDocDao.findMaxRB();
+		rb++;
 		entity.setBroj(rb);
 		Iterator<StavkaPrometnogDokumenta> stavke = entity.getStavke()
 					.iterator();
