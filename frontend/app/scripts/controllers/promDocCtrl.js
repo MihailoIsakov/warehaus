@@ -24,7 +24,7 @@ if($routeParams.invoiceId!='new'){
 
 
 $scope.proknjizi = function (invoiceItem, size) {
-			$scope.selectedDoc.$update({'id':'1'},function () {
+			$scope.selectedDoc.$update({'id':'knjizenje'},function () {
 				$route.reload();
 			},
             function (response) {
@@ -56,7 +56,7 @@ $scope.proknjizi = function (invoiceItem, size) {
 			
 			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
 			if( data.action==='save'){
-				selectedDoc.$update(function () {
+				selectedDoc.$update({'id':'storniranje'},function () {
 				$route.reload();
 			},
             function (response) {

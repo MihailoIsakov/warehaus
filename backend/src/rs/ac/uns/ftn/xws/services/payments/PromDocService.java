@@ -120,10 +120,52 @@ public class PromDocService {
 		return retVal;
 	}
 
+	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
+	public PrometniDokument update(PrometniDokument entity) throws Exception {
+
+		log.error("update prometnog dokumenta");
+		return null;
+	}
+	
+	@PUT
+	@Path("{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Authenticate
+	public PrometniDokument update(@PathParam("id") String tipIzmene, PrometniDokument entity) throws Exception {
+		log.error("ovo je parametar"+tipIzmene+"evo ovde. ID: "+ entity.getIdPrometniDokument());
+		if(tipIzmene.equals("storniranje"))
+			return storniranje(entity);
+		else if (tipIzmene.equals("knjizenje"))
+			return knjizenje(entity);
+		return null;
+		
+	}
+
+	private PrometniDokument knjizenje(PrometniDokument entity) throws Exception{
+		PrometniDokument retVal = null;
+		if(!proveriKnjizenje(entity)){
+			return null;
+		}
+		if(!updateStanjaMagacina(entity)){
+			log.error("ERRRRORROROROROOR!");
+			return null;
+		}else{
+			entity.setDatumKnjizenja(new Date());
+			entity.setStatusDokumenta(statusDokumenta.proknjizen);
+		}
+		try {
+			retVal = promDocDao.merge(entity);
+		} catch (Exception e) {
+			throw e;
+
+		}
+		return retVal;
+	}
 	public PrometniDokument storniranje(PrometniDokument entity) throws Exception {
 		log.error("storniranje");
 		entity = promDocDao.findById(entity.getIdPrometniDokument());
@@ -151,32 +193,7 @@ public class PromDocService {
 	}
 	
 	
-	@PUT
-	@Path("{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	@Authenticate
-	public PrometniDokument knjizenje(@PathParam("id") String str, PrometniDokument entity) throws Exception {
-		log.error("ovo je parametar"+str+"evo ovde. ID: "+ entity.getIdPrometniDokument());
-		PrometniDokument retVal = null;
-		if(!proveriKnjizenje(entity)){
-			return null;
-		}
-		if(!updateStanjaMagacina(entity)){
-			log.error("ERRRRORROROROROOR!");
-			return null;
-		}else{
-			entity.setDatumKnjizenja(new Date());
-			entity.setStatusDokumenta(statusDokumenta.proknjizen);
-		}
-		try {
-			retVal = promDocDao.merge(entity);
-		} catch (Exception e) {
-			throw e;
-
-		}
-		return retVal;
-	}
+	
 	
 	public boolean proveriKnjizenje(PrometniDokument p){
 		if(p.getStatusDokumenta().equals(statusDokumenta.proknjizen))
