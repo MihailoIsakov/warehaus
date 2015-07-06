@@ -1,7 +1,9 @@
 package rs.ac.uns.ftn.xws.services.payments;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -154,11 +156,26 @@ public class PromDocService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-	public PrometniDokument knjizenje(@PathParam("id") String str,PrometniDokument entity) throws Exception {
-		log.error("ovo je parametar"+str+"evo ovde");
-		
-		
-		return null;
+	public PrometniDokument knjizenje(@PathParam("id") String str, PrometniDokument entity) throws Exception {
+		log.error("ovo je parametar"+str+"evo ovde. ID: "+ entity.getIdPrometniDokument());
+		PrometniDokument retVal = null;
+		if(!proveriKnjizenje(entity)){
+			return null;
+		}
+		if(!updateStanjaMagacina(entity)){
+			log.error("ERRRRORROROROROOR!");
+			return null;
+		}else{
+			entity.setDatumKnjizenja(new Date());
+			entity.setStatusDokumenta(statusDokumenta.proknjizen);
+		}
+		try {
+			retVal = promDocDao.merge(entity);
+		} catch (Exception e) {
+			throw e;
+
+		}
+		return retVal;
 	}
 	
 	public boolean proveriKnjizenje(PrometniDokument p){
@@ -172,11 +189,17 @@ public class PromDocService {
 		return true;
 	}
 
+	@SuppressWarnings("static-access")
 	public boolean updateStanjaMagacina(PrometniDokument p){
 		VrstaDokumenta primka = vrstaDao.findByName("primka");
 		if(p.getVrstaDokumenta().getIdVrstaDokumenta() == primka.getIdVrstaDokumenta()){
 			for(StavkaPrometnogDokumenta sp: p.getStavke()){
-				MagacinskaKartica m = magCardDao.findByArtikalId(sp.getArtikal().getIdArtikal());
+				MagacinskaKartica m = null;
+				try {
+					m = magCardDao.findByMagaciniArtikaliPG(p.getMagacin1().getIdMagacin(), sp.getArtikal().getIdArtikal(),p.getPoslovnaGodina().getIdPoslovnaGodina());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 				if(m == null){
 					m = new MagacinskaKartica();
 					m.setArtikal(sp.getArtikal());
@@ -200,7 +223,7 @@ public class PromDocService {
 					BigDecimal ukupnaVr = m.getPocetnoStanjeVr().add(m.getVrUlaza()).subtract(m.getVrIzlaza());
 					BigDecimal ukupnaKol = m.getPocetnoStanjeKol().add(m.getKolUlaza()).subtract(m.getKolIzlaza());
 					BigDecimal cena = ukupnaVr.add(sp.getCenaStavke().multiply(sp.getKolicinaPrDokumenta()));
-					cena = cena.divide(sp.getKolicinaPrDokumenta().add(ukupnaKol));
+					cena = cena.divide(sp.getKolicinaPrDokumenta().add(ukupnaKol), 2, RoundingMode.HALF_UP);
 					m.setProsecnaCena(cena);
 					m.setKolUlaza(m.getKolUlaza().add(sp.getKolicinaPrDokumenta()));
 					m.setVrUlaza(m.getVrUlaza().add(sp.getVrednostStavke()));
@@ -233,34 +256,30 @@ public class PromDocService {
 			}
 			return true;
 		}
+		
+		
 		VrstaDokumenta ot = vrstaDao.findByName("otpremnica");
 		if(p.getVrstaDokumenta().getIdVrstaDokumenta() == ot.getIdVrstaDokumenta()){
 			for(StavkaPrometnogDokumenta sp: p.getStavke()){
-				MagacinskaKartica m = magCardDao.findByArtikalId(sp.getArtikal().getIdArtikal());
+				MagacinskaKartica m = null;
+				try {
+					m = magCardDao.findByMagaciniArtikaliPG(p.getMagacin1().getIdMagacin(), sp.getArtikal().getIdArtikal(),p.getPoslovnaGodina().getIdPoslovnaGodina());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 				if(m == null){
-					MagacinskaKartica nova = new MagacinskaKartica();
-					nova.setArtikal(sp.getArtikal());
-					nova.setKolUlaza(BigDecimal.valueOf(0));
-					nova.setVrUlaza(BigDecimal.valueOf(0));
-					nova.setKolIzlaza(sp.getKolicinaPrDokumenta());
-					nova.setVrIzlaza(sp.getVrednostStavke());
-					nova.setMagacin(p.getMagacin2());
-					nova.setPocetnoStanjeKol(BigDecimal.valueOf(0));
-					nova.setPocetnoStanjeVr(BigDecimal.valueOf(0));
-					nova.setPoslovnaGodina(p.getPoslovnaGodina());
-					nova.setProsecnaCena(sp.getCenaStavke());
-					nova.setRedniBrojKartice(magCardDao.findMaxRedniBroj());
-					try {
-						magCardDao.persist(nova);
-					} catch (NoSuchFieldException e) {
-						e.printStackTrace();
-						return false;
-					}
+					log.error("NO CARD!");
+					return false;
 				}else{
+					log.error("CARD!");
+					//proveriti ima li dovoljno na stanju
 					BigDecimal ukupnaVr = m.getPocetnoStanjeVr().add(m.getVrUlaza()).subtract(m.getVrIzlaza());
 					BigDecimal ukupnaKol = m.getPocetnoStanjeKol().add(m.getKolUlaza()).subtract(m.getKolIzlaza());
+					if(ukupnaKol.compareTo(sp.getKolicinaPrDokumenta()) == -1){
+						return false;
+					}
 					BigDecimal cena = ukupnaVr.add(sp.getCenaStavke().multiply(sp.getKolicinaPrDokumenta()));
-					cena = cena.divide(sp.getKolicinaPrDokumenta().add(ukupnaKol));
+					cena = cena.divide(sp.getKolicinaPrDokumenta().add(ukupnaKol), 2, RoundingMode.HALF_UP);
 					m.setProsecnaCena(cena);
 					m.setKolIzlaza(m.getKolIzlaza().add(sp.getKolicinaPrDokumenta()));
 					m.setVrIzlaza(m.getVrIzlaza().add(sp.getVrednostStavke()));
@@ -286,6 +305,121 @@ public class PromDocService {
 	        	a.setVrednost(value);
 	        	try {
 					anDao.persist(a);
+				} catch (NoSuchFieldException e) {
+					e.printStackTrace();
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		
+		VrstaDokumenta mm = vrstaDao.findByName("medjumagacinski");
+		if(p.getVrstaDokumenta().getIdVrstaDokumenta() == mm.getIdVrstaDokumenta()){
+			for(StavkaPrometnogDokumenta sp: p.getStavke()){
+				//PRVI MAGACIN
+				MagacinskaKartica m = null;
+				try {
+					m = magCardDao.findByMagaciniArtikaliPG(p.getMagacin1().getIdMagacin(), sp.getArtikal().getIdArtikal(),p.getPoslovnaGodina().getIdPoslovnaGodina());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				if(m == null){
+					return false;
+				}else{
+					BigDecimal ukupnaVr = m.getPocetnoStanjeVr().add(m.getVrUlaza()).subtract(m.getVrIzlaza());
+					BigDecimal ukupnaKol = m.getPocetnoStanjeKol().add(m.getKolUlaza()).subtract(m.getKolIzlaza());
+					if(ukupnaKol.compareTo(sp.getKolicinaPrDokumenta()) == -1){
+						return false;
+					}
+					BigDecimal cena = ukupnaVr.add(sp.getCenaStavke().multiply(sp.getKolicinaPrDokumenta()));
+					cena = cena.divide(sp.getKolicinaPrDokumenta().add(ukupnaKol), 2, RoundingMode.HALF_UP);
+					m.setProsecnaCena(cena);
+					m.setKolIzlaza(m.getKolIzlaza().add(sp.getKolicinaPrDokumenta()));
+					m.setVrIzlaza(m.getVrIzlaza().add(sp.getVrednostStavke()));
+					try {
+						magCardDao.merge(m);
+					} catch (NoSuchFieldException e) {
+						e.printStackTrace();
+						return false;
+					}
+				}
+				
+				AnalitikaMagacinskeKartice a = new AnalitikaMagacinskeKartice();
+	        	a.setCena(sp.getCenaStavke());
+	        	a.setDatumPromene(p.getDatumNastanka());
+	        	a.setKolicina(sp.getKolicinaPrDokumenta());
+	        	a.setMagacinskaKartica(m);
+	        	//a.setRedniBroj(redniBroj);
+	        	a.setSifraDokumenta("OTP");
+	        	a.setSmer(a.getSmer().I);
+	        	a.setStavkaPrometnogDokumenta(sp);
+	        	//VREDNOST 
+	        	BigDecimal value = sp.getKolicinaPrDokumenta().multiply(sp.getCenaStavke());
+	        	a.setVrednost(value);
+	        	try {
+					anDao.persist(a);
+				} catch (NoSuchFieldException e) {
+					e.printStackTrace();
+					return false;
+				}
+	        	
+	        	//DRUGI MAGACIN
+	        	m = null;
+				try {
+					m = magCardDao.findByMagaciniArtikaliPG(p.getMagacin2().getIdMagacin(), sp.getArtikal().getIdArtikal(),p.getPoslovnaGodina().getIdPoslovnaGodina());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				if(m == null){
+					m = new MagacinskaKartica();
+					m.setArtikal(sp.getArtikal());
+					m.setKolIzlaza(BigDecimal.valueOf(0));
+					m.setVrIzlaza(BigDecimal.valueOf(0));
+					m.setKolUlaza(sp.getKolicinaPrDokumenta());
+					m.setVrUlaza(sp.getVrednostStavke());
+					m.setMagacin(p.getMagacin2());
+					m.setPocetnoStanjeKol(BigDecimal.valueOf(0));
+					m.setPocetnoStanjeVr(BigDecimal.valueOf(0));
+					m.setPoslovnaGodina(p.getPoslovnaGodina());
+					m.setProsecnaCena(sp.getCenaStavke());
+					m.setRedniBrojKartice(magCardDao.findMaxRedniBroj());
+					try {
+						magCardDao.persist(m);
+					} catch (NoSuchFieldException e) {
+						e.printStackTrace();
+						return false;
+					}
+				}else{
+					BigDecimal ukupnaVr = m.getPocetnoStanjeVr().add(m.getVrUlaza()).subtract(m.getVrIzlaza());
+					BigDecimal ukupnaKol = m.getPocetnoStanjeKol().add(m.getKolUlaza()).subtract(m.getKolIzlaza());
+					BigDecimal cena = ukupnaVr.add(sp.getCenaStavke().multiply(sp.getKolicinaPrDokumenta()));
+					cena = cena.divide(sp.getKolicinaPrDokumenta().add(ukupnaKol), 2, RoundingMode.HALF_UP);
+					m.setProsecnaCena(cena);
+					m.setKolUlaza(m.getKolUlaza().add(sp.getKolicinaPrDokumenta()));
+					m.setVrUlaza(m.getVrUlaza().add(sp.getVrednostStavke()));
+					try {
+						magCardDao.merge(m);
+					} catch (NoSuchFieldException e) {
+						e.printStackTrace();
+						return false;
+					}
+				}
+				
+				AnalitikaMagacinskeKartice aa = new AnalitikaMagacinskeKartice();
+	        	aa.setCena(sp.getCenaStavke());
+	        	aa.setDatumPromene(p.getDatumNastanka());
+	        	aa.setKolicina(sp.getKolicinaPrDokumenta());
+	        	aa.setMagacinskaKartica(m);
+	        	//a.setRedniBroj(redniBroj);
+	        	aa.setSifraDokumenta("PRI");
+	        	aa.setSmer(aa.getSmer().U);
+	        	aa.setStavkaPrometnogDokumenta(sp);
+	        	//VREDNOST 
+	        	BigDecimal valuee = sp.getKolicinaPrDokumenta().multiply(sp.getCenaStavke());
+	        	aa.setVrednost(valuee);
+	        	try {
+					anDao.persist(aa);
 				} catch (NoSuchFieldException e) {
 					e.printStackTrace();
 					return false;
