@@ -1,39 +1,44 @@
-<div class="modal-header">
+﻿<div class="modal-header">
   <h3><i class="modal-title"></i> Poslovni partner </h3>  
 </div>
 <div class="modal-body">
-	<form id="form1">
+	<form name="form">
 		<div class="form-group">
-            <label>�ifra partnera:</label>
-			 <input class="form-control" ng-model="item.sifraPartnera"></input>
+            <label>* Šifra partnera:</label>
+			 <input name="sifra" class="form-control" ng-model="item.sifraPartnera" required></input>
         </div>
         <div class="form-group">
-            <label>Naziv:</label>
-			 <input class="form-control" ng-model="item.nazivPartnera"></input>
+            <label>* Naziv:</label>
+			 <input name="naziv" class="form-control" ng-model="item.nazivPartnera" required></input>
         </div>
 		<div class="form-group">
             <label>Adresa:</label>
-			<div class="input-group">
-				<input class="form-control" ng-model="item.adresaPartnera"></input>
-			</div>
+			<input name="adresa" class="form-control" ng-model="item.adresaPartnera"></input>
         </div>
 		<div class="form-group">
             <label>Broj telefona:</label>
-			<div class="input-group">
-				<input class="form-control" ng-model="item.brojTelefonaPartnera"></input>
-			</div>
+			<input name="telefon" class="form-control" ng-model="item.brojTelefonaPartnera" pattern="((\+)|([0-9]+\/))?([0-9]+[-\s]?)+[0-9]+"></input>
+			<span style="color:red" ng-show="form.telefon.$invalid && form.telefon.$dirty">
+				<span class="error" ng-show="form.telefon.$invalid">Potrebno je uneti broj telefona u validnom formatu!</span>
+			</span>
         </div>
 		<div class="form-group">
             <label>Kontakt osoba:</label>
-			 <input class="form-control" ng-model="item.kontaktOsoba"></input>
+			 <input name="osoba" class="form-control" ng-model="item.kontaktOsoba"></input>
         </div>
 		<div class="form-group">
             <label>Mail adresa:</label>
-			 <input class="form-control" ng-model="item.mailAdresa"></input>
+			 <input name="mail1" class="form-control" ng-model="item.mailAdresa" pattern="[-a-z0-9._+%]+@[a-z0-9.-]+\.[a-z]{2-4}"></input>
+			 <span style="color:red" ng-show="form.mail1.$invalid && form.mail1.$dirty">
+				<span class="error" ng-show="form.mail1.$invalid">Potrebno je uneti e-mail adresu u validnom formatu!</span>
+			 </span>
         </div>		
         
-		<div class="modal-footer">
-			    <button class="btn" ng-click="sacuvaj()">Sacuvaj izmene</button>
+		<span style="color:red" ng-show="show && form.$invalid">
+				<span>Jedno ili više polja označenih zvezdicom je nepopunjeno. Da biste nastavili, popunite ih!</span>
+			</span>
+		<div class="modal-footer" ng-init="show=false" ng-mouseover="show=true">
+			    <button class="btn" ng-click="sacuvaj()" ng-disabled="form.$invalid">Sačuvaj</button>
 				<button class="btn" ng-click="zatvaranje()">Zatvori</button>
 		</div>
     </form>	

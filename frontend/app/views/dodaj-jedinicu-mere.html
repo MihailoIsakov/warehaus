@@ -1,21 +1,30 @@
-<div class="modal-header">
+﻿<div class="modal-header">
     <h3 class="modal-title">Jedinica mere</h3>
 </div>
 <div class="modal-body">
-    <form>
+    <form name="form">
         <div class="form-group">
-            <label>�ifra:</label>
-            <input class="form-control" ng-model="selectedJedinicaMere.sifraJediniceMere" ></input>
+            <label>* Šifra:</label>
+			<input type="text" name="sifra" class="form-control" ng-model="selectedJedinicaMere.sifraJediniceMere" required></input>
+			 <span style="color:red" ng-show="form.sifra.$invalid && form.sifra.$dirty">
+				<span class="error" ng-show="form.sifra.$error.required">Obavezno polje!</span>
+			 </span>			
         </div>
         <div class="form-group">
-            <label>Naziv:</label>
-            <input class="form-control" ng-model="selectedJedinicaMere.nazivJediniceMere" ></input>
+            <label>* Naziv:</label>
+			<input type="text" name="naziv" class="form-control" ng-model="selectedJedinicaMere.nazivJediniceMere" required></input>
+			 <span style="color:red" ng-show="form.naziv.$invalid && form.naziv.$dirty">
+				<span class="error" ng-show="form.naziv.$error.required">Obavezno polje!</span>
+			 </span>				
         </div>        
     </form>
 </div>
 
-<div class="modal-footer">
-    <button class="btn" ng-click="ok()">Potvrdi</button>
-    <button class="btn" ng-click="cancel()">Otka�i</button>
-   
+<span style="color:red" ng-show="show && form.$invalid">
+		<span>Jedno ili više polja označenih zvezdicom je nepopunjeno. Da biste nastavili, popunite ih!</span>
+	</span>
+<div class="modal-footer" ng-init="show=false" ng-mouseover="show=true">
+    <button class="btn" ng-click="ok()" ng-disabled="form.$invalid">Sačuvaj</button>
+    <button class="btn" ng-click="cancel()">Odustani</button>
+</div>
 </div>

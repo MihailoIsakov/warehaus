@@ -1,8 +1,13 @@
-'use strict';
+﻿'use strict';
 
- angular.module('promDocDetail',[])
+ angular.module('promDocDetail',['ui.bootstrap'])
 
- .controller('promDocDetailCtrl', function ($scope, $modal, $modalInstance, StavkaPD, VrstaPD, Magacin, PoslovnaGodina) {
+ .controller('promDocDetailCtrl', function ($scope, $modal, $modalInstance, StavkaPD, VrstaPD, Magacin, PoslovnaGodina, datepickerPopupConfig) {
+	
+	$scope.today = new Date();
+	datepickerPopupConfig.currentText = "Danas";
+	datepickerPopupConfig.clearText="Obriši";
+	$scope.show = false;
 	
 	//poslovneGodine za drop down
 	VrstaPD.query().$promise.then(function (data) {
@@ -56,6 +61,15 @@
 		});}
 		
 	$scope.sacuvaj = function () {
+		if (!$scope.selectedDoc.datumNastanka) {
+			$scope.selectedDoc.datumNastanka = $scope.today;
+		}
+		if (!$scope.selectedDoc.vrstaDokumenta == "primka") {
+			$scope.selectedDoc.magacin2 = null;
+		}
+		if (!$scope.selectedDoc.vrstaDokumenta == "otpremnica") {
+			$scope.selectedDoc.magacin1 = null;
+		}
 		$modalInstance.close({'selectedDoc':$scope.selectedDoc,
 								'action':'sacuvaj'});
 	};

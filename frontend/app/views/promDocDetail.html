@@ -2,42 +2,42 @@
     <h3 class="modal-title">Kreiranje prometnog dokumenta</h3>
 </div>
 <div class="modal-body">
-    <form>
+    <form name="form">
 	    <div class="form-group">
-            <label>Vrsta prometnog dokumenta:</label>
-            <select ng-model="selectedDoc.vrstaDokumenta" ng-options="opt as opt.nazivVrste for opt in vrste"></select>
+            <label>* Vrsta prometnog dokumenta:</label>
+            <select name="vrsta" class="form-control" ng-model="selectedDoc.vrstaDokumenta" ng-options="opt as opt.nazivVrste for opt in vrste" required></select>
         </div>
 	  
         <div class="form-group">
             <label>Status dokumenta:</label>
-            <input class="form-control" text="u fazi formiranja" readonly></input>
+            <input name="status" class="form-control" value="u fazi formiranja" readonly></input>
         </div>
-		<div class="form-group">
-            <label>Magacin primke:</label>
+		<div class="form-group" ng-hide="selectedDoc.vrstaDokumenta.nazivVrste=='otpremnica'">
+            <label>* Magacin primke:</label>
 			<div class="input-group">
-				<input type="text" class="form-control" ng-model="selectedDoc.magacin1.nazivMagacina" readonly/>
+				<input name="magacin1" type="text" class="form-control" ng-model="selectedDoc.magacin1.nazivMagacina" readonly ng-required="selectedDoc.vrstaDokumenta.nazivVrste!='otpremnica'"/>
 				<span class="input-group-btn">
 					<button type="button" class="btn btn-default" ng-click="selektujMagacin1()"><i>...</i></button>
 				</span>
 			</div>
         </div>
-		<div class="form-group">
-            <label>Magacin otpremnice:</label>
+		<div class="form-group" ng-hide="selectedDoc.vrstaDokumenta.nazivVrste=='primka'">
+            <label>* Magacin otpremnice:</label>
 			<div class="input-group">
-				<input type="text" class="form-control" ng-model="selectedDoc.magacin2.nazivMagacina" readonly/>
+				<input name="magacin2" type="text" class="form-control" ng-model="selectedDoc.magacin2.nazivMagacina" readonly ng-required="selectedDoc.vrstaDokumenta.nazivVrste!='primka'"/>
 				<span class="input-group-btn">
 					<button type="button" class="btn btn-default" ng-click="selektujMagacin2()"><i>...</i></button>
 				</span>
 			</div>
         </div>
         <div class="form-group">
-            <label>Poslovna godina:</label>
-            <select ng-model="selectedDoc.poslovnaGodina" ng-options="opt as opt.brojGodine for opt in poslovneGodine"></select>
+            <label>* Poslovna godina:</label>
+            <select name="godina" class="form-control" ng-model="selectedDoc.poslovnaGodina" ng-options="opt as opt.brojGodine for opt in poslovneGodine" required></select>
         </div>
 		<div class="form-group">
-            <label>Poslovni partner:</label>
+            <label>* Poslovni partner:</label>
 			<div class="input-group">
-				<input type="text" class="form-control" ng-model="selectedDoc.poslovniPartner.nazivPartnera" readonly/>
+				<input name="partner" type="text" class="form-control" ng-model="selectedDoc.poslovniPartner.nazivPartnera" readonly required/>
 				<span class="input-group-btn">
 					<button type="button" class="btn btn-default" ng-click="odabirPoslovnogPartnera()"><i>...</i></button>
 				</span>
@@ -46,7 +46,7 @@
 		<div class="form-group">
             <label>Datum nastanka:</label>
 			<div class="input-group">
-				<input type="text" class="form-control" datepicker-popup="dd.MM.yyyy." ng-model="selectedDoc.datumNastanka" is-open="datumNastankaOpened" close-text="Zatvori" />
+				<input name="datum" type="text" class="form-control" datepicker-popup="dd.MM.yyyy." ng-model="selectedDoc.datumNastanka" is-open="datumNastankaOpened" close-text="Zatvori" max-date="{{today}}"/>
 				<span class="input-group-btn">
 					<button type="button" class="btn btn-default" ng-click="openDatumNastankaDatepicker($event, 'datumNastankaOpened')"><i class="glyphicon glyphicon-calendar"></i></button>
 				</span>
@@ -84,8 +84,11 @@
 	<button class="btn" ng-click="izmeniStavkuPD()">Izmeni stavku</button>
 </div>
 
-<div class="modal-footer">
-    <button class="btn" ng-click="sacuvaj()">Sačuvaj</button>
+	<span style="color:red" ng-show="show && form.$invalid">
+		<span>Jedno ili više polja označenih zvezdicom je nepopunjeno. Da biste nastavili, popunite ih!</span>
+	</span>
+<div class="modal-footer" ng-init="show=false" ng-mouseover="show=true">
+	<button type="submit" class="btn" ng-click="sacuvaj()" ng-disabled="form.$invalid">Sačuvaj</button>
     <button class="btn" ng-click="odustani()">Odustani</button>
    
 </div>

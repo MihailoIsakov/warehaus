@@ -1,18 +1,22 @@
-<div class="modal-header">
+﻿<div class="modal-header">
     <h3 class="modal-title">Prometni dokument - pregled</h3>
 </div>
 <div class="modal-body">
     <form>
+	    <div class="form-group">
+            <label>Vrsta dokumenta:</label>
+            <input class="form-control" ng-model="selectedDoc.vrstaDokumenta.nazivVrste" readonly></input>
+        </div>
         <div class="form-group">
-            <label>Status Dokumenta:</label>
+            <label>Status dokumenta:</label>
             <input class="form-control" ng-model="selectedDoc.statusDokumenta" readonly></input>
         </div>
-        <div class="form-group">
-            <label>Magacin otpremnice:</label>
+		<div class="form-group" ng-hide="selectedDoc.vrstaDokumenta.nazivVrste=='otpremnica'">
+            <label>Magacin primke:</label>
             <input class="form-control" ng-model="selectedDoc.magacin1.nazivMagacina" readonly></input>
         </div>
-        <div class="form-group">
-            <label>Magacin primke:</label>
+        <div class="form-group" ng-hide="selectedDoc.vrstaDokumenta.nazivVrste=='primka'">
+            <label>Magacin otpremnice:</label>
             <input class="form-control" ng-model="selectedDoc.magacin2.nazivMagacina" readonly></input>
         </div>
         <div class="form-group">
@@ -28,7 +32,7 @@
             <input class="form-control" ng-model="selectedDoc.datumNastanka" readonly></input>
         </div>
         <div class="form-group">
-            <label>Datum knji�enja:</label>
+            <label>Datum knjiženja:</label>
             <input class="form-control" ng-model="selectedDoc.datumKnjizenja" readonly></input>
         </div>
          <table class="table table-striped">

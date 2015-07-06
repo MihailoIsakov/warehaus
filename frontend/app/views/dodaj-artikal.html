@@ -1,42 +1,55 @@
-<div class="modal-header">
+﻿<div class="modal-header">
     <h3 class="modal-title">Artikal</h3>
 </div>
 <div class="modal-body">
-    <form>
+    <form name="form">
         <div class="form-group">
-            <label>�ifra:</label>
-            <input class="form-control" ng-model="selectedArtikal.sifraArtikla" ></input>
+            <label>* Šifra:</label>
+			<input type="text" name="sifra" class="form-control" ng-model="selectedArtikal.sifraArtikla" required></input>
+			 <span style="color:red" ng-show="form.sifra.$invalid && form.sifra.$dirty">
+				<span class="error" ng-show="form.sifra.$error.required">Obavezno polje!</span>
+			 </span>			
         </div>
         <div class="form-group">
-            <label>Naziv:</label>
-            <input class="form-control" ng-model="selectedArtikal.nazivArtikla" ></input>
+            <label>* Naziv:</label>
+			<input type="text" name="naziv" class="form-control" ng-model="selectedArtikal.nazivArtikla" required></input>
+			 <span style="color:red" ng-show="form.naziv.$invalid && form.naziv.$dirty">
+				<span class="error" ng-show="form.naziv.$error.required">Obavezno polje!</span>
+			 </span>			
         </div>
 		<div class="form-group">
-            <label>Grupa artikala:</label>
-            <input class="form-control" ng-model="selectedArtikal.grupaArtikala.nazivGrupe" readonly>
+            <label>* Grupa artikala:</label>
+            <div class="input-group">
+				<input name="grupa" type="text" class="form-control" ng-model="selectedArtikal.grupaArtikala.nazivGrupe" readonly required></input>
 				<span class="input-group-btn">
-					<button type="button" class="btn btn-default" ng-click="selektujGrupuArtikala()">Izaberi</button>
+					<button type="button" class="btn btn-default" ng-click="selektujGrupuArtikala()"><i>...</i></button>
 				</span>
-			</input>
+			</div>			
         </div>
 		<div class="form-group">
-            <label>Pakovanje:</label>
-            <input class="form-control" type="number" ng-model="selectedArtikal.pakovanje"></input>
+            <label>* Pakovanje:</label>
+			<input type="text" name="pakovanje" class="form-control" ng-model="selectedArtikal.pakovanje" pattern="[0-9]{1,7}(\.[0-9]{0,7})?" required></input>
+			 <span style="color:red" ng-show="form.pakovanje.$invalid && form.pakovanje.$dirty">
+				<span class="error" ng-show="form.pakovanje.$error.required">Obavezno polje!</span>
+				<span class="error" ng-show="form.pakovanje.$invalid">Potrebno je uneti broj!</span>
+			 </span>			
         </div>
 		<div class="form-group">
-            <label>Jedinica mere:</label>
-            <input class="form-control" ng-model="selectedArtikal.jedinicaMere.nazivJediniceMere" readonly>
+            <label>* Jedinica mere:</label>
+			<div class="input-group">
+				<input name="jedinica" type="text" class="form-control" ng-model="selectedArtikal.jedinicaMere.nazivJediniceMere" readonly required></input>
 				<span class="input-group-btn">
-					<button type="button" class="btn btn-default" ng-click="selektujJedinicuMere()">Izaberi</button>
+					<button type="button" class="btn btn-default" ng-click="selektujJedinicuMere()"><i>...</i></button>
 				</span>
-			</input>
-        </div>
-        
+			</div>
+        </div> 
     </form>
 </div>
 
-<div class="modal-footer">
-    <button class="btn" ng-click="ok()">Potvrdi</button>
-    <button class="btn" ng-click="cancel()">Otka�i</button>
-   
+<span style="color:red" ng-show="show && form.$invalid">
+		<span>Jedno ili više polja označenih zvezdicom je nepopunjeno. Da biste nastavili, popunite ih!</span>
+	</span>
+<div class="modal-footer" ng-init="show=false" ng-mouseover="show=true">
+    <button class="btn" ng-click="ok()" ng-disabled="form.$invalid">Sačuvaj</button>
+    <button class="btn" ng-click="cancel()">Odustani</button>
 </div>

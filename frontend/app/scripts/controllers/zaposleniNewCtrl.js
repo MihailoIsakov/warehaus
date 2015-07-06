@@ -1,9 +1,14 @@
-'use strict';
+﻿'use strict';
 
 angular.module('zaposleniNew', [])
 
-.controller('zaposleniNewCtrl', function ($scope, $routeParams, $modal, $log, $location, $route, $modalInstance ) {
+.controller('zaposleniNewCtrl', function ($scope, $routeParams, $modal, $log, $location, $route, $modalInstance, datepickerPopupConfig ) {
 
+	$scope.today = new Date();
+	datepickerPopupConfig.currentText = "Danas";
+	datepickerPopupConfig.clearText="Obriši";
+	$scope.show = false;
+	
 	$scope.ok = function () {
 		
 		$modalInstance.close({'selectedZaposleni':$scope.selectedZaposleni,

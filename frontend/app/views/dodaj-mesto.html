@@ -1,30 +1,45 @@
-<div class="modal-header">
+﻿<div class="modal-header">
     <h3 class="modal-title">Mesto</h3>
 </div>
 <div class="modal-body">
-    <form>
+    <form name="form">
         <div class="form-group.required">
-            <label>Šifra:</label>
-            <input class="form-control" ng-model="selectedMesto.sifraMesta" ></input>
+            <label>* Šifra:</label>
+			<input type="text" name="sifra" class="form-control" ng-model="selectedMesto.sifraMesta" required></input>
+			 <span style="color:red" ng-show="form.sifra.$invalid && form.sifra.$dirty">
+				<span class="error" ng-show="form.sifra.$error.required">Obavezno polje!</span>
+			 </span>
         </div>
         <div class="form-group.required">
-            <label>Naziv:</label>
-            <input class="form-control" ng-model="selectedMesto.nazivMesta" ></input>
+            <label>* Naziv:</label>
+			<input type="text" name="naziv" class="form-control" ng-model="selectedMesto.nazivMesta" required></input>
+			 <span style="color:red" ng-show="form.naziv.$invalid && form.naziv.$dirty">
+				<span class="error" ng-show="form.naziv.$error.required">Obavezno polje!</span>
+			 </span>
         </div>
          <div class="form-group">
             <label>PTT:</label>
-            <input class="form-control" ng-model="selectedMesto.pttBroj" ></input>
+			<input name="ptt" class="form-control" ng-model="selectedMesto.pttBroj" pattern="[0-9]{5}"></input>
+			<span style="color:red" ng-show="form.ptt.$invalid && form.ptt.$dirty">
+				<span class="error" ng-show="form.ptt.$invalid">Potrebno je uneti petocifreni PTT broj!</span>
+			</span>
         </div>
          <div class="form-group">
-            <label>Drzava:</label>
-            <input class="form-control"  ng-model="selectedMesto.drzava.nazivDrzave" readonly ></input>
-             <button class="btn" ng-click="selektujDrzavu()">Selektuj</button>
+            <label>* Država:</label>
+			<div class="input-group">
+				<input name="drzava" type="text" class="form-control" ng-model="selectedMesto.drzava.nazivDrzave" readonly required></input>
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default" ng-click="selektujDrzavu()"><i>...</i></button>
+				</span>
+			</div>
         </div>
     </form>
 </div>
 
-<div class="modal-footer">
-    <button class="btn" ng-click="ok()">OK</button>
-    <button class="btn" ng-click="cancel()">Cancel</button>
-   
+<span style="color:red" ng-show="show && form.$invalid">
+		<span>Jedno ili više polja označenih zvezdicom je nepopunjeno. Da biste nastavili, popunite ih!</span>
+	</span>
+<div class="modal-footer" ng-init="show=false" ng-mouseover="show=true">
+    <button class="btn" ng-click="ok()" ng-disabled="form.$invalid">Sačuvaj</button>
+    <button class="btn" ng-click="cancel()">Odustani</button>
 </div>

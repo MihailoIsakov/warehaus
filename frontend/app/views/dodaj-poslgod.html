@@ -1,27 +1,36 @@
-<div class="modal-header">
-    <h3 class="modal-title">Poslovna Godina</h3>
+﻿<div class="modal-header">
+    <h3 class="modal-title">Poslovna godina</h3>
 </div>
 <div class="modal-body">
-    <form>
+    <form name="form">
         <div class="form-group required">
-            <label>Broj Godine:</label>
-            <input class="form-control" ng-model="selectedPoslGod.brojGodine" ></input>
+            <label>* Broj godine:</label>
+			<input name="brojGodine" class="form-control" ng-model="selectedPoslGod.brojGodine" pattern="(19[0-9]{2})|(2[0-9]{3})"></input>
+			<span style="color:red" ng-show="form.brojGodine.$invalid && form.brojGodine.$dirty">
+				<span class="error" ng-show="form.brojGodine.$invalid">Potrebno je uneti ispravan četvorocifren broj godine!</span>
+			</span>
         </div>
         <div class="form-group" hidden>
-            <label>Zakljucena:</label>
+            <label>Zaključena:</label>
             <input type="checkbox"  class="form-control" ng-model="selectedPoslGod.zakljucenaGodina" ></input>
         </div>
        
          <div class="form-group">
-            <label>Preduzece:</label>
-            <input class="form-control"  ng-model="selectedPoslGod.preduzece.nazivPreduzeca"readonly ></input>
-             <button class="btn" ng-click="selektujPreduzece()">Selektuj</button>
+            <label>* Preduzeće:</label>
+			<div class="input-group">
+				<input name="preduzece" type="text" class="form-control" ng-model="selectedPoslGod.preduzece.nazivPreduzeca" readonly></input>
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default" ng-click="selektujPreduzece()"><i>...</i></button>
+				</span>
+			</div>
         </div>
     </form>
 </div>
 
-<div class="modal-footer">
-    <button class="btn" ng-click="ok()">OK</button>
-    <button class="btn" ng-click="cancel()">Cancel</button>
-   
+<span style="color:red" ng-show="show && form.$invalid">
+		<span>Jedno ili više polja označenih zvezdicom je nepopunjeno. Da biste nastavili, popunite ih!</span>
+	</span>
+<div class="modal-footer" ng-init="show=false" ng-mouseover="show=true">
+    <button class="btn" ng-click="ok()" ng-disabled="form.$invalid">Sačuvaj</button>
+    <button class="btn" ng-click="cancel()">Odustani</button> 
 </div>
