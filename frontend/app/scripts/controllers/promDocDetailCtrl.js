@@ -8,15 +8,24 @@
 	datepickerPopupConfig.currentText = "Danas";
 	datepickerPopupConfig.clearText="Obriši";
 	$scope.show = false;
+	$scope.vrstaIndex = 0;
+	$scope.godinaIndex = 0;
 	
 	//poslovneGodine za drop down
 	VrstaPD.query().$promise.then(function (data) {
 			$scope.vrste = data;
+			var i=0;
+			for (i=0; i<$scope.vrste.length; i++) {
+				if ($scope.vrste[i].idVrstaDokumenta==$scope.selectedDoc.vrstaDokumenta.idVrstaDokumenta) {
+					$scope.vrstaIndex = i;
+				}
+			}
 	});
 	
 	//poslovneGodine za drop down
 	PoslovnaGodina.query().$promise.then(function (data) {
 			$scope.poslovneGodine = data;
+			$scope.godinaIndex = $scope.poslovneGodine.indexOf($scope.selectedDoc.poslovnaGodina);
 	});
 	
 	$scope.zatvaranje = function() {

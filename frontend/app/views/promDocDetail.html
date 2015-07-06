@@ -87,8 +87,11 @@
 	<span style="color:red" ng-show="show && form.$invalid">
 		<span>Jedno ili više polja označenih zvezdicom je nepopunjeno. Da biste nastavili, popunite ih!</span>
 	</span>
+	<span style="color:red" ng-show="show && selectedDoc.stavke.length<1">
+		<span>Prometni dokument mora da ima najmanje jednu stavku!</span>
+	</span>
 <div class="modal-footer" ng-init="show=false" ng-mouseover="show=true">
-	<button type="submit" class="btn" ng-click="sacuvaj()" ng-disabled="form.$invalid">Sačuvaj</button>
+	<button type="submit" class="btn" ng-click="sacuvaj()" ng-disabled="form.$invalid && selectedDoc.stavke.length<1">Sačuvaj</button>
     <button class="btn" ng-click="odustani()">Odustani</button>
    
 </div>

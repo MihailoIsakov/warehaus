@@ -116,6 +116,39 @@ $scope.proknjizi = function (invoiceItem, size) {
 		});
 	};
 	
+	$scope.izmeni = function () {
+		if ($scope.selectedDoc.statusDokumenta!="proknjizen") {
+			
+			var modalInstance = $modal.open({
+				templateUrl: 'views/promDocDetail.html',
+				controller: 'promDocDetailCtrl',
+				scope: $scope
+			});
+			modalInstance.result.then(function (data) {
+				var selectedDoc = data.selectedDoc;
+				
+				if( data.action==='save'){
+					selectedDoc.$update(function () {
+					$route.reload();
+				},
+				function (response) {
+					if (response.status === 500) {
+						$scope.greska = "greska";
+					}
+				   
+				}
+			);
+					$route.reload();
+						
+				}
+				//ako stavka treba da se obrise izbaci se iz niza
+				
+			}, function () {
+				$log.info('Modal dismissed at: ' + new Date());
+			});
+		}
+	};
+	
 
 $scope.setSelected = function (selectedDoc) {
    $scope.selectedDoc = selectedDoc;
