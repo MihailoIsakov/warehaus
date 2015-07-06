@@ -8,10 +8,7 @@
             <select name="vrsta" class="form-control" ng-model="selectedDoc.vrstaDokumenta" ng-options="opt as opt.nazivVrste for opt in vrste" required></select>
         </div>
 	  
-        <div class="form-group">
-            <label>Status dokumenta:</label>
-            <input name="status" class="form-control" value="u fazi formiranja" readonly></input>
-        </div>
+       
 		<div class="form-group" ng-hide="selectedDoc.vrstaDokumenta.nazivVrste=='otpremnica'">
             <label>* Magacin primke:</label>
 			<div class="input-group">

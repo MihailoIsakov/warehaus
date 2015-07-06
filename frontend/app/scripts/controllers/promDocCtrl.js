@@ -22,9 +22,20 @@ if($routeParams.invoiceId!='new'){
 	
 }
 
-$scope.proknjizi = function (invoiceItem, size) {
 
+$scope.proknjizi = function (invoiceItem, size) {
+			$scope.selectedDoc.$update({'id':'1'},function () {
+				$route.reload();
+			},
+            function (response) {
+                if (response.status === 500) {
+                    $scope.greska = "greska";
+                }
+               
+            })
 			}
+
+
 
 
 	$scope.storniranje = function (invoiceItem, size) {

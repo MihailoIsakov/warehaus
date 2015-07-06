@@ -122,7 +122,8 @@ public class PromDocService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
-	public PrometniDokument update(PrometniDokument entity) throws Exception {
+	public PrometniDokument storniranje(PrometniDokument entity) throws Exception {
+		log.error("storniranje");
 		entity = promDocDao.findById(entity.getIdPrometniDokument());
 		if (entity.getStatusDokumenta().equals(statusDokumenta.proknjizen)&& !entity.getPoslovnaGodina().getZakljucenaGodina()) {
 			entity.setIdPrometniDokument(0);
@@ -144,6 +145,19 @@ public class PromDocService {
 
 			return retVal;
 		}
+		return null;
+	}
+	
+	
+	@PUT
+	@Path("{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Authenticate
+	public PrometniDokument knjizenje(@PathParam("id") String str,PrometniDokument entity) throws Exception {
+		log.error("ovo je parametar"+str+"evo ovde");
+		
+		
 		return null;
 	}
 	
