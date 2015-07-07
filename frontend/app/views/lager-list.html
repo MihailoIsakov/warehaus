@@ -4,7 +4,7 @@
    <hr>
  
 
-  <select ng-model="selected" ng-click="insertOrEditInvoice(selected.idMagacin)" ng-options="opt as opt.nazivMagacina for opt in options"  ng-init="selected=''"></select>
+  <select class="form-control" ng-model="selected" ng-click="insertOrEditInvoice(selected.idMagacin)" ng-options="opt as opt.nazivMagacina for opt in options"  ng-init="selected=''"></select>
    <div id="printThis">
     <div>Selektovan Magacin: <span ng-bind="selected.nazivMagacina"></span>
     </div>
