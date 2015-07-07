@@ -28,7 +28,7 @@ $scope.setSelected = function (selectedStavka) {
 			var stavka = data.selectedStavka;
 			
 			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
-			if( data.action==='sacuvaj'){
+			if( data.action==='save'){
 				stavka.$create(function () {
 									$route.reload();
 								},
@@ -58,7 +58,7 @@ $scope.setSelected = function (selectedStavka) {
 		modalInstance.result.then(function (data) {
 			var stavka = data.selectedStavka;
 			
-			if( data.action==='sacuvaj'){
+			if( data.action==='save'){
 				stavka.$update({stavkaId:$scope.selectedStavka}, function () {
 				$route.reload();
 			},

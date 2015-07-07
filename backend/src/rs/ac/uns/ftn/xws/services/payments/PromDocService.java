@@ -94,29 +94,29 @@ public class PromDocService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
 	public PrometniDokument create(PrometniDokument entity) throws Exception {
-		log.error("TUUUUUUUUUUUUU");
 		log.error(entity.getDatumNastanka());
 		
 		entity.setStatusDokumenta(statusDokumenta.u_fazi_formiranje);
-		int rb = promDocDao.findMaxRB();
+	/*	int rb = promDocDao.findMaxRB();
 		rb++;
 		entity.setBroj(rb);
-		Iterator<StavkaPrometnogDokumenta> stavke = entity.getStavke()
-					.iterator();
-		while (stavke.hasNext()) {
-			StavkaPrometnogDokumenta stavkaPrometnogDokumenta = (StavkaPrometnogDokumenta) stavke
-					.next();
-			stavkaDao.persist(stavkaPrometnogDokumenta);
-			
-		}
+	*/	
 		PrometniDokument retVal = null;
 		try {
-			retVal = promDocDao.persistSaKreiranjemStavki(entity);
+			retVal = promDocDao.persist(entity);
+			Iterator<StavkaPrometnogDokumenta> stavke = entity.getStavke()
+						.iterator();
+			while (stavke.hasNext()) {
+				StavkaPrometnogDokumenta stavkaPrometnogDokumenta = (StavkaPrometnogDokumenta) stavke
+						.next();
+				stavkaPrometnogDokumenta.setPrometniDokument(retVal);
+				stavkaDao.persist(stavkaPrometnogDokumenta);
+			}
+
 		} catch (Exception e) {
 			throw e;
 
 		}
-		//updateStanjaMagacina(retVal);
 		return retVal;
 	}
 
@@ -128,6 +128,37 @@ public class PromDocService {
 	public PrometniDokument update(PrometniDokument entity) throws Exception {
 
 		log.error("update prometnog dokumenta");
+		if (entity.getStatusDokumenta().equals(statusDokumenta.u_fazi_formiranje)) {
+			PrometniDokument retVal = null;
+			try {
+				retVal = promDocDao.merge(entity);
+				List<StavkaPrometnogDokumenta> list = stavkaDao.getStavkeByIdDokumenta(entity.getIdPrometniDokument());
+				Iterator<StavkaPrometnogDokumenta> stavke = entity.getStavke()
+							.iterator();
+				while (stavke.hasNext()) {
+					StavkaPrometnogDokumenta stavkaPrometnogDokumenta = (StavkaPrometnogDokumenta) stavke
+							.next();
+					stavkaPrometnogDokumenta.setPrometniDokument(retVal);
+					//brisanje
+					for (StavkaPrometnogDokumenta stavka : list) {
+						if (stavka.getIdStavkaPrometnogDokumenta()==stavkaPrometnogDokumenta.getIdStavkaPrometnogDokumenta()) {
+							list.remove(stavka);
+							break;
+						}
+					}
+					stavkaDao.persist(stavkaPrometnogDokumenta);
+					log.error("Persistovao stavku: " + stavkaPrometnogDokumenta.getIdStavkaPrometnogDokumenta());
+				}
+				
+				for (StavkaPrometnogDokumenta stavka : list) {
+					stavkaDao.remove(stavka);
+				}
+				return retVal;
+			} catch (Exception e) {
+				throw e;
+	
+			}
+		}
 		return null;
 	}
 	

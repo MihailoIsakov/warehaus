@@ -7,7 +7,7 @@
 	$scope.sacuvaj = function() {
 		$scope.selectedStavka.vrednostStavke = parseInt($scope.selectedStavka.cenaStavke)*parseInt($scope.selectedStavka.kolicinaPrDokumenta);
 		$modalInstance.close({'selectedStavka':$scope.selectedStavka, 
-							  'action':'sacuvaj'});
+							  'action':'save'});
 	}
 	
 	$scope.zatvaranje = function() {

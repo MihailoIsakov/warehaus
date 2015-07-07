@@ -1,29 +1,18 @@
-﻿'use strict';
+'use strict';
 
  angular.module('promDocDetail',['ui.bootstrap'])
 
- .controller('promDocDetailCtrl', function ($scope, $modal, $modalInstance, StavkaPD, VrstaPD, Magacin, PoslovnaGodina, datepickerPopupConfig) {
+ .controller('popisniDokumentCtrl', function ($scope, $modal, $modalInstance, Magacin, PoslovnaGodina, datepickerPopupConfig) {
 	
 	$scope.today = new Date();
 	datepickerPopupConfig.currentText = "Danas";
-	datepickerPopupConfig.clearText="Obriši";
+	datepickerPopupConfig.clearText="Obri�i";
 	$scope.show = false;
 	$scope.vrstaIndex = 0;
 	$scope.godinaIndex = 0;
-	if (!$scope.selectedDoc.datumNastanka) {
-		$scope.selectedDoc.datumNastanka = new Date();
+	if (!$scope.selectedDoc.datumPopisa) {
+		$scope.selectedDoc.datumPopisa = new Date();
 	}
-	
-	//poslovneGodine za drop down
-	VrstaPD.query().$promise.then(function (data) {
-			$scope.vrste = data;
-			var i=0;
-			for (i=0; i<$scope.vrste.length; i++) {
-				if ($scope.vrste[i].idVrstaDokumenta==$scope.selectedDoc.vrstaDokumenta.idVrstaDokumenta) {
-					$scope.vrstaIndex = i;
-				}
-			}
-	});
 	
 	//poslovneGodine za drop down
 	PoslovnaGodina.query().$promise.then(function (data) {
@@ -36,30 +25,25 @@
 	}
 	
 	//funkcija koja otvara datepicker
-	$scope.openDatumNastankaDatepicker = function($event, datumNastankaOpened) {
+	$scope.openDatumPopisaDatepicker = function($event, datumPopisaOpened) {
 		$event.preventDefault();
 		$event.stopPropagation();
-		$scope[datumNastankaOpened] = true;
+		$scope[datumPopisaOpened] = true;
 	};
 	
 	//otvaranje modala
-	$scope.odabirPoslovnogPartnera = function(size) {
+	$scope.odabirPopisneKomisije = function() {
 		
 		var modalInstance = $modal.open({
-			templateUrl: 'views/poslovniPartnerModal.html',
-			controller: 'partnerModalCtrl',
-			scope: $scope,
-			resolve: {
-				partner: function () {
-					return $scope.selectedPartner;
-				}
-			}
+			templateUrl: 'views/popisne-komisije-modal.html',
+			controller: 'popisneKomisijeModalCtrl',
+			scope: $scope
 		});
 		modalInstance.result.then(function (data) {
-			var partner = data.partner;
+			var komisija = data.selectedKomisija;
 			
 			if( data.action==='odabir')
-				$scope.selectedDoc.poslovniPartner = partner;
+				$scope.selectedDoc.popisnaKomisija = komisija;
 			},
             function (response) {
                 if (response.status === 500) {
@@ -73,15 +57,7 @@
 		});}
 		
 	$scope.sacuvaj = function () {
-		if (!$scope.selectedDoc.datumNastanka) {
-			$scope.selectedDoc.datumNastanka = $scope.today;
-		}
-		if (!$scope.selectedDoc.vrstaDokumenta.nazivVrste == "primka") {
-			$scope.selectedDoc.magacin2 = null;
-		}
-		if (!$scope.selectedDoc.vrstaDokumenta.nazivVrste == "otpremnica") {
-			$scope.selectedDoc.magacin1 = null;
-		}
+		
 		$modalInstance.close({'selectedDoc':$scope.selectedDoc,
 								'action':'save'});
 	};
@@ -99,8 +75,8 @@ $scope.setSelected = function (selectedStavka) {
 		
 		$scope.selectedStavka = new StavkaPD();
 		var modalInstance = $modal.open({
-			templateUrl: 'views/stavkaPDDetail.html',
-			controller: 'stavkaModalCtrl',
+			templateUrl: 'views/stavkaPopisaDetail.html',
+			controller: 'stavkaPopisaModalCtrl',
 			scope: $scope
 		});
 		modalInstance.result.then(function (data) {
@@ -124,8 +100,8 @@ $scope.setSelected = function (selectedStavka) {
 		
 		if ($scope.selectedStavka) {
 			var modalInstance = $modal.open({
-				templateUrl: 'views/stavkaPDDetail.html',
-				controller: 'stavkaModalCtrl',
+				templateUrl: 'views/stavkaPopisaDetail.html',
+				controller: 'stavkaPopisaModalCtrl',
 				scope: $scope
 			});
 			modalInstance.result.then(function (data) {}
@@ -159,11 +135,11 @@ $scope.setSelected = function (selectedStavka) {
 		});
 		modalInstance.result.then(function (data) {
 			
-			var selectedMagacin1 = data.selectedMagacin;
+			var selectedMagacin = data.selectedMagacin;
 			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
 
 			if( data.action==='save')
-				$scope.selectedDoc.magacin1 = selectedMagacin1;
+				$scope.selectedDoc.magacin = selectedMagacin;
 			},
             function (response) {
                 if (response.status === 500) {
@@ -174,32 +150,5 @@ $scope.setSelected = function (selectedStavka) {
 		}, function () {
 			$log.info('Modal dismissed at: ' + new Date());
 		});}
-	
-	
-	$scope.selektujMagacin2 = function () {	
-		var modalInstance = $modal.open({
-			templateUrl: 'views/magacin-modal.html',
-			controller: 'magaciniModalCtrl',
-			scope: $scope
-		});
-		modalInstance.result.then(function (data) {
-			
-			var selectedMagacin2 = data.selectedMagacin;
-			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
-
-			if( data.action==='save')
-				$scope.selectedDoc.magacin2 = selectedMagacin2;
-			},
-            function (response) {
-                if (response.status === 500) {
-                    $scope.greska = "greska";
-                }
-			$route.reload();
-			
-		}, function () {
-			$log.info('Modal dismissed at: ' + new Date());
-		});
-		}
-		}
 );
 
