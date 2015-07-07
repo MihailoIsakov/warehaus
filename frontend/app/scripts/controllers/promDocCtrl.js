@@ -40,6 +40,7 @@ $scope.proknjizi = function (invoiceItem, size) {
 
 	$scope.storniranje = function (invoiceItem, size) {
 
+		if($scope.selectedDoc && $scope.selectedDoc.idPrometniDokument){
 		var modalInstance = $modal.open({
 			templateUrl: 'views/storniraj-primku.html',
 			controller: 'stonPrimCtrl',
@@ -74,6 +75,7 @@ $scope.proknjizi = function (invoiceItem, size) {
 		}, function () {
 			$log.info('Modal dismissed at: ' + new Date());
 		});
+	}
 	};
 
 		//modalni dijalog za stavku fakutre
@@ -114,6 +116,7 @@ $scope.proknjizi = function (invoiceItem, size) {
 	
 			//modalni dijalog za stavku fakutre
 	$scope.pregled = function (size) {
+		if($scope.selectedDoc && $scope.selectedDoc.idPrometniDokument){
 		var modalInstance = $modal.open({
 			templateUrl: 'views/pregledPD.html',
 			controller: 'promDocDetailCtrl',
@@ -125,6 +128,7 @@ $scope.proknjizi = function (invoiceItem, size) {
 				}
 			}
 		});
+	}
 	};
 	
 	$scope.izmeni = function () {
