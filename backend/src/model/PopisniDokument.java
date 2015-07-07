@@ -3,11 +3,24 @@ package model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -60,6 +73,9 @@ public class PopisniDokument implements Serializable {
 	@JoinColumn(name="ID_POSLOVNA_GODINA")
 	private PoslovnaGodina poslovnaGodina;
 	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="popisniDokument")
+    private Set<StavkaPopisa> stavke = new HashSet<StavkaPopisa>();
+	
 	public PopisniDokument() {
 	}
 
@@ -111,6 +127,14 @@ public class PopisniDokument implements Serializable {
 
 	public void setPoslovnaGodina(PoslovnaGodina poslovnaGodina) {
 		this.poslovnaGodina = poslovnaGodina;
+	}
+
+	public Set<StavkaPopisa> getStavke() {
+		return stavke;
+	}
+
+	public void setStavke(Set<StavkaPopisa> stavke) {
+		this.stavke = stavke;
 	}
 
 

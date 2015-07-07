@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigDecimal;
 
 
@@ -50,6 +52,7 @@ public class StavkaPopisa implements Serializable {
 	//bi-directional many-to-one association to PopisniDokument
 	@ManyToOne
 	@JoinColumn(name="ID_POPISNI_DOKUMENT")
+	@JsonIgnore
 	private PopisniDokument popisniDokument;
 
 	public StavkaPopisa() {
