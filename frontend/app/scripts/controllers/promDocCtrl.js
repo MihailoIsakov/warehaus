@@ -24,7 +24,7 @@ if($routeParams.invoiceId!='new'){
 
 
 $scope.proknjizi = function (invoiceItem, size) {
-			$scope.selectedDoc.$update({'id':'1'},function () {
+			$scope.selectedDoc.$update({'id':'knjizenje'},function () {
 				$route.reload();
 			},
             function (response) {
@@ -40,6 +40,7 @@ $scope.proknjizi = function (invoiceItem, size) {
 
 	$scope.storniranje = function (invoiceItem, size) {
 
+		if($scope.selectedDoc && $scope.selectedDoc.idPrometniDokument){
 		var modalInstance = $modal.open({
 			templateUrl: 'views/storniraj-primku.html',
 			controller: 'stonPrimCtrl',
@@ -56,7 +57,7 @@ $scope.proknjizi = function (invoiceItem, size) {
 			
 			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
 			if( data.action==='save'){
-				selectedDoc.$update(function () {
+				selectedDoc.$update({'id':'storniranje'},function () {
 				$route.reload();
 			},
             function (response) {
@@ -74,6 +75,7 @@ $scope.proknjizi = function (invoiceItem, size) {
 		}, function () {
 			$log.info('Modal dismissed at: ' + new Date());
 		});
+	}
 	};
 
 		//modalni dijalog za stavku fakutre
@@ -114,6 +116,7 @@ $scope.proknjizi = function (invoiceItem, size) {
 	
 			//modalni dijalog za stavku fakutre
 	$scope.pregled = function (size) {
+		if($scope.selectedDoc && $scope.selectedDoc.idPrometniDokument){
 		var modalInstance = $modal.open({
 			templateUrl: 'views/pregledPD.html',
 			controller: 'promDocDetailCtrl',
@@ -125,6 +128,7 @@ $scope.proknjizi = function (invoiceItem, size) {
 				}
 			}
 		});
+	}
 	};
 	
 	$scope.izmeni = function () {

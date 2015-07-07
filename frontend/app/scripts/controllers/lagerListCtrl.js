@@ -61,13 +61,11 @@ if($routeParams.invoiceId!='new'){
  		
 	};
 
-	document.getElementById("btnPrint").onclick = function () {
-    printElement(document.getElementById("printThis"));
-    
-    var modThis = document.querySelector("#printSection .modifyMe");
- 
-    
-    window.print();
+$scope.btnPrint = function () {
+		
+    	printElement(document.getElementById("printThis"));
+    	var modThis = document.querySelector("#printSection .modifyMe");
+ 		window.print();
 }
 
 function printElement(elem) {

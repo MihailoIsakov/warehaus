@@ -23,7 +23,7 @@ $scope.setSelected = function (selectedPartner) {
 		$scope.item = new Partner();
 		var modalInstance = $modal.open({
 			templateUrl: 'views/partnerDetail.html',
-			controller: 'genericModalCtrl',
+			controller: 'partnerDetailCtrl',
 			size: size,
 			scope: $scope ,
 			resolve: {
@@ -36,7 +36,7 @@ $scope.setSelected = function (selectedPartner) {
 			var partner = data.item;
 			
 			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
-			if( data.action==='sacuvaj'){
+			if( data.action==='save'){
 				partner.$create(function () {
 				$route.reload();
 
@@ -64,7 +64,7 @@ $scope.setSelected = function (selectedPartner) {
 			$scope.item = $scope.selectedPartner;
 		var modalInstance = $modal.open({
 			templateUrl: 'views/partnerDetail.html',
-			controller: 'genericModalCtrl',
+			controller: 'partnerDetailCtrl',
 			size: size,
 			scope: $scope ,
 			resolve: {
@@ -76,7 +76,7 @@ $scope.setSelected = function (selectedPartner) {
 		modalInstance.result.then(function (data) {
 			var partner = data.item;
 			
-			if( data.action==='sacuvaj'){
+			if( data.action==='save'){
 				partner.$update({partnerId:$scope.item}, function () {
 				$route.reload();
 			},

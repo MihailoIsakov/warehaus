@@ -12,6 +12,10 @@
 			 <input name="naziv" class="form-control" ng-model="item.nazivPartnera" required></input>
         </div>
 		<div class="form-group">
+            <label>* Vrsta partnera:</label>
+            <select name="vrsta" class="form-control" ng-model="selectedDoc.vrstaPartnera" ng-options="opt as opt for opt in vrste" required></select>
+        </div>
+		<div class="form-group">
             <label>Adresa:</label>
 			<input name="adresa" class="form-control" ng-model="item.adresaPartnera"></input>
         </div>
@@ -33,6 +37,15 @@
 				<span class="error" ng-show="form.mail1.$invalid">Potrebno je uneti e-mail adresu u validnom formatu!</span>
 			 </span>
         </div>		
+		<div class="form-group">
+            <label>Mesto:</label>
+            <div class="input-group">
+				<input name="mesto" type="text" class="form-control" ng-model="item.mesto.nazivMesta" readonly></input>
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default" ng-click="selektujMesto()"><i>...</i></button>
+				</span>
+			</div>
+        </div>
         
 		<span style="color:red" ng-show="show && form.$invalid">
 				<span>Jedno ili više polja označenih zvezdicom je nepopunjeno. Da biste nastavili, popunite ih!</span>

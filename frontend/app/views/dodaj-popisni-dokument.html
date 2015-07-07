@@ -1,0 +1,87 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">Kreiranje popisnog dokumenta</h3>
+</div>
+<div class="modal-body">
+    <form name="form">	  
+        <div class="form-group">
+            <label>* Šifra popisnog dokumenta:</label>
+			<input type="text" name="sifra" class="form-control" ng-model="selectedDoc.sifraPopisa" required></input>
+			 <span style="color:red" ng-show="form.sifra.$invalid && form.sifra.$dirty">
+				<span class="error" ng-show="form.sifra.$error.required">Obavezno polje!</span>
+			 </span>			
+        </div>
+		<div class="form-group">
+            <label>* Magacin:</label>
+			<div class="input-group">
+				<input name="magacin" type="text" class="form-control" ng-model="selectedDoc.magacin.nazivMagacina" readonly></input>
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default" ng-click="selektujMagacin1()"><i>...</i></button>
+				</span>
+			</div>
+        </div>
+		<div class="form-group">
+            <label> Status popisnog dokumenta:</label>
+			<div class="input-group">
+				<input name="status" type="text" class="form-control" value="neproknjizen" readonly></input>
+			</div>
+        </div>
+        <div class="form-group">
+            <label>* Poslovna godina:</label>
+            <select name="godina" class="form-control" ng-model="selectedDoc.poslovnaGodina" ng-options="opt as opt.brojGodine for opt in poslovneGodine" required></select>
+        </div>
+		<div class="form-group">
+            <label>* Popisna komisija:</label>
+			<div class="input-group">
+				<button type="button" class="btn btn-default" ng-click="odabirPopisneKomisije()"><i>Odaberi komisiju</i></button>
+				<label>Predsednik: </label><input value="{{selectedDoc.popisnaKomisija.zaposleni1.ime}} {{selectedDoc.popisnaKomisija.zaposleni1.prezime}}"></input>
+			</div>
+        </div>
+		<div class="form-group">
+            <label>Datum popisa:</label>
+			<div class="input-group">
+				<input name="datum" type="text" class="form-control" datepicker-popup="dd.MM.yyyy." ng-model="selectedDoc.datumPopisa" is-open="datumPopisaOpened" close-text="Zatvori" max-date="{{today}}"/>
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default" ng-click="openDatumNastankaDatepicker($event, 'datumPopisaOpened')"><i class="glyphicon glyphicon-calendar"></i></button>
+				</span>
+			</div>
+        </div>
+         <table class="table table-striped">
+    <thead>
+      <tr>
+          <th> <a ng-click = "orderProp = 'redniBrojStavke'; reverseSort = !reverseSort">Redni broj stavke</th> 
+          <th> <a ng-click = "orderProp = 'artikal.nazivArtikla'; reverseSort = !reverseSort">Artikal</th> 
+          <th> <a ng-click = "orderProp = 'cenaAktuelnaPriPopisu'; reverseSort = !reverseSort">Aktuelna cena pri popisu</th> 
+          <th> <a ng-click = "orderProp = 'kolicinaUKartici'; reverseSort = !reverseSort">Količina u kartici</th>
+          <th> <a ng-click = "orderProp = 'kolicinaPoPopisu'; reverseSort = !reverseSort">Količina po popisu</th> 
+          <th> <a ng-click = "orderProp = 'vrednostUKartici'; reverseSort = !reverseSort">Vrednost u kartici</th> 
+		  <th> <a ng-click = "orderProp = 'vrednostPoPopisu'; reverseSort = !reverseSort">Vrednost po popisu</th> 
+          
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-click="setSelected(article)" ng-repeat="article in selectedDoc.stavke  | filter:query | orderBy:orderProp : reverseSort ">
+          <td>{{article.redniBrojStavke}}</td>
+          <td>{{article.artikal.nazivArtikla}}</td>
+          <td>{{article.cenaAktuelnaPriPopisu}}</td>
+          <td>{{article.kolicinaUKartici}}</td>
+          <td>{{article.kolicinaPoPopisu}}</td>
+          <td>{{article.vrednostUKartici}}</td>
+          <td>{{article.vrednostPoPopisu}}</td>
+      </tr>
+    </tbody>
+    </table>
+    </form>
+	</hr>
+	<button class="btn" ng-click="dodajStavkuPD()">Dodaj stavku</button>
+    <button class="btn" ng-click="obrisiStavkuPD()">Obriši stavku</button>
+	<button class="btn" ng-click="izmeniStavkuPD()">Izmeni stavku</button>
+</div>
+
+	<span style="color:red" ng-show="show && form.$invalid">
+		<span>Jedno ili više polja oznacenih zvezdicom je nepopunjeno. Da biste nastavili, popunite ih!</span>
+	</span>
+<div class="modal-footer" ng-init="show=false" ng-mouseover="show=true">
+	<button type="submit" class="btn" ng-click="sacuvaj()" ng-disabled="form.$invalid">Sacuvaj</button>
+    <button class="btn" ng-click="odustani()">Odustani</button>
+   
+</div>

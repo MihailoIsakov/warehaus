@@ -16,7 +16,7 @@ public class VrstaDokumentaDao extends GenericDaoBean<VrstaDokumenta, Integer> i
 		Query q = em.createNamedQuery("VrstaDokumenta.findByName");
 
 		q.setParameter("name", name);
-		return (VrstaDokumenta) q.getResultList();
+		return (VrstaDokumenta) q.getSingleResult();
 	}
 
 }
