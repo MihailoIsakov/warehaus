@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Analitika" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ccc107da-eccf-4ff8-ae6d-75a7478f5437">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Analitika" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ccc107da-eccf-4ff8-ae6d-75a7478f5437">
 	<property name="ireport.zoom" value="1.771561000000001"/>
-	<property name="ireport.x" value="105"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
@@ -248,11 +248,11 @@ where xws.analitika_magacinske_kartice.ID_MAGACINSKA_KARTICA = $P{IdMagacinskaKa
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="Detail" x="379" y="109" width="53" height="15" uuid="1249ed3f-3cf3-4e0d-8f5d-e219c3b815ca"/>
-				<textFieldExpression><![CDATA[$F{POCETNO_STANJE_KOL} + $F{KOL__ULAZA} - $F{KOL__IZLAZA}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{POCETNO_STANJE_KOL}.add($F{KOL__ULAZA}).subtract($F{KOL__IZLAZA})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="Detail" x="432" y="109" width="64" height="15" uuid="d195b86c-0710-4622-b0bc-74a1c0aaf4ff"/>
-				<textFieldExpression><![CDATA[$F{POCETNO_STANJE_VR} + $F{VR__ULAZA} - $F{VR__IZLAZA}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{POCETNO_STANJE_VR}.add($F{VR__ULAZA}).subtract($F{VR__IZLAZA})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="Detail" x="496" y="109" width="59" height="15" uuid="0dd8b1e5-823f-492c-bd0f-6916ea56c5d8"/>
