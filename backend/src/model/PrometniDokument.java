@@ -32,7 +32,8 @@ import javax.persistence.TemporalType;
 @Table(name="prometni_dokument")
 @NamedQueries({
 	@NamedQuery(name="PrometniDokument.findAll", query="SELECT p FROM PrometniDokument p"),
-	@NamedQuery(name="PrometniDokument.findMaxRB", query="SELECT MAX(broj) FROM PrometniDokument")
+	@NamedQuery(name="PrometniDokument.findMaxRB", query="SELECT MAX(broj) FROM PrometniDokument"),
+	@NamedQuery(name="PrometniDokument.findMaxRBbyPG", query="SELECT p FROM PrometniDokument p WHERE p.poslovnaGodina.idPoslovnaGodina like :id")
 })
 public class PrometniDokument implements Serializable {
 	private static final long serialVersionUID = 1L;

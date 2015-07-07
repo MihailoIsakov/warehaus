@@ -9,6 +9,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 
+import model.PoslovnaGodina;
 import model.PrometniDokument;
 import model.StavkaPrometnogDokumenta;
 import rs.ac.uns.ftn.xws.sessionbeans.common.GenericDaoBean;
@@ -130,6 +131,22 @@ public class PrometniDokumentDao extends
 	public int findMaxRB() {
 		Query q = em.createNamedQuery("PrometniDokument.findMaxRB");
 		return (int) q.getSingleResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public int findRBbyPG(PoslovnaGodina poslovnaGodina) {
+		Query q = em.createNamedQuery("PrometniDokument.findMaxRBbyPG");
+		q.setParameter("id", poslovnaGodina.getIdPoslovnaGodina());
+		List<PrometniDokument> spisak = q.getResultList();
+		int ret = 0;
+		for(PrometniDokument p: spisak){
+			if(p.getBroj() > ret){
+				ret = p.getBroj();
+			}
+		}
+		ret++;
+		return ret;
 	}
 	
 

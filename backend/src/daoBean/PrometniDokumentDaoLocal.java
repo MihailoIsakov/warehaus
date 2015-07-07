@@ -1,5 +1,6 @@
 package daoBean;
 
+import model.PoslovnaGodina;
 import model.PrometniDokument;
 import rs.ac.uns.ftn.xws.sessionbeans.common.GenericDao;
 
@@ -15,4 +16,6 @@ public interface PrometniDokumentDaoLocal extends GenericDao<PrometniDokument, I
 	boolean proveriPrometniDokument(PrometniDokument entity);
 	
 	public int findMaxRB();
+
+	public int findRBbyPG(PoslovnaGodina poslovnaGodina);
 }
