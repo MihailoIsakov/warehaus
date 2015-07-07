@@ -6,7 +6,7 @@
 
  .controller('lagerListCtrl', function (Artikal, MagacinskaKartica, $scope, $routeParams, $modal, $log, $location, InvoiceItem) {
 
-if($routeParams.invoiceId!='new'){
+    if($routeParams.invoiceId!='new'){
 		//preuzimanje parametra iz URL
 		var invoiceId = $routeParams.invoiceId;
 		if(invoiceId){
@@ -15,9 +15,6 @@ if($routeParams.invoiceId!='new'){
 			$scope.articles = data;
 		});
 	}
-
-
-
 	//ako kreiramo novu fakutru
 	else{
 		$scope.articles = new Artikal();
