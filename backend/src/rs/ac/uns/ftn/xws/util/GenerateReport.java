@@ -3,10 +3,12 @@ package rs.ac.uns.ftn.xws.util;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
- 
+import java.util.Properties;
+
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
@@ -14,7 +16,7 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
-  
+
 /**
  * You'll need these jar's below:
  *	
@@ -27,37 +29,60 @@ import net.sf.jasperreports.engine.export.JRPdfExporter;
  * commons-digester-2.1.jar
  * commons-logging-1.1.jar
  */
-public class GenerateSimplePdfReportWithJasperReports {
+public class GenerateReport {
+
+    public static void createLagerList() {
+        String location = "Reports/";
+        String filename = "LagerLista";
+        String destination = "pdfs/";
+        Map<String, Object> params = new HashMap<String, Object>();
+
+        createPdf(location, filename, destination, params);
+    }
+
+    public static void createAnalitika(int IdMK) {
+        String location = "Reports/";
+        String filename = "Analitika";
+        String destination = "pdfs/";
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("IdMagacinskaKartica", IdMK);
+
+        createPdf(location, filename, destination, params);
+    }
  
-	public static void main(String[] args) {
-		
-		Connection connection = null;
+	private static void createPdf(String fileLocation, String filename, String destination, Map<String, Object> parameters) {
+        
+        Connection conn = null;
 		try {
-		
-			String reportName = "myreport";
-			Map<String, Object> parameters = new HashMap<String, Object>();
-			connection = new ConnectionFactory().getConnection(); // opens a jdbc connection
+
+            //Establish a database connection 
+            conn = null;
+            Properties connectionProps = new Properties();
+            connectionProps.put("user", "root");
+            connectionProps.put("password", "root");
+            conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/",
+                    connectionProps);
  
 			// compiles jrxml
-			JasperCompileManager.compileReportToFile(reportName + ".jrxml");
+			JasperCompileManager.compileReportToFile(fileLocation + filename + ".jrxml");
 			// fills compiled report with parameters and a connection
-			JasperPrint print = JasperFillManager.fillReport(reportName + ".jasper", parameters, connection);
+			JasperPrint print = JasperFillManager.fillReport(fileLocation + filename + ".jasper", parameters, conn);
 			// exports report to pdf
 			JRExporter exporter = new JRPdfExporter();
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
-			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, new FileOutputStream(reportName + ".pdf")); // your output goes here
+			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, new FileOutputStream(destination + filename + ".pdf")); // your output goes here
 			
 			exporter.exportReport();
  
 		} catch (Exception e) {
+            e.printStackTrace();
 			throw new RuntimeException("It's not possible to generate the pdf report.", e);
 		} finally {
 			// it's your responsibility to close the connection, don't forget it!
-			if (connection != null) {
-				try { connection.close(); } catch (Exception e) {}
+			if (conn != null) {
+				try { conn.close(); } catch (Exception e) {}
 			}
 		}
-		
 	}
-	
 }

@@ -24,7 +24,7 @@ public class Artikal implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	 @GeneratedValue(strategy=IDENTITY)
+	@GeneratedValue(strategy=IDENTITY)
 	@Column(name="ID_ARTIKAL")
 	private int idArtikal;
 
