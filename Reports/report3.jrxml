@@ -13,13 +13,31 @@
 			<style backcolor="#E6DAC3"/>
 		</conditionalStyle>
 	</style>
-	<queryString language="SQL">
-		<![CDATA[select * from xws.magacinska_kartica;]]>
+	<parameter name="idartikal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from xws.artikal join xws.magacinska_kartica where ID_ARTIKAL = idartikal;]]>
 	</queryString>
-	<field name="ID_MAGACINSKA_KARTICA" class="java.lang.Integer">
+	<field name="ID_ARTIKAL" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="ID_ARTIKAL" class="java.lang.Integer">
+	<field name="ID_JEDINICA_MERE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ID_GRUPA_ARTIKALA" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SIFRA_ARTIKLA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NAZIV_ARTIKLA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PAKOVANJE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ID_MAGACINSKA_KARTICA" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="ID_POSLOVNA_GODINA" class="java.lang.Integer">
@@ -112,14 +130,14 @@
 				<textElement verticalAlignment="Middle">
 					<font size="40" pdfFontName="Times-Roman"/>
 				</textElement>
-				<text><![CDATA[Magacinska kartica]]></text>
+				<text><![CDATA[Analitika]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="138" y="62" width="196" height="22" uuid="acf12c7d-f992-4b8c-beac-5f7f93e03063"/>
+				<reportElement style="SubTitle" x="138" y="62" width="322" height="22" uuid="acf12c7d-f992-4b8c-beac-5f7f93e03063"/>
 				<textElement>
 					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
 				</textElement>
-				<text><![CDATA[Coffee SubTitle]]></text>
+				<text><![CDATA[Analitika magacinske kartice]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="138" y="94" width="417" height="42" uuid="6f105d6e-4070-4d62-ba47-64653b2a459b"/>

@@ -1,26 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0fbf4db3-4de4-45ba-8a0a-98a75957cb06">
-	<property name="template.type" value="columnar"/>
-	<property name="ireport.zoom" value="1.0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LagerLista" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e94e8366-e4bf-425a-a368-4b1cb7650793">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<style name="Title" forecolor="#000000" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
-	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
-	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
-	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
-	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#F46800" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
-			<style mode="Opaque" backcolor="#F0EFEF"/>
+			<style backcolor="#E6DAC3"/>
 		</conditionalStyle>
 	</style>
-	<queryString language="SQL">
-		<![CDATA[select * from xws.magacinska_kartica;]]>
+	<queryString>
+		<![CDATA[select * from xws.artikal join xws.magacinska_kartica on xws.artikal.ID_ARTIKAL = xws.magacinska_kartica.ID_ARTIKAL
+join xws.poslovna_godina on xws.magacinska_kartica.ID_POSLOVNA_GODINA = xws.poslovna_godina.ID_POSLOVNA_GODINA
+join xws.jedinica_mere on xws.artikal.ID_JEDINICA_MERE = xws.jedinica_mere.ID_JEDINICA_MERE
+join xws.magacin on xws.magacinska_kartica.ID_MAGACIN = xws.magacin.ID_MAGACIN;]]>
 	</queryString>
-	<field name="ID_MAGACINSKA_KARTICA" class="java.lang.Integer">
+	<field name="ID_ARTIKAL" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="ID_ARTIKAL" class="java.lang.Integer">
+	<field name="ID_JEDINICA_MERE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ID_GRUPA_ARTIKALA" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SIFRA_ARTIKLA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NAZIV_ARTIKLA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PAKOVANJE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ID_MAGACINSKA_KARTICA" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="ID_POSLOVNA_GODINA" class="java.lang.Integer">
@@ -53,68 +70,111 @@
 	<field name="POCETNO_STANJE_VR" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<group name="ID_POSLOVNA_GODINA">
-		<groupExpression><![CDATA[$F{ID_POSLOVNA_GODINA}]]></groupExpression>
+	<field name="ID_PREDUZECE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BROJ_GODINE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ZAKLJUCENA_GODINA" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SIFRA_JEDINICE_MERE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NAZIV_JEDINICE_MERE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ID_MESTO" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ID_SEKTOR" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SIFRA_MAGACINA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NAZIV_MAGACINA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ADRESA_MAGACINA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="BROJ_GODINE">
+		<groupExpression><![CDATA[$F{BROJ_GODINE}]]></groupExpression>
 		<groupHeader>
-			<band height="31">
+			<band height="37">
 				<frame>
-					<reportElement mode="Opaque" x="0" y="7" width="555" height="24" forecolor="#B89F7D" backcolor="#9DB1B8" uuid="4824f605-f61f-40e5-97dc-d67aa501be5f"/>
-					<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-						<reportElement style="SubTitle" isPrintRepeatedValues="false" x="2" y="1" width="479" height="23" forecolor="#FFFFFF" uuid="1cc3afd3-9f90-4bc2-ba2e-b8c71985fafd"/>
+					<reportElement mode="Opaque" x="-21" y="7" width="597" height="24" forecolor="#B89F7D" backcolor="#FFD687" uuid="ad0765f9-fe8b-4435-82a7-3c0ecfa739ce"/>
+					<rectangle>
+						<reportElement mode="Opaque" x="21" y="0" width="36" height="24" backcolor="#FF5F01" uuid="0fa211f8-7752-4a84-a5e3-21eebe734fbb"/>
+						<graphicElement>
+							<pen lineWidth="0.0"/>
+						</graphicElement>
+					</rectangle>
+					<textField>
+						<reportElement style="SubTitle" x="68" y="0" width="413" height="24" forecolor="#963E00" uuid="4071b07c-65e0-4935-b046-dda709e5b10b"/>
 						<textElement>
-							<font isBold="false"/>
+							<font isBold="true"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{ID_POSLOVNA_GODINA}]]></textFieldExpression>
+						<textFieldExpression><![CDATA["Godina: " + $F{BROJ_GODINE}]]></textFieldExpression>
 					</textField>
 				</frame>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="6"/>
+			<band height="11"/>
 		</groupFooter>
 	</group>
-	<group name="ID_MAGACINSKA_KARTICA">
-		<groupExpression><![CDATA[$F{ID_MAGACINSKA_KARTICA}]]></groupExpression>
+	<group name="ID_MAGACIN">
+		<groupExpression><![CDATA[$F{ID_MAGACIN}]]></groupExpression>
 		<groupHeader>
-			<band height="24">
-				<textField isBlankWhenNull="true">
-					<reportElement positionType="Float" x="0" y="4" width="299" height="20" forecolor="#000000" uuid="8d8c1a24-d2c6-49be-b729-cc75b2a4dd92"/>
+			<band height="30">
+				<textField>
+					<reportElement style="SubTitle" x="0" y="4" width="539" height="20" forecolor="#963E00" uuid="64b5e5f7-8da0-40e4-93d3-37fdfa544f9b"/>
 					<textElement>
-						<font fontName="Times New Roman" size="16" isBold="false"/>
+						<font size="16" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{ID_MAGACINSKA_KARTICA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Magacin: " + $F{NAZIV_MAGACINA} +" - " +$F{ADRESA_MAGACINA}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
 	</group>
-	<group name="REDNI_BROJ_KARTICE">
-		<groupExpression><![CDATA[$F{REDNI_BROJ_KARTICE}]]></groupExpression>
+	<group name="SIFRA_ARTIKLA">
+		<groupExpression><![CDATA[$F{SIFRA_ARTIKLA}]]></groupExpression>
 	</group>
-	<group name="ID_ARTIKAL">
-		<groupExpression><![CDATA[$F{ID_ARTIKAL}]]></groupExpression>
+	<group name="PROSECNA_CENA">
+		<groupExpression><![CDATA[$F{PROSECNA_CENA}]]></groupExpression>
 	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="132" splitType="Stretch">
+		<band height="136" splitType="Stretch">
 			<image>
-				<reportElement x="2" y="0" width="118" height="132" uuid="7a251c5e-49af-42ef-b091-9d942cdfae83"/>
-				<imageExpression><![CDATA["tree1.png"]]></imageExpression>
+				<reportElement x="0" y="0" width="137" height="126" uuid="d04e0bc8-d1b4-4758-afba-8a366768fb75"/>
+				<imageExpression><![CDATA["warehaus.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement style="Title" x="120" y="10" width="435" height="93" uuid="09029257-8fbc-4701-842e-4c0c3b432021"/>
-				<textElement>
-					<font size="40" isBold="false"/>
+				<reportElement style="Title" x="137" y="0" width="263" height="62" uuid="222925ac-a72d-4cc3-9a7c-0b978362e3cd"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Times-Roman"/>
 				</textElement>
-				<text><![CDATA[Magacinska kartica]]></text>
+				<text><![CDATA[Lager lista]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="336" y="103" width="217" height="29" uuid="e09066ab-e769-4396-8b7a-4fb25855ecd5"/>
+				<reportElement style="SubTitle" x="137" y="62" width="196" height="22" uuid="f79b0ddf-6634-4344-b5c0-984a4a03999d"/>
 				<textElement>
-					<font size="22" isBold="false"/>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
 				</textElement>
-				<text><![CDATA[Tree SubTitle]]></text>
+				<text><![CDATA[Svi magacini]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="137" y="94" width="383" height="42" uuid="091f1066-481f-4490-ac3f-6e765c44becd"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce auctor purus gravida arcu aliquam mattis. Donec et nulla libero, ut varius massa. Nulla sed turpis elit. Etiam aliquet mauris a ligula hendrerit in auctor leo lobortis.]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -122,135 +182,85 @@
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band splitType="Stretch"/>
-	</columnHeader>
-	<detail>
-		<band height="160" splitType="Stretch">
-			<image>
-				<reportElement x="2" y="0" width="56" height="80" uuid="fb8c72c3-93ad-430a-9350-ed63f6377bec"/>
-				<imageExpression><![CDATA["tree2.png"]]></imageExpression>
-			</image>
+		<band height="18" splitType="Stretch">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="2" y="90" width="551" height="1" uuid="ce1bbc9b-70b9-4dcf-a078-5529af474695"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="89d5a32d-9cd3-4a78-bfa5-f1c70a22abc0"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement style="Column header" positionType="Float" x="79" y="0" width="132" height="20" forecolor="#000000" uuid="2a7c70bb-f13b-480c-aeb2-ba90d835a4a5"/>
-				<textElement textAlignment="Right">
-					<font isBold="false"/>
-				</textElement>
-				<text><![CDATA[ID_MAGACIN]]></text>
+				<reportElement style="Column header" x="0" y="0" width="68" height="15" forecolor="#963E00" uuid="5e2e7919-7d52-4099-8ad0-44608aac4d67"/>
+				<text><![CDATA[Sifra]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" positionType="Float" x="215" y="0" width="338" height="18" uuid="88a6b379-53b4-46c3-8978-5acd0a43e0c1"/>
-				<textElement>
-					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{ID_MAGACIN}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement style="Column header" positionType="Float" x="79" y="20" width="132" height="20" forecolor="#000000" uuid="f01c5f94-d764-4272-8412-f5cde9141dfb"/>
-				<textElement textAlignment="Right">
-					<font isBold="false"/>
-				</textElement>
-				<text><![CDATA[PROSECNA_CENA]]></text>
+				<reportElement style="Column header" x="69" y="0" width="68" height="15" forecolor="#963E00" uuid="fa7018ce-1d6e-41a2-ba8a-934101f3b680"/>
+				<text><![CDATA[Naziv]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" positionType="Float" x="215" y="20" width="338" height="18" uuid="0ffa099b-db6b-4b05-9b89-c274c992bace"/>
-				<textElement>
-					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
-				</textElement>
+			<staticText>
+				<reportElement style="Column header" x="137" y="0" width="101" height="15" forecolor="#963E00" uuid="0416a1fc-05aa-4871-a154-7f27436d08de"/>
+				<text><![CDATA[Prosecna cena]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="238" y="0" width="68" height="15" forecolor="#963E00" uuid="6772d785-33ae-4012-a029-14a86ff207ae"/>
+				<text><![CDATA[Pakovanje]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="306" y="0" width="68" height="15" forecolor="#963E00" uuid="0a9ff16d-35a9-4b02-8f03-1e1719d30f8a"/>
+				<text><![CDATA[Mera]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="374" y="0" width="92" height="15" forecolor="#963E00" uuid="0f61b74c-ddfd-4382-b09d-2be94cff8f1b"/>
+				<text><![CDATA[Ukupna kol.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="460" y="0" width="116" height="15" forecolor="#963E00" uuid="412629eb-1e0b-48de-9d15-fd313096dc14"/>
+				<text><![CDATA[Ukupna vrednost]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="0" y="0" width="68" height="15" uuid="d6ae8cfe-ad63-440f-a590-0fc18bc56c78"/>
+				<textFieldExpression><![CDATA[$F{SIFRA_ARTIKLA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="69" y="0" width="68" height="15" uuid="81c0fa0e-9fb0-43ac-ba98-178c6bf20db3"/>
+				<textFieldExpression><![CDATA[$F{NAZIV_ARTIKLA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="137" y="0" width="101" height="15" uuid="e2a4648d-8c7d-4550-8eee-05d7b9f0624a"/>
 				<textFieldExpression><![CDATA[$F{PROSECNA_CENA}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement style="Column header" positionType="Float" x="79" y="40" width="132" height="20" forecolor="#000000" uuid="fe5a15b8-c44b-430f-8817-b7d97efbbd46"/>
-				<textElement textAlignment="Right">
-					<font isBold="false"/>
-				</textElement>
-				<text><![CDATA[KOL__ULAZA]]></text>
-			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" positionType="Float" x="215" y="40" width="338" height="18" uuid="c258391a-60f8-477b-a6f8-945be7b275cc"/>
-				<textElement>
-					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{KOL__ULAZA}]]></textFieldExpression>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="238" y="0" width="68" height="15" uuid="20667bf5-6db3-486e-a0a7-aaa788b9107d"/>
+				<textFieldExpression><![CDATA[$F{PAKOVANJE}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement style="Column header" positionType="Float" x="79" y="60" width="132" height="20" forecolor="#000000" uuid="5c6f848b-04f0-4a36-8e34-c56f6fa43732"/>
-				<textElement textAlignment="Right">
-					<font isBold="false"/>
-				</textElement>
-				<text><![CDATA[VR__ULAZA]]></text>
-			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" positionType="Float" x="215" y="60" width="338" height="18" uuid="2e5774ec-6021-4635-bbb4-cf40bd58b4bd"/>
-				<textElement>
-					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{VR__ULAZA}]]></textFieldExpression>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="306" y="0" width="68" height="15" uuid="b3ec7374-ef50-4575-a242-4b4e1dc637c4"/>
+				<textFieldExpression><![CDATA[$F{NAZIV_JEDINICE_MERE}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement style="Column header" positionType="Float" x="79" y="80" width="132" height="20" forecolor="#000000" uuid="50bdee25-7f87-470e-9229-3cfae2aac145"/>
-				<textElement textAlignment="Right">
-					<font isBold="false"/>
-				</textElement>
-				<text><![CDATA[KOL__IZLAZA]]></text>
-			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" positionType="Float" x="215" y="80" width="338" height="18" uuid="0bece0fd-261f-464d-9f8e-2cc58296832e"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="374" y="0" width="86" height="15" uuid="a8925b63-1327-4454-8836-e71a5a3b65cd"/>
 				<textElement>
-					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
+					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{KOL__IZLAZA}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{POCETNO_STANJE_KOL} + $F{KOL__ULAZA} - $F{KOL__IZLAZA}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement style="Column header" positionType="Float" x="79" y="100" width="132" height="20" forecolor="#000000" uuid="ea9e3723-9bda-4da8-a8f7-c508c266d759"/>
-				<textElement textAlignment="Right">
-					<font isBold="false"/>
-				</textElement>
-				<text><![CDATA[VR__IZLAZA]]></text>
-			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" positionType="Float" x="215" y="100" width="338" height="18" uuid="51101afd-4d44-4764-a43f-977f2e1f4ce7"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" mode="Transparent" x="460" y="0" width="79" height="15" uuid="02c9c7e6-ddd4-4218-8a1b-f14fe53de1d8"/>
 				<textElement>
-					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
+					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{VR__IZLAZA}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement style="Column header" positionType="Float" x="79" y="120" width="132" height="20" forecolor="#000000" uuid="eb686cb8-e832-4363-b4aa-a41785d0122a"/>
-				<textElement textAlignment="Right">
-					<font isBold="false"/>
-				</textElement>
-				<text><![CDATA[POCETNO_STANJE_KOL]]></text>
-			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" positionType="Float" x="215" y="120" width="338" height="18" uuid="e813bc93-2bc3-4fb9-b02e-f3d8e8d1b322"/>
-				<textElement>
-					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{POCETNO_STANJE_KOL}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement style="Column header" positionType="Float" x="79" y="140" width="132" height="20" forecolor="#000000" uuid="33cb37ad-23f3-4f96-be54-43e9a93ac6db"/>
-				<textElement textAlignment="Right">
-					<font isBold="false"/>
-				</textElement>
-				<text><![CDATA[POCETNO_STANJE_VR]]></text>
-			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" positionType="Float" x="215" y="140" width="338" height="18" uuid="7894ee80-cafa-44a2-a391-8dc47ff803d9"/>
-				<textElement>
-					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{POCETNO_STANJE_VR}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{POCETNO_STANJE_VR} + $F{VR__ULAZA} - $F{VR__IZLAZA}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="7" splitType="Stretch">
+		<band height="45" splitType="Stretch">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="1de495ed-5f5d-4ecc-bf49-ea922d909830"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="5323fd5f-64bd-4ad7-8ecc-8cbb34aed523"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
@@ -258,25 +268,25 @@
 		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="13" splitType="Stretch">
+		<band height="25" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="2" y="0" width="555" height="13" forecolor="#D0B48E" backcolor="#9DB1B8" uuid="ed7b7655-7e4e-4164-a05a-be6cf2687a54"/>
+				<reportElement mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#D0B48E" backcolor="#FFD687" uuid="18c8fd5a-b5fd-4f57-b7ab-15dec26ca57e"/>
 				<textField evaluationTime="Report">
-					<reportElement style="Column header" x="513" y="-1" width="40" height="13" forecolor="#FFFFFF" uuid="05603de1-4b13-4523-b38e-dd08a1fe0e91"/>
+					<reportElement style="Column header" x="533" y="0" width="40" height="20" forecolor="#736343" uuid="52db326d-6381-43be-90aa-9457358fd6b1"/>
 					<textElement verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Column header" x="433" y="-1" width="80" height="13" forecolor="#FFFFFF" uuid="ef7dce48-f543-44c1-9513-8ab7061251b0"/>
+					<reportElement style="Column header" x="453" y="0" width="80" height="20" forecolor="#736343" uuid="c5876070-5a04-4e9d-8776-aabf846948c9"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
-					<reportElement style="Column header" x="2" y="0" width="197" height="13" forecolor="#FFFFFF" uuid="c9a20d67-8a86-4fec-98b3-c358aed86a2d"/>
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="91e0d309-6d73-4060-a486-42d8c35da84d"/>
 					<textElement verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
