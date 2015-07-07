@@ -31,9 +31,10 @@ public class ReportService {
 	private static Logger log = Logger.getLogger(ReportService.class);
 
     private static final String lagerListaURI = "pdfs/LagerLista.pdf";
+    private static final String analitikaURI= "pdfs/Analitika.pdf";
 	
 	@GET 
-    @Path("LagerLista")
+    @Path("lager")
     @Produces("application/pdf")
     public Response generateLagerLista() {
         GenerateReport.createLagerList();
@@ -41,7 +42,7 @@ public class ReportService {
 
         ResponseBuilder response = Response.ok((Object) file);
         response.header("Content-Disposition",
-                "attachment; filename=LagerLista.pdf");
+                "inline; filename=LagerLista.pdf");
 
         return response.build();
     }
@@ -51,11 +52,11 @@ public class ReportService {
     @Produces("application/pdf")
     public Response generateAnalitika(@PathParam("id") String id) {
         GenerateReport.createAnalitika(Integer.parseInt(id));
-        File file = new File(lagerListaURI);
+        File file = new File(analitikaURI);
 
         ResponseBuilder response = Response.ok((Object) file);
         response.header("Content-Disposition",
-                "attachment; filename=LagerLista.pdf");
+                "inline; filename=Analitika.pdf;");
 
         return response.build();
     }
