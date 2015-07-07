@@ -92,7 +92,7 @@ $scope.proknjizi = function (invoiceItem, size) {
 		modalInstance.result.then(function (data) {
 			var doc = data.selectedDoc;
 			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
-					if( data.action==='sacuvaj'){
+					if( data.action==='save'){
 				doc.$create(function () {
 					$route.reload();
 			},
