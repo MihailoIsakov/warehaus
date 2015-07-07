@@ -130,9 +130,10 @@ public class PromDocService {
 		log.error("update prometnog dokumenta");
 		if (entity.getStatusDokumenta().equals(statusDokumenta.u_fazi_formiranje)) {
 			PrometniDokument retVal = null;
+			List<StavkaPrometnogDokumenta> list = stavkaDao.getStavkeByIdDokumenta(entity.getIdPrometniDokument());
+			
 			try {
 				retVal = promDocDao.merge(entity);
-				List<StavkaPrometnogDokumenta> list = stavkaDao.getStavkeByIdDokumenta(entity.getIdPrometniDokument());
 				Iterator<StavkaPrometnogDokumenta> stavke = entity.getStavke()
 							.iterator();
 				while (stavke.hasNext()) {
@@ -146,7 +147,7 @@ public class PromDocService {
 							break;
 						}
 					}
-					stavkaDao.persist(stavkaPrometnogDokumenta);
+					stavkaDao.merge(stavkaPrometnogDokumenta);
 					log.error("Persistovao stavku: " + stavkaPrometnogDokumenta.getIdStavkaPrometnogDokumenta());
 				}
 				
