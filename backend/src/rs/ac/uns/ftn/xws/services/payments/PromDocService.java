@@ -188,6 +188,8 @@ public class PromDocService {
 		}else{
 			entity.setDatumKnjizenja(new Date());
 			entity.setStatusDokumenta(statusDokumenta.proknjizen);
+			int broj = promDocDao.findRBbyPG(entity.getPoslovnaGodina());
+			entity.setBroj(broj);
 		}
 		try {
 			retVal = promDocDao.merge(entity);
@@ -255,7 +257,7 @@ public class PromDocService {
 					m.setVrIzlaza(BigDecimal.valueOf(0));
 					m.setKolUlaza(sp.getKolicinaPrDokumenta());
 					m.setVrUlaza(sp.getVrednostStavke());
-					m.setMagacin(p.getMagacin2());
+					m.setMagacin(p.getMagacin1());
 					m.setPocetnoStanjeKol(BigDecimal.valueOf(0));
 					m.setPocetnoStanjeVr(BigDecimal.valueOf(0));
 					m.setPoslovnaGodina(p.getPoslovnaGodina());
@@ -311,7 +313,7 @@ public class PromDocService {
 			for(StavkaPrometnogDokumenta sp: p.getStavke()){
 				MagacinskaKartica m = null;
 				try {
-					m = magCardDao.findByMagaciniArtikaliPG(p.getMagacin1().getIdMagacin(), sp.getArtikal().getIdArtikal(),p.getPoslovnaGodina().getIdPoslovnaGodina());
+					m = magCardDao.findByMagaciniArtikaliPG(p.getMagacin2().getIdMagacin(), sp.getArtikal().getIdArtikal(),p.getPoslovnaGodina().getIdPoslovnaGodina());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -368,7 +370,7 @@ public class PromDocService {
 				//PRVI MAGACIN
 				MagacinskaKartica m = null;
 				try {
-					m = magCardDao.findByMagaciniArtikaliPG(p.getMagacin1().getIdMagacin(), sp.getArtikal().getIdArtikal(),p.getPoslovnaGodina().getIdPoslovnaGodina());
+					m = magCardDao.findByMagaciniArtikaliPG(p.getMagacin2().getIdMagacin(), sp.getArtikal().getIdArtikal(),p.getPoslovnaGodina().getIdPoslovnaGodina());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -415,7 +417,7 @@ public class PromDocService {
 	        	//DRUGI MAGACIN
 	        	m = null;
 				try {
-					m = magCardDao.findByMagaciniArtikaliPG(p.getMagacin2().getIdMagacin(), sp.getArtikal().getIdArtikal(),p.getPoslovnaGodina().getIdPoslovnaGodina());
+					m = magCardDao.findByMagaciniArtikaliPG(p.getMagacin1().getIdMagacin(), sp.getArtikal().getIdArtikal(),p.getPoslovnaGodina().getIdPoslovnaGodina());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -426,7 +428,7 @@ public class PromDocService {
 					m.setVrIzlaza(BigDecimal.valueOf(0));
 					m.setKolUlaza(sp.getKolicinaPrDokumenta());
 					m.setVrUlaza(sp.getVrednostStavke());
-					m.setMagacin(p.getMagacin2());
+					m.setMagacin(p.getMagacin1());
 					m.setPocetnoStanjeKol(BigDecimal.valueOf(0));
 					m.setPocetnoStanjeVr(BigDecimal.valueOf(0));
 					m.setPoslovnaGodina(p.getPoslovnaGodina());
