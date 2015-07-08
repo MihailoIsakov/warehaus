@@ -85,7 +85,11 @@
   'radnoMesto',
   'zaposleni',
   'zaposleniNew',
-  'radnoMestoM'
+  'zaposleniModal',
+  'radnoMestoM',
+  'resource.popisniDokument',
+  'popisniDokument',
+  'popisniDokumenti'
   ])
  .config(function ($routeProvider) {
   $routeProvider
@@ -176,6 +180,10 @@
    .when('/jedinice-mere', {
     templateUrl: 'views/jedinice-mere.html',
     controller: 'jediniceMereCtrl'
+  })
+   .when('/popisni-dokumenti', {
+    templateUrl: 'views/popisni-dokumenti.html',
+    controller: 'popisniDokumentiCtrl'
   })
   .when('/login', {
     templateUrl: 'views/login.html',

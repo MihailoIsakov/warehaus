@@ -17,27 +17,23 @@
         </div>
         <div class="form-group">
             <label>* Cena:</label>
-			 <input type="text" name="cena" class="form-control" ng-model="selectedStavka.cenaStavke" pattern="[0-9]{1,7}(\.[0-9]{0,7})?" required></input>
-			 <span style="color:red" ng-show="form.cena.$invalid && form.cena.$dirty">
+			  <input type="text" name="cena" class="form-control" ng-model="selectedStavka.cenaStavke" pattern="[0-9]{1,7}(\.[0-9]{0,7})?" required></input>
+			  <span style="color:red" ng-show="form.cena.$invalid && form.cena.$dirty">
 				<span class="error" ng-show="form.cena.$error.required">Obavezno polje!</span>
 				<span class="error" ng-show="form.cena.$invalid">Potrebno je uneti broj!</span>
-			 </span>
+			  </span>
         </div>
 		<div class="form-group">
             <label>* Količina:</label>
-			<div class="input-group">
 				<input type="text" name="kolicina" class="form-control" ng-model="selectedStavka.kolicinaPrDokumenta" pattern="[0-9]{1,7}" required></input>
 				<span style="color:red" ng-show="form.kolicina.$invalid && form.kolicina.$dirty">
 					<span class="error" ng-show="form.kolicina.$error.required">Obavezno polje!</span>
 					<span class="error" ng-show="form.kolicina.$invalid">Potrebno je uneti ceo broj!</span>
 				</span>
-			</div>
         </div>
 		<div class="form-group">
             <label>Vrednost:</label>
-			<div class="input-group">
-				<input type="text" name="vrednost" class="form-control" ng-model="selectedStavka.kolicinaPrDokumenta*selectedStavka.cenaStavke" readonly></input>
-			</div>
+			<input type="text" name="vrednost" class="form-control" ng-model="selectedStavka.kolicinaPrDokumenta*selectedStavka.cenaStavke" readonly></input>
         </div>		
 		
 		<span style="color:red" ng-show="show && form.$invalid">

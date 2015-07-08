@@ -1,0 +1,39 @@
+﻿<div class="col-sm-9">
+    
+   <h3><i class="glyphicon glyphicon-dashboard"></i> Popisni dokumenti </h3>  
+   <hr>
+
+  <table class="table table-striped table-bordered table-condensed table-hover">
+    <thead>
+      <tr>
+          <th> <a ng-click = "orderProp = 'brojPopisaUGodini'; reverseSort = !reverseSort">Broj</th> 
+          <th> <a ng-click = "orderProp = 'sifraPopisa'; reverseSort = !reverseSort">Šifra</th> 
+          <th> <a ng-click = "orderProp = 'statusPredaje'; reverseSort = !reverseSort">Status</th> 
+          <th> <a ng-click = "orderProp = 'magacin.nazivMagacina'; reverseSort = !reverseSort">Magacin</th>
+          <th> <a ng-click = "orderProp = 'poslovnaGodina.brojGodine'; reverseSort = !reverseSort">Poslovna godina</th>
+          <th> <a ng-click = "orderProp = 'datumPopisa'; reverseSort = !reverseSort">Datum</th> 
+		  <th> <a ng-click = "orderProp = 'zaposleni1.ime'; reverseSort = !reverseSort">Predsednik komisije</th> 
+          
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-click="setSelected(article)" ng-class="{selected: article === selectedDoc}" ng-repeat="article in dokumenti  | filter:query | orderBy:orderProp : reverseSort ">
+          <td>{{article.brojPopisaUGodini}}</td>
+          <td>{{article.sifraPopisa}}</td>
+          <td>{{article.statusPredaje}}</td>
+          <td>{{article.magacin.nazivMagacina}}</td>
+          <td>{{article.poslovnaGodina.brojGodine}}</td>
+		  <td>{{article.datumPopisa}}</td>
+          <td>{{article.zaposleni1.ime}} {{article.zaposleni1.prezime}}</td>
+      </tr>
+    </tbody>
+  <div class="form-group">
+      <button class="btn btn-default" ng-click="storniranje()">Storniraj</button>
+	  <button class="btn btn-default" ng-click="dodavanje()">Dodaj</button>
+	  <button class="btn btn-default" ng-click="pregled()">Pregled</button>
+	  <button class="btn btn-default" ng-click="proknjizi()">Proknjiži</button>
+	  <button class="btn btn-default" ng-click="izmeni()">Izmeni</button>
+	  <button class="btn btn-default" ng-click="stampaj()">Štampaj</button>
+	  <button class="btn btn-default" ng-click="unesiPopisaneStavke()">Unesi popisane stavke</button>
+    </div>
+</div>

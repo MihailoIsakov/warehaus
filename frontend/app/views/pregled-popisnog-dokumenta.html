@@ -1,0 +1,108 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">Kreiranje popisnog dokumenta</h3>
+</div>
+<div class="modal-body">
+    <form name="form">	  
+        <div class="form-group">
+            <label> Šifra popisnog dokumenta:</label>
+			<input type="text" name="sifra" class="form-control" ng-model="selectedDoc.sifraPopisa" readonly></input>			
+        </div>
+		<div class="form-group">
+            <label> Status popisnog dokumenta:</label>
+			<input name="status" type="text" class="form-control" ng-model="selectedDoc.statusPredaje" readonly></input>
+        </div>
+		<div class="form-group">
+            <label> Magacin:</label>
+			<input name="magacin" type="text" class="form-control" ng-model="selectedDoc.magacin.nazivMagacina" readonly></input>
+        </div>
+        <div class="form-group">
+            <label> Poslovna godina:</label>
+			<input name="godina" type="text" class="form-control" ng-model="selectedDoc.poslovnaGodina" readonly/>
+        </div>
+		<div class="form-group">
+            <label>Datum popisa:</label>
+			<input name="datum" type="text" class="form-control" datepicker-popup="dd.MM.yyyy." ng-model="selectedDoc.datumPopisa" is-open="datumPopisaOpened" readonly/>
+        </div>
+		</hr>
+        <h4>Popisna komisija:</h4>
+			<div class="form-group">
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label"> Predsednik:</label>
+						<div class="controls form-inline">
+							<label>Šifra</label>
+							<input type="text" class="form-control" ng-model="selectedDoc.zaposleni1.sifraZaposlenog" readonly>
+							<label>Ime</label>
+							<input type="text" class="input-small form-control" ng-model="selectedDoc.zaposleni1.ime" readonly>
+							<label>Prezime</label>
+							<input type="text" class="input-small form-control" ng-model="selectedDoc.zaposleni1.prezime" readonly>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="form-group">
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label">Član 1:</label>
+						<div class="controls form-inline">
+							<label>Šifra</label>
+							<input type="text" class="form-control" ng-model="selectedDoc.zaposleni2.sifraZaposlenog" readonly>
+							<label>Ime</label>
+							<input type="text" class="input-small form-control" ng-model="selectedDoc.zaposleni2.ime" readonly>
+							<label>Prezime</label>
+							<input type="text" class="input-small form-control" ng-model="selectedDoc.zaposleni2.prezime" readonly>
+						</div>
+					</div>
+				</form>
+			</div>	
+			<div class="form-group">
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label">Član 2:</label>
+						<div class="controls form-inline">
+							<label>Šifra</label>
+							<input type="text" class="form-control" ng-model="selectedDoc.zaposleni3.sifraZaposlenog" readonly>
+							<label>Ime</label>
+							<input type="text" class="input-small form-control" ng-model="selectedDoc.zaposleni3.ime" readonly>
+							<label>Prezime</label>
+							<input type="text" class="input-small form-control" ng-model="selectedDoc.zaposleni3.prezime" readonly>
+						</div>
+					</div>
+				</form>
+			</div>
+        </div>
+		</hr>
+         <table class="table table-striped">
+    <thead>
+      <tr>
+          <th> <a ng-click = "orderProp = 'redniBrojStavke'; reverseSort = !reverseSort">Redni broj stavke</th> 
+          <th> <a ng-click = "orderProp = 'artikal.nazivArtikla'; reverseSort = !reverseSort">Artikal</th> 
+          <th> <a ng-click = "orderProp = 'cenaAktuelnaPriPopisu'; reverseSort = !reverseSort">Aktuelna cena pri popisu</th> 
+          <th> <a ng-click = "orderProp = 'kolicinaUKartici'; reverseSort = !reverseSort">Količina u kartici</th>
+          <th> <a ng-click = "orderProp = 'kolicinaPoPopisu'; reverseSort = !reverseSort">Količina po popisu</th> 
+          <th> <a ng-click = "orderProp = 'vrednostUKartici'; reverseSort = !reverseSort">Vrednost u kartici</th> 
+		  <th> <a ng-click = "orderProp = 'vrednostPoPopisu'; reverseSort = !reverseSort">Vrednost po popisu</th> 
+          
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-click="setSelected(article)" ng-repeat="article in selectedDoc.stavke  | filter:query | orderBy:orderProp : reverseSort ">
+          <td>{{article.redniBrojStavke}}</td>
+          <td>{{article.artikal.nazivArtikla}}</td>
+          <td>{{article.cenaAktuelnaPriPopisu}}</td>
+          <td>{{article.kolicinaUKartici}}</td>
+          <td>{{article.kolicinaPoPopisu}}</td>
+          <td>{{article.vrednostUKartici}}</td>
+          <td>{{article.vrednostPoPopisu}}</td>
+      </tr>
+    </tbody>
+    </table>
+    </form>
+	</hr>
+
+</div>
+
+<div class="modal-footer">
+    <button class="btn" ng-click="odustani()">Zatvori</button>
+</div>
+</div>

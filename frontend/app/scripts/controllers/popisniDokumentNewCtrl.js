@@ -1,6 +1,6 @@
 'use strict';
 
- angular.module('promDocDetail',['ui.bootstrap'])
+ angular.module('popisniDokument',['ui.bootstrap'])
 
  .controller('popisniDokumentCtrl', function ($scope, $modal, $modalInstance, Magacin, PoslovnaGodina, datepickerPopupConfig) {
 	
@@ -127,7 +127,7 @@ $scope.setSelected = function (selectedStavka) {
 		}
 
 	
-	$scope.selektujMagacin1 = function () {	
+	$scope.selektujMagacin = function () {	
 		var modalInstance = $modal.open({
 			templateUrl: 'views/magacin-modal.html',
 			controller: 'magaciniModalCtrl',
@@ -150,5 +150,83 @@ $scope.setSelected = function (selectedStavka) {
 		}, function () {
 			$log.info('Modal dismissed at: ' + new Date());
 		});}
-);
+	
+		$scope.selektujPredsednikaKomisije = function (size) {	
+		var modalInstance = $modal.open({
+			templateUrl: 'views/zaposleni-modal.html',
+			controller: 'zaposleniModalCtrl',
+			size:'lg',
+			scope: $scope
+		});
+		modalInstance.result.then(function (data) {
+			
+			var selectedPredsednik = data.selectedZaposleni;
+			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
+
+			if( data.action==='save')
+				$scope.selectedDoc.zaposleni1 = selectedPredsednik;
+			},
+            function (response) {
+                if (response.status === 500) {
+                    $scope.greska = "greska";
+                }
+			$route.reload();
+			
+		}, function () {
+			$log.info('Modal dismissed at: ' + new Date());
+		});
+		}
+		
+		$scope.selektujClana1 = function () {	
+		var modalInstance = $modal.open({
+			templateUrl: 'views/zaposleni-modal.html',
+			controller: 'zaposleniModalCtrl',
+			size:'lg',
+			scope: $scope
+		});
+		modalInstance.result.then(function (data) {
+			
+			var selectedClan1 = data.selectedZaposleni;
+			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
+
+			if( data.action==='save')
+				$scope.selectedDoc.zaposleni2 = selectedClan1;
+			},
+            function (response) {
+                if (response.status === 500) {
+                    $scope.greska = "greska";
+                }
+			$route.reload();
+			
+		}, function () {
+			$log.info('Modal dismissed at: ' + new Date());
+		});
+		}
+
+		$scope.selektujClana2 = function () {	
+		var modalInstance = $modal.open({
+			templateUrl: 'views/zaposleni-modal.html',
+			controller: 'zaposleniModalCtrl',
+			size:'lg',
+			scope: $scope
+		});
+		modalInstance.result.then(function (data) {
+			
+			var selectedClan2 = data.selectedZaposleni;
+			//ako stavka fakture nema id i ako je akcija 'save' znaci da je nova i dodaje se u listu. ako ima, svakako se manja u listi
+
+			if( data.action==='save')
+				$scope.selectedDoc.zaposleni3 = selectedClan2;
+			},
+            function (response) {
+                if (response.status === 500) {
+                    $scope.greska = "greska";
+                }
+			$route.reload();
+			
+		}, function () {
+			$log.info('Modal dismissed at: ' + new Date());
+		});
+		}		
+});
 

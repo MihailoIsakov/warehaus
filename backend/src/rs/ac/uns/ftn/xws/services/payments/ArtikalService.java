@@ -44,7 +44,7 @@ public class ArtikalService {
 	
 	@GET 
     @Produces(MediaType.APPLICATION_JSON)
-//	@Authenticate
+	@Authenticate
     public List<Artikal> findAll() {
 		List<Artikal> retVal = null;
 		try {

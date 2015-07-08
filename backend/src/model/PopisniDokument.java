@@ -48,7 +48,7 @@ public class PopisniDokument implements Serializable {
 	@Column(name="SIFRA_POPISA")
 	private String sifraPopisa;
 
-	private enum statusPredaje {
+	public enum statusPredaje {
 		neproknjizen, proknjizen, zakljucen,
 	}
 
@@ -76,6 +76,18 @@ public class PopisniDokument implements Serializable {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="popisniDokument")
     private Set<StavkaPopisa> stavke = new HashSet<StavkaPopisa>();
 	
+	@ManyToOne
+	@JoinColumn(name="ID_ZAPOSLENI1")
+	private Zaposleni zaposleni1;
+	
+	@ManyToOne
+	@JoinColumn(name="ID_ZAPOSLENI2")
+	private Zaposleni zaposleni2;
+	
+	@ManyToOne
+	@JoinColumn(name="ID_ZAPOSLENI3")
+	private Zaposleni zaposleni3;
+
 	public PopisniDokument() {
 	}
 
@@ -111,8 +123,6 @@ public class PopisniDokument implements Serializable {
 		this.sifraPopisa = sifraPopisa;
 	}
 
-
-
 	public Magacin getMagacin() {
 		return this.magacin;
 	}
@@ -136,6 +146,29 @@ public class PopisniDokument implements Serializable {
 	public void setStavke(Set<StavkaPopisa> stavke) {
 		this.stavke = stavke;
 	}
+	
+	public Zaposleni getZaposleni1() {
+		return this.zaposleni1;
+	}
 
+	public void setZaposleni1(Zaposleni zaposleni1) {
+		this.zaposleni1 = zaposleni1;
+	}
+	
+	public Zaposleni getZaposleni2() {
+		return this.zaposleni2;
+	}
+
+	public void setZaposleni2(Zaposleni zaposleni2) {
+		this.zaposleni2 = zaposleni2;
+	}
+	
+	public Zaposleni getZaposleni3() {
+		return this.zaposleni3;
+	}
+
+	public void setZaposleni3(Zaposleni zaposleni3) {
+		this.zaposleni3 = zaposleni3;
+	}
 
 }
