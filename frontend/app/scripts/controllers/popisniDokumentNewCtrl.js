@@ -1,12 +1,12 @@
-'use strict';
+﻿'use strict';
 
  angular.module('popisniDokument',['ui.bootstrap'])
 
- .controller('popisniDokumentCtrl', function ($scope, $modal, $modalInstance, Magacin, PoslovnaGodina, datepickerPopupConfig) {
+ .controller('popisniDokumentCtrl', function ($scope, $modal, $modalInstance, Magacin, PoslovnaGodina, StavkaPopisnogDokumenta, datepickerPopupConfig) {
 	
 	$scope.today = new Date();
 	datepickerPopupConfig.currentText = "Danas";
-	datepickerPopupConfig.clearText="Obri�i";
+	datepickerPopupConfig.clearText="Obriši";
 	$scope.show = false;
 	$scope.vrstaIndex = 0;
 	$scope.godinaIndex = 0;
@@ -73,10 +73,10 @@ $scope.setSelected = function (selectedStavka) {
 	
 	$scope.dodajStavkuPD = function() {
 		
-		$scope.selectedStavka = new StavkaPD();
+		$scope.selectedStavka = new StavkaPopisnogDokumenta();
 		var modalInstance = $modal.open({
-			templateUrl: 'views/stavkaPopisaDetail.html',
-			controller: 'stavkaPopisaModalCtrl',
+			templateUrl: 'views/dodaj-stavku-popisa.html',
+			controller: 'stavkaPopisaNewCtrl',
 			scope: $scope
 		});
 		modalInstance.result.then(function (data) {
@@ -100,8 +100,8 @@ $scope.setSelected = function (selectedStavka) {
 		
 		if ($scope.selectedStavka) {
 			var modalInstance = $modal.open({
-				templateUrl: 'views/stavkaPopisaDetail.html',
-				controller: 'stavkaPopisaModalCtrl',
+				templateUrl: 'views/dodaj-stavku-popisa.html',
+				controller: 'stavkaPopisaNewCtrl',
 				scope: $scope
 			});
 			modalInstance.result.then(function (data) {}
@@ -125,7 +125,10 @@ $scope.setSelected = function (selectedStavka) {
 				$scope.selectedDoc.stavke.splice(index,1);
 			}
 		}
-
+		
+$scope.setSelected = function (selectedStavka) {
+   $scope.selectedStavka = selectedStavka;
+};
 	
 	$scope.selektujMagacin = function () {	
 		var modalInstance = $modal.open({
@@ -227,6 +230,7 @@ $scope.setSelected = function (selectedStavka) {
 		}, function () {
 			$log.info('Modal dismissed at: ' + new Date());
 		});
-		}		
+		}	
+
 });
 

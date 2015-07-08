@@ -89,7 +89,9 @@
   'radnoMestoM',
   'resource.popisniDokument',
   'popisniDokument',
-  'popisniDokumenti'
+  'popisniDokumenti',
+  'stavkaPopisa',
+  'resource.stavkaPopisnogDokumenta'
   ])
  .config(function ($routeProvider) {
   $routeProvider
