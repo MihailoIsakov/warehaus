@@ -183,6 +183,9 @@ create table POPISNI_DOKUMENT
    SIFRA_POPISA         varchar(12) not null,
    DATUM_POPISA         date not null,
    BROJ_POPISA_U_GODNI  int default 1,
+   ID_ZAPOSLENI1  int,
+   ID_ZAPOSLENI2  int,
+   ID_ZAPOSLENI3  int,
    STATUS_PREDAJE       ENUM('neproknjizen', 'proknjizen', 'zakljucen'),
    primary key (ID_POPISNI_DOKUMENT)
 );
@@ -433,7 +436,15 @@ alter table ZAPOSLENI add constraint FK_RELATIONSHIP_19 foreign key (ID_MESTO)
 alter table ZAPOSLENI add constraint FK_RUKOVODILAC foreign key (ID_PREDUZECE)
       references PREDUZECE (ID_PREDUZECE) on delete restrict on update restrict;
 
+alter table POPISNI_DOKUMENT add constraint FK_ZAPOSLENI1 foreign key (ID_ZAPOSLENI1)
+      references ZAPOSLENI (ID_ZAPOSLENI) on delete restrict on update restrict;
 
+alter table POPISNI_DOKUMENT add constraint FK_ZAPOSLENI2 foreign key (ID_ZAPOSLENI2)
+      references ZAPOSLENI (ID_ZAPOSLENI) on delete restrict on update restrict;
+	  
+alter table POPISNI_DOKUMENT add constraint FK_ZAPOSLENI3 foreign key (ID_ZAPOSLENI3)
+      references ZAPOSLENI (ID_ZAPOSLENI) on delete restrict on update restrict;
+	  
 CREATE TABLE `invoice` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `acountNumber` int(11) NOT NULL,
