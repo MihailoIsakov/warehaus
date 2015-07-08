@@ -21,6 +21,7 @@
 			for (i=0; i<$scope.vrste.length; i++) {
 				if ($scope.vrste[i].idVrstaDokumenta==$scope.selectedDoc.vrstaDokumenta.idVrstaDokumenta) {
 					$scope.vrstaIndex = i;
+					$scope.vrste[i] = $scope.selectedDoc.vrstaDokumenta;
 				}
 			}
 	});
@@ -29,6 +30,12 @@
 	PoslovnaGodina.query().$promise.then(function (data) {
 			$scope.poslovneGodine = data;
 			$scope.godinaIndex = $scope.poslovneGodine.indexOf($scope.selectedDoc.poslovnaGodina);
+			var i=0;
+			for (i=0; i<$scope.poslovneGodine.length; i++) {
+				if ($scope.poslovneGodine[i].idPoslovnaGodina==$scope.selectedDoc.poslovnaGodina.idPoslovnaGodina) {
+					$scope.poslovneGodine[i] = $scope.selectedDoc.poslovnaGodina;
+				}
+			}
 	});
 	
 	$scope.zatvaranje = function() {
