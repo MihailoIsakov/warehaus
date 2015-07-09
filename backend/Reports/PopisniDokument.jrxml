@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Popisni dokument" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ccc107da-eccf-4ff8-ae6d-75a7478f5437">
+	<property name="ireport.zoom" value="1.771561000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="New Dataset 1" uuid="af02beb5-4024-4697-9912-3164000055c7">
+		<queryString language="SQL">
+			<![CDATA[select * from xws.artikal join xws.magacinska_kartica on xws.artikal.ID_ARTIKAL = xws.magacinska_kartica.ID_ARTIKAL
+join xws.poslovna_godina on xws.magacinska_kartica.ID_POSLOVNA_GODINA = xws.poslovna_godina.ID_POSLOVNA_GODINA
+join xws.jedinica_mere on xws.artikal.ID_JEDINICA_MERE = xws.jedinica_mere.ID_JEDINICA_MERE
+join xws.magacin on xws.magacinska_kartica.ID_MAGACIN = xws.magacin.ID_MAGACIN;]]>
+		</queryString>
+		<field name="SIFRA_ARTIKLA" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="NAZIV_ARTIKLA" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="NAZIV_MAGACINA" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="SIFRA_MAGACINA" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="BROJ_GODINE" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="PROSECNA_CENA" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="KOL__ULAZA" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="VR__ULAZA" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="KOL__IZLAZA" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="VR__IZLAZA" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="POCETNO_STANJE_KOL" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="POCETNO_STANJE_VR" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ID_MAGACINSKA_KARTICA" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/zieghailo/development/projects/warehaus/Reports/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT BROJ_POPISA_U_GODNI, SIFRA_POPISA, STATUS_PREDAJE, NAZIV_MAGACINA, BROJ_GODINE, DATUM_POPISA, ID_ZAPOSLENI1,
+	REDNI_BROJ_STAVKE, NAZIV_ARTIKLA, CENA_AKTUELNA_PRI_POPISU, IME, PREZIME
+FROM xws.stavka_popisa
+join xws.artikal on xws.stavka_popisa.ID_ARTIKAL = xws.artikal.ID_ARTIKAL
+join xws.popisni_dokument on xws.stavka_popisa.ID_POPISNI_DOKUMENT = xws.popisni_dokument.ID_POPISNI_DOKUMENT
+join xws.magacin on xws.popisni_dokument.ID_MAGACIN = xws.magacin.ID_MAGACIN
+join xws.poslovna_godina on xws.popisni_dokument.ID_POSLOVNA_GODINA = xws.poslovna_godina.ID_POSLOVNA_GODINA
+join xws.zaposleni on xws.popisni_dokument.ID_ZAPOSLENI1 = xws.zaposleni.ID_ZAPOSLENI;]]>
+	</queryString>
+	<field name="BROJ_POPISA_U_GODNI" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SIFRA_POPISA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="STATUS_PREDAJE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NAZIV_MAGACINA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BROJ_GODINE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DATUM_POPISA" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ID_ZAPOSLENI1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="REDNI_BROJ_STAVKE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NAZIV_ARTIKLA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CENA_AKTUELNA_PRI_POPISU" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PREZIME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="136" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="164" height="126" uuid="66c5ddf6-2d78-4673-9e05-787976df3a02"/>
+				<imageExpression><![CDATA["warehaus.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="140" y="0" width="415" height="62" uuid="eac9447b-f507-40d7-b61e-399cbc176571"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" rotation="None">
+					<font isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Popisni dokument]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="140" y="64" width="44" height="30" forecolor="#736343" uuid="19f0ac83-7765-4d64-bd8e-17a806381f32"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Broj:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="275" y="64" width="44" height="30" forecolor="#736343" uuid="8cf6e279-7fe3-4bc1-a11e-d87a3797145e"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Sifra:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="275" y="94" width="87" height="15" forecolor="#736343" uuid="d4cc8d60-4952-4b64-9389-320253cb680f"/>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="140" y="94" width="71" height="15" forecolor="#736343" uuid="03c89937-ab59-49fd-8bee-13489e77b58c"/>
+				<text><![CDATA[Magacin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="211" y="94" width="64" height="15" forecolor="#736343" uuid="65c1691c-1bfc-42ea-b15f-46185e18dc1f"/>
+				<text><![CDATA[Godina]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="468" y="94" width="87" height="15" forecolor="#736343" uuid="10ddfafa-7dc0-4aea-a740-d2a7a3100b52"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Datum popisa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="437" y="64" width="118" height="15" forecolor="#736343" uuid="8e69d4e4-85d3-4835-bc4f-a1c456c5d4d8"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Predsednik komisije]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" isPrintRepeatedValues="false" x="184" y="64" width="27" height="30" uuid="100f6f02-1926-437f-bd3c-ec0eb59e857b"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BROJ_POPISA_U_GODNI}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" isPrintRepeatedValues="false" x="319" y="64" width="36" height="30" uuid="45da5942-9ffe-4dfd-afd6-3dd14ef4110c"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SIFRA_POPISA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" isPrintRepeatedValues="false" x="140" y="109" width="71" height="15" uuid="99e99d60-22c7-4706-8cb5-19a474a92ff3"/>
+				<textFieldExpression><![CDATA[$F{NAZIV_MAGACINA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" isPrintRepeatedValues="false" x="211" y="109" width="64" height="15" uuid="4c163ae0-8d92-4122-b4f6-28359bc27922"/>
+				<textFieldExpression><![CDATA[$F{BROJ_GODINE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" isPrintRepeatedValues="false" x="468" y="109" width="87" height="15" uuid="1249ed3f-3cf3-4e0d-8f5d-e219c3b815ca"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{DATUM_POPISA})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" isPrintRepeatedValues="false" x="437" y="79" width="118" height="15" uuid="d195b86c-0710-4622-b0bc-74a1c0aaf4ff"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{IME} + " " + $F{PREZIME}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" isPrintRepeatedValues="false" x="275" y="109" width="87" height="15" uuid="33893572-19ab-40b8-ae06-324f55002e9b"/>
+				<textFieldExpression><![CDATA[$F{STATUS_PREDAJE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="c2b42555-83b1-40ff-ba53-5552f48eb0b4"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="89" height="15" forecolor="#736343" uuid="7a5c290c-292d-41d8-8a66-f39c1b5458a5"/>
+				<text><![CDATA[Broj stavke]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="89" y="0" width="122" height="15" forecolor="#736343" uuid="8b42cc39-b498-4fd9-ad64-f8f98855da77"/>
+				<text><![CDATA[Artikal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="211" y="0" width="151" height="15" forecolor="#736343" uuid="3a04886a-202a-4cbc-aa8d-23b67a40baa0"/>
+				<text><![CDATA[Aktuelna cena pri popisu]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="362" y="0" width="193" height="15" forecolor="#736343" uuid="1112cc70-44af-4a2d-8fe9-705c72a87dfd"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Kolicina pri popisu]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="15" uuid="83310994-9e95-4827-a9f2-55885146fad1"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" isPrintRepeatedValues="false" x="1" y="0" width="88" height="15" uuid="3fba2804-896e-455c-8215-73d28999dc85"/>
+					<textFieldExpression><![CDATA[$F{REDNI_BROJ_STAVKE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" isPrintRepeatedValues="false" x="89" y="0" width="122" height="15" uuid="7dc4e654-c507-4898-94dc-826514d0e017"/>
+					<textFieldExpression><![CDATA[$F{NAZIV_ARTIKLA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" isPrintRepeatedValues="false" x="211" y="0" width="151" height="15" uuid="7d00efac-8466-4962-bcb3-34c78c1ded9a"/>
+					<textFieldExpression><![CDATA[$F{CENA_AKTUELNA_PRI_POPISU}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement x="362" y="0" width="193" height="15" uuid="4c6e5022-34d2-4514-8054-d469c194b39c"/>
+				</rectangle>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="2c261614-9f3f-4e2e-a97f-e5cbd0405b43"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="f399ff42-ccae-456b-9f96-66580732e9a4"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="533" y="0" width="40" height="20" forecolor="#736343" uuid="1e98a4f2-f048-4b90-9d5e-45f711a95da7"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="453" y="0" width="80" height="20" forecolor="#736343" uuid="dca77b43-30a4-491d-aafa-01b977960556"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="772788a5-a313-48a4-983b-6fcf995c0252"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
