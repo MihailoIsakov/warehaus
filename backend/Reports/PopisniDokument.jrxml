@@ -63,6 +63,9 @@ join xws.magacin on xws.magacinska_kartica.ID_MAGACIN = xws.magacin.ID_MAGACIN;]
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/home/zieghailo/development/projects/warehaus/Reports/"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="PopisID" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT BROJ_POPISA_U_GODNI, SIFRA_POPISA, STATUS_PREDAJE, NAZIV_MAGACINA, BROJ_GODINE, DATUM_POPISA, ID_ZAPOSLENI1,
 	REDNI_BROJ_STAVKE, NAZIV_ARTIKLA, CENA_AKTUELNA_PRI_POPISU, IME, PREZIME
@@ -71,7 +74,8 @@ join xws.artikal on xws.stavka_popisa.ID_ARTIKAL = xws.artikal.ID_ARTIKAL
 join xws.popisni_dokument on xws.stavka_popisa.ID_POPISNI_DOKUMENT = xws.popisni_dokument.ID_POPISNI_DOKUMENT
 join xws.magacin on xws.popisni_dokument.ID_MAGACIN = xws.magacin.ID_MAGACIN
 join xws.poslovna_godina on xws.popisni_dokument.ID_POSLOVNA_GODINA = xws.poslovna_godina.ID_POSLOVNA_GODINA
-join xws.zaposleni on xws.popisni_dokument.ID_ZAPOSLENI1 = xws.zaposleni.ID_ZAPOSLENI;]]>
+join xws.zaposleni on xws.popisni_dokument.ID_ZAPOSLENI1 = xws.zaposleni.ID_ZAPOSLENI
+where xws.popisni_dokument.ID_POPISNI_DOKUMENT = $P{PopisID};]]>
 	</queryString>
 	<field name="BROJ_POPISA_U_GODNI" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>

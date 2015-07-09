@@ -49,6 +49,16 @@ public class GenerateReport {
 
         createPdf(location, filename, destination, params);
     }
+
+    public static void createPopis(int IdPopis) {
+        String location = "Reports/";
+        String filename = "PopisniDokument";
+        String destination = "pdfs/";
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("PopisID", IdPopis);
+
+        createPdf(location, filename, destination, params);
+    }
  
 	private static void createPdf(String fileLocation, String filename, String destination, Map<String, Object> parameters) {
         

@@ -31,7 +31,9 @@ public class ReportService {
 	private static Logger log = Logger.getLogger(ReportService.class);
 
     private static final String lagerListaURI = "pdfs/LagerLista.pdf";
-    private static final String analitikaURI= "pdfs/Analitika.pdf";
+    private static final String analitikaURI  = "pdfs/Analitika.pdf";
+    private static final String popisURI      = "pdfs/PopisniDokument.pdf";
+    
 	
 	@GET 
     @Path("lager")
@@ -57,6 +59,20 @@ public class ReportService {
         ResponseBuilder response = Response.ok((Object) file);
         response.header("Content-Disposition",
                 "inline; filename=Analitika.pdf;");
+
+        return response.build();
+    }
+
+    @GET
+    @Path("popis/{id}")
+    @Produces("application/pdf")
+    public Response generatePopisniDokument(@PathParam("id") String id) {
+        GenerateReport.createPopis(Integer.parseInt(id));
+        File file = new File(popisURI);
+    
+        ResponseBuilder response = Response.ok((Object) file);
+        response.header("Content-Disposition",
+                "inline; filename=PopisniDokument.pdf;");
 
         return response.build();
     }
