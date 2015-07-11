@@ -91,9 +91,7 @@ public class PoslGodinaDocService {
 			}
 			if(retVal.size()==0){
 				entity.setZakljucenaGodina(true);
-				if (!zakljuciGodinu(entity)) {
-					return null;
-				}
+				
 			}
 			
 			
@@ -107,48 +105,6 @@ public class PoslGodinaDocService {
 		return retVal;
 	}
 
-	private boolean zakljuciGodinu(PoslovnaGodina entity) {
-		List<PrometniDokument> list = promDocDao.findAll();
-		for (PrometniDokument p : list) {
-			if (p.getPoslovnaGodina().getIdPoslovnaGodina() == entity
-					.getIdPoslovnaGodina() && p.getDatumKnjizenja() == null) {
-				p.setDatumKnjizenja(new Date());
-				p.setStatusDokumenta(statusDokumenta.proknjizen);
-				try {
-					promDocDao.merge(p);
-				} catch (NoSuchFieldException e) {
-					e.printStackTrace();
-					return false;
-				}
-			}
-		}
-		List<MagacinskaKartica> mag = magCardDao.findAll();
-		for (MagacinskaKartica m : mag) {
-			// Pocetno stanje + ulaz - izlaz
-			m.setPocetnoStanjeKol(m.getPocetnoStanjeKol().add(m.getKolUlaza())
-					.subtract(m.getKolIzlaza()));
-			m.setPoslovnaGodina(entity);
-			try {
-				magCardDao.merge(m);
-			} catch (NoSuchFieldException e) {
-				e.printStackTrace();
-				return false;
-			}
-		}
-		return true;
-	}
 
-	@DELETE
-	@Path("{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Authenticate
-	public void removeItem(@PathParam("id") Integer id) {
-		PoslovnaGodina p = poslGodDao.findById(id);
-		try {
-			poslGodDao.remove(p);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-		}
 
-	}
 }
