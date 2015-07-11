@@ -3,7 +3,7 @@
  angular.module('poslGodina', ['resource.poslGodina',
  	'angular-md5'])
 
- .controller('poslGodinaCtrl', function (PoslovnaGodina, $scope, $routeParams, $modal, $log, $location, InvoiceItem ,$route ) {
+ .controller('poslGodinaCtrl', function (PoslovnaGodina,PoslGodinaDoc, $scope, $routeParams, $modal, $log, $location, InvoiceItem ,$route ) {
 
 if($routeParams.invoiceId!='new'){
 		//preuzimanje parametra iz URL
@@ -68,9 +68,41 @@ if($routeParams.invoiceId!='new'){
 
 	$scope.update = function (invoiceItem, size) {
 
-		
-				$scope.selectedPoslGod.$update({invoiceItemId:$scope.selectedPoslGod},function () {
-				$route.reload();
+			PoslGodinaDoc.get({invoiceItemId:$scope.selectedPoslGod.idPoslovnaGodina},function (data) {
+					$scope.returnList = data;
+					
+					if(data.length!=0){
+						var modalInstance = $modal.open({
+							templateUrl: 'views/neproknjizeni-dokumenti.html',
+							controller: 'promDocModalCtrl',
+							size: size,
+							scope: $scope,
+							 windowClass: 'app-modal-window'
+						});
+						modalInstance.result.then(function (data) {
+							var selectedPoslGod = data.selectedPoslGod;
+			
+							if( data.action==='save'){
+								selectedPoslGod.$create(function () {
+								$route.reload();
+							},
+            				function (response) {
+                				if (response.status === 500) {
+                    			$scope.greska = "greska";
+               		 		}
+               
+           			 	});
+					$route.reload();		
+				}
+			//ako stavka treba da se obrise izbaci se iz niza
+			
+		}, function () {
+			$log.info('Modal dismissed at: ' + new Date());
+		});
+					}
+					else{
+						$route.reload();
+					}
 			});
 	};
 

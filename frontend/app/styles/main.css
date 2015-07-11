@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 /* line 9, ../../../../InvoiceClient/bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_normalize.scss */
 html {
@@ -18,6 +18,10 @@ body {
   #printSection {
       display: none;
   }
+}
+
+.app-modal-window .modal-dialog {
+  width: 1000px;
 }
 
 @media print {

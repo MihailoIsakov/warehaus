@@ -36,6 +36,7 @@
   'resource.magacinskaN',
   'resource.partner',
   'resource.drzave',
+  'resource.poslGodinaDoc',
   'drzave',
   'resource.mesta',
   'mesta',

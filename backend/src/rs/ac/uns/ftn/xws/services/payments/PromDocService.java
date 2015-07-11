@@ -211,7 +211,8 @@ public class PromDocService {
 				StavkaPrometnogDokumenta stavkaPrometnogDokumenta = (StavkaPrometnogDokumenta) stavke
 						.next();
 				stavkaPrometnogDokumenta.setKolicinaPrDokumenta(stavkaPrometnogDokumenta.getKolicinaPrDokumenta().negate());
-			}
+				stavkaPrometnogDokumenta.setVrednostStavke(stavkaPrometnogDokumenta.getVrednostStavke().negate());
+					}
 			PrometniDokument retVal = null;
 			try {
 				retVal = promDocDao.persistSaKreiranjemStavki(entity);

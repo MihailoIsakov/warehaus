@@ -6,6 +6,9 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -34,6 +37,11 @@ public class PoslovnaGodina implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="ID_PREDUZECE")
 	private Preduzece preduzece;
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="poslovnaGodina")
+	  private Set<PrometniDokument> promDoc = new HashSet<PrometniDokument>();
+	
 	
 	public PoslovnaGodina() {
 	}
@@ -68,6 +76,14 @@ public class PoslovnaGodina implements Serializable {
 
 	public void setPreduzece(Preduzece preduzece) {
 		this.preduzece = preduzece;
+	}
+
+	public Set<PrometniDokument> getPromDoc() {
+		return promDoc;
+	}
+
+	public void setPromDoc(Set<PrometniDokument> promDoc) {
+		this.promDoc = promDoc;
 	}
 
 

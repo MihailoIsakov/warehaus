@@ -28,9 +28,9 @@ import daoBean.MagacinskaKarticaDaoLocal;
 import daoBean.PoslovnaGodinaDaoLocal;
 import daoBean.PrometniDokumentDaoLocal;
 
-@Path("/poslovna-godina")
-public class PoslovnaGodinaService {
-	private static Logger log = Logger.getLogger(PoslovnaGodinaService.class);
+@Path("/poslovna-godina-doc")
+public class PoslGodinaDocService {
+	private static Logger log = Logger.getLogger(PoslGodinaDocService.class);
 
 	@EJB
 	private PoslovnaGodinaDaoLocal poslGodDao;
@@ -52,19 +52,7 @@ public class PoslovnaGodinaService {
 		return retVal;
 	}
 
-	@GET
-	@Path("{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Authenticate
-	public PoslovnaGodina findById(@PathParam("id") String id) {
-		PoslovnaGodina retVal = null;
-		try {
-			retVal = poslGodDao.findById(Integer.parseInt(id));
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-		}
-		return retVal;
-	}
+	
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -82,6 +70,42 @@ public class PoslovnaGodinaService {
 		return retVal;
 	}
 
+	@GET
+	@Path("{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Authenticate
+	public ArrayList<PrometniDokument> zakljucivanje(@PathParam("id") Integer id, String da) {
+		log.info("PUT");
+		PoslovnaGodina entity = poslGodDao.findById(id);
+		ArrayList<PrometniDokument> retVal = new ArrayList<PrometniDokument>();
+		if (!entity.getZakljucenaGodina()) {
+			Iterator<PrometniDokument> promDocIt = entity.getPromDoc().iterator();
+			while (promDocIt.hasNext()) {
+				PrometniDokument prometniDokument = (PrometniDokument) promDocIt
+						.next();
+				if(prometniDokument.getStatusDokumenta().equals(statusDokumenta.u_fazi_formiranje)){
+					retVal.add(prometniDokument);
+				}
+				
+			}
+			if(retVal.size()==0){
+				entity.setZakljucenaGodina(true);
+				if (!zakljuciGodinu(entity)) {
+					return null;
+				}
+			}
+			
+			
+			
+			try {
+				poslGodDao.merge(entity);
+			} catch (Exception e) {
+				log.error(e.getMessage(), e);
+			}
+		}
+		return retVal;
+	}
 
 	private boolean zakljuciGodinu(PoslovnaGodina entity) {
 		List<PrometniDokument> list = promDocDao.findAll();
