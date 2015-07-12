@@ -1,9 +1,10 @@
 'use strict';
 
  angular.module('promDoc', ['resource.promDoc',
+ 'resource.magCardpga',
  	'angular-md5'])
 
- .controller('promDocCtrl', function (Documents, $scope, $routeParams, $modal, $route, $log, $location ) {
+ .controller('promDocCtrl', function (Documents, Pga, $scope, $routeParams, $modal, $route, $log, $location ) {
 	
 if($routeParams.invoiceId!='new'){
 		//preuzimanje parametra iz URL
@@ -23,18 +24,70 @@ if($routeParams.invoiceId!='new'){
 }
 
 
-$scope.proknjizi = function (invoiceItem, size) {
+	$scope.proknjizi = function (invoiceItem, size) {
+		var ok = 1;
+		if($scope.selectedDoc.vrstaDokumenta.nazivVrste === "medjumagacinski"){
+			var len = $scope.selectedDoc.stavke.length;
+			for(var i=0; i < len; i++){
+				var objekat = $scope.selectedDoc.stavke[i];
+				var idArtikal = $scope.selectedDoc.stavke[i].artikal.idArtikal;
+				var idMagacin = $scope.selectedDoc.magacin2.idMagacin;
+				var idPG = $scope.selectedDoc.poslovnaGodina.idPoslovnaGodina;
+				Pga.findGG({'idArtikal':idArtikal, 'idMagacin':idMagacin, 'idPG':idPG}).$promise.then(function (data) {
+					$scope.gkg = data;
+					if($scope.gkg === null){
+						alert("Artikla "+objekat.artikal.nazivArtikla+" nema u magacinu.");
+						ok = 0;
+					}
+					else{
+						var ukupnaVr = $scope.gkg.pocetnoStanjeVr + $scope.gkg.vrUlaza - $scope.gkg.vrIzlaza;
+						var ukupnaKol = $scope.gkg.pocetnoStanjeKol + $scope.gkg.kolUlaza - $scope.gkg.kolIzlaza;
+						if(ukupnaKol < objekat.kolicinaPrDokumenta){
+							alert("Artikla " + objekat.artikal.nazivArtikla + 
+							" nema dovoljno na stanju u magacinu.");
+							ok = 0;
+						}
+					}
+				});
+			}
+		}
+		else if($scope.selectedDoc.vrstaDokumenta.nazivVrste === "otpremnica"){
+			var len = $scope.selectedDoc.stavke.length;
+			for(var i=0; i < len; i++){
+				var objekat = $scope.selectedDoc.stavke[i];
+				var idArtikal = $scope.selectedDoc.stavke[i].artikal.idArtikal;
+				var idMagacin = $scope.selectedDoc.magacin2.idMagacin;
+				var idPG = $scope.selectedDoc.poslovnaGodina.idPoslovnaGodina;
+				Pga.findGG({'idArtikal':idArtikal, 'idMagacin':idMagacin, 'idPG':idPG}).$promise.then(function (data) {
+					$scope.gkg = data;
+					if($scope.gkg === null){
+						alert("Artikla "+objekat.artikal.nazivArtikla+" nema u magacinu.");
+						ok = 0;
+					}
+					else{
+						var ukupnaVr = $scope.gkg.pocetnoStanjeVr + $scope.gkg.vrUlaza - $scope.gkg.vrIzlaza;
+						var ukupnaKol = $scope.gkg.pocetnoStanjeKol + $scope.gkg.kolUlaza - $scope.gkg.kolIzlaza;
+						if(ukupnaKol < objekat.kolicinaPrDokumenta){
+							alert("Artikla " + objekat.artikal.nazivArtikla + 
+							" nema dovoljno na stanju u magacinu.");
+							ok = 0;
+						}
+					}
+				});
+			}
+		}
+		if(ok === 1){
 			$scope.selectedDoc.$update({'id':'knjizenje'},function () {
+				alert("Dokument je uspesno proknjizen.");
 				$route.reload();
 			},
-            function (response) {
-                if (response.status === 500) {
-                    $scope.greska = "greska";
-                }
-               
-            })
-			}
-
+			function (response) {
+				if (response.status === 500) {
+					$scope.greska = "greska";
+				}
+			})
+		}
+	}
 
 
 
