@@ -20,6 +20,7 @@
   'about',
   'article',
   'promDoc',
+  'promDoc2',
   'invoice',
   'karticaA',
   'correction',

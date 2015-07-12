@@ -1,6 +1,6 @@
 'use strict';
 
- angular.module('promDoc', ['resource.promDoc',
+ angular.module('promDoc2', ['resource.promDoc',
  	'angular-md5'])
 
  .controller('promDocModalCtrl', function (Documents, $scope, $routeParams, $modalInstance, $modal, $route, $log, $location ) {
