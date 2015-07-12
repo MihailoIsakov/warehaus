@@ -23,6 +23,30 @@ if($routeParams.invoiceId!='new'){
 }
 
 
+$scope.proknjizi2 = function (invoiceItem, size) {
+	$scope.greskaf = $scope.selectedDoc;
+	var i=0;
+	for(i=0;i<$scope.promDoc.length;i++){
+		$scope.greskaf = $scope.promDoc[i].idPrometniDokument;
+		if($scope.promDoc[i].idPrometniDokument==$scope.selectedDoc.idPrometniDokument){
+			$scope.promDoc[i].$update({'id':'knjizenje'},function () {
+				$modalInstance.close({'invoiceItem':$scope.invoiceItem,
+								'action':'refresh'});
+			},
+			function (response) {
+				$modalInstance.close({'invoiceItem':$scope.invoiceItem,
+								'action':'refresh'});
+				if (response.status === 500) {
+					$scope.greska = "greska";
+				}
+				
+			})
+		}
+	}
+	
+	
+}
+
 $scope.proknjizi = function (invoiceItem, size) {
 			$scope.selectedDoc.$update({'id':'knjizenje'},function () {
 				$route.reload();

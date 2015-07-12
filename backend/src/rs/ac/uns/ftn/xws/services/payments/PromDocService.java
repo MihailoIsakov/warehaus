@@ -37,7 +37,7 @@ import daoBean.VrstaDokumentaDaoLocal;
 @Path("/prometni-dokumenti")
 public class PromDocService {
 
-	private static Logger log = Logger.getLogger(Invoice.class);
+	private static Logger log = Logger.getLogger(PromDocService.class);
 
 	@EJB
 	private PrometniDokumentDaoLocal promDocDao;
@@ -58,7 +58,7 @@ public class PromDocService {
 		List<PrometniDokument> retVal = new ArrayList<PrometniDokument>();
 
 		try {
-			log.error("usao");
+			log.error("GET");
 
 			retVal = promDocDao.findAll();
 			// Gson gson = new Gson();
@@ -79,6 +79,8 @@ public class PromDocService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Authenticate
 	public PrometniDokument findById(@PathParam("id") String id) {
+		log.error("GET2");
+
 		PrometniDokument retVal = null;
 		try {
 
@@ -179,6 +181,8 @@ public class PromDocService {
 	}
 
 	private PrometniDokument knjizenje(PrometniDokument entity) throws Exception{
+		log.error("Knjizenje");
+
 		PrometniDokument retVal = null;
 		if(!proveriKnjizenje(entity)){
 			return null;

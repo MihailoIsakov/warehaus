@@ -94,6 +94,9 @@ if($routeParams.invoiceId!='new'){
            			 	});
 					$route.reload();		
 				}
+				else if(data.action==='refresh'){
+						$scope.update();
+				}
 			//ako stavka treba da se obrise izbaci se iz niza
 			
 		}, function () {
