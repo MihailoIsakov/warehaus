@@ -21,4 +21,6 @@ public interface MagacinskaKarticaDaoLocal extends GenericDao<MagacinskaKartica,
 	public MagacinskaKartica findByArtikalId(Integer id);
 	
 	public int findMaxRedniBroj();
+
+	public List<MagacinskaKartica> findByPG(int i);
 }

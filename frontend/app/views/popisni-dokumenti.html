@@ -33,7 +33,7 @@
 	  <button class="btn btn-default" ng-click="pregled()">Pregled</button>
 	  <button class="btn btn-default" ng-click="proknjizi()">Proknjiži</button>
 	  <button class="btn btn-default" ng-click="izmeni()">Izmeni</button>
-	  <button class="btn btn-default" ng-click="stampaj()">Štampaj</button>
+	  <a class="btn btn-default" ng-href="http://localhost:8080/xws/api/report/popis/{{selectedDoc.idPopisniDokument}}" target="_blank">Štampaj</a>
 	  <button class="btn btn-default" ng-click="unesiPopisaneStavke()">Unesi popisane stavke</button>
     </div>
 </div>

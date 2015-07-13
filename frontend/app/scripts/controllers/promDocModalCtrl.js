@@ -1,9 +1,10 @@
 'use strict';
 
  angular.module('promDoc2', ['resource.promDoc',
+ 'resource.magCardpga',
  	'angular-md5'])
 
- .controller('promDocModalCtrl', function (Documents, $scope, $routeParams, $modalInstance, $modal, $route, $log, $location ) {
+ .controller('promDocModalCtrl', function (Documents, Pga, $scope, $routeParams, $modalInstance, $modal, $route, $log, $location ) {
 	
 if($routeParams.invoiceId!='new'){
 		//preuzimanje parametra iz URL
@@ -29,22 +30,48 @@ $scope.proknjizi2 = function (invoiceItem, size) {
 	for(i=0;i<$scope.promDoc.length;i++){
 		$scope.greskaf = $scope.promDoc[i].idPrometniDokument;
 		if($scope.promDoc[i].idPrometniDokument==$scope.selectedDoc.idPrometniDokument){
-			$scope.promDoc[i].$update({'id':'knjizenje'},function () {
-				$modalInstance.close({'invoiceItem':$scope.invoiceItem,
-								'action':'refresh'});
-			},
-			function (response) {
-				$modalInstance.close({'invoiceItem':$scope.invoiceItem,
-								'action':'refresh'});
-				if (response.status === 500) {
-					$scope.greska = "greska";
+			
+			if($scope.selectedDoc.vrstaDokumenta.nazivVrste !== "primka"){
+				var len = $scope.selectedDoc.stavke.length;
+				for(var i=0; i < len; i++){
+					var objekat = $scope.selectedDoc.stavke[i];
+					var idArtikal = $scope.selectedDoc.stavke[i].artikal.idArtikal;
+					var idMagacin = $scope.selectedDoc.magacin2.idMagacin;
+					var idPG = $scope.selectedDoc.poslovnaGodina.idPoslovnaGodina;
+					Pga.findGG({'idArtikal':idArtikal, 'idMagacin':idMagacin, 'idPG':idPG}).$promise.then(function (data) {
+						$scope.gkg = data;
+						if($scope.gkg === null){
+							alert("Artikla "+objekat.artikal.nazivArtikla+" nema u magacinu.");
+							ok = 0;
+						}
+						else{
+							var ukupnaVr = $scope.gkg.pocetnoStanjeVr + $scope.gkg.vrUlaza - $scope.gkg.vrIzlaza;
+							var ukupnaKol = $scope.gkg.pocetnoStanjeKol + $scope.gkg.kolUlaza - $scope.gkg.kolIzlaza;
+							if(ukupnaKol < objekat.kolicinaPrDokumenta){
+								alert("Artikla " + objekat.artikal.nazivArtikla + 
+								" nema dovoljno na stanju u magacinu.");
+								ok = 0;
+							}
+						}
+					});
 				}
-				
-			})
+			}
+			if(ok === 1){
+				$scope.promDoc[i].$update({'id':'knjizenje'},function () {
+					$modalInstance.close({'invoiceItem':$scope.invoiceItem,
+									'action':'refresh'});
+				},
+				function (response) {
+					$modalInstance.close({'invoiceItem':$scope.invoiceItem,
+									'action':'refresh'});
+					if (response.status === 500) {
+						$scope.greska = "greska";
+					}
+					
+				})
+			}
 		}
 	}
-	
-	
 }
 
 $scope.proknjizi = function (invoiceItem, size) {

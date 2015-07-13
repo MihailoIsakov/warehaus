@@ -1,8 +1,8 @@
 angular.module('resource.poslGodina', ['ngResource'])
 	.factory('PoslovnaGodina', function ($resource) {
-	return $resource('http://localhost:8080/xws/api/poslovna-godina/:invoiceItemId',null, {
+	return $resource('http://localhost:8080/xws/api/poslovna-godina/:invoiceItemId', {invoiceItemId:'@invoiceItemId' }, {
         'create': { method:'POST' },
-        'update': { method:'GET', isArray:true}
+        'findById': { method:'GET'}
       
     });
 })

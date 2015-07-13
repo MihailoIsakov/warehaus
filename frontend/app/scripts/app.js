@@ -94,7 +94,9 @@
   'popisniDokumenti',
   'stavkaPopisa',
   'resource.stavkaPopisnogDokumenta',
-  'resource.magCardpga'
+  'resource.magCardpga',
+  'resource.pGodina',
+  'resource.pGodina2'
   ])
  .config(function ($routeProvider) {
   $routeProvider

@@ -109,6 +109,7 @@
 	};	
 	
 	$scope.stampaj = function() {
+		
 	}
 	
 	$scope.unesiPopisaneStavke = function() {

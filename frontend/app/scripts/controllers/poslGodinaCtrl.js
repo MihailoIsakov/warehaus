@@ -1,9 +1,11 @@
 'use strict';
 
  angular.module('poslGodina', ['resource.poslGodina',
+ 'resource.pGodina2',
+ 'resource.pGodina',
  	'angular-md5'])
 
- .controller('poslGodinaCtrl', function (PoslovnaGodina,PoslGodinaDoc, $scope, $routeParams, $modal, $log, $location, InvoiceItem ,$route ) {
+ .controller('poslGodinaCtrl', function (PoslovnaGodina, pGodina2, pGodina, PoslGodinaDoc, $scope, $routeParams, $modal, $log, $location, InvoiceItem ,$route ) {
 
 if($routeParams.invoiceId!='new'){
 		//preuzimanje parametra iz URL
@@ -62,7 +64,33 @@ if($routeParams.invoiceId!='new'){
 		});
 	};
 	
-
+	$scope.updateAll = function (invoiceItem, size) {
+		var now = $scope.selectedPoslGod.idPoslovnaGodina;
+		var next = now+1;
+		pGodina2.get({invoiceItemId:next},function (data) {
+			var temp = data;
+			if(temp === null) {
+				alert("Mora biti kreirana naredna godina da bi se otvorila nova pocetna stanja.");
+			}
+			else {
+				$scope.bbb = temp;
+				pGodina.update({'idPoslovnaGodina':now},function (data) {
+					alert("Uspesno otvorena pocetna stanja.");
+				},
+				function (response) {
+					if (response.status === 500) {
+						$scope.greska = "greska";
+					}
+				   
+				})
+			}
+		},
+		function (response) {
+			if (response.status === 500) {
+				alert("Mora biti kreirana naredna godina da bi se otvorila nova pocetna stanja.");
+			}
+		})
+	}
 
 	
 

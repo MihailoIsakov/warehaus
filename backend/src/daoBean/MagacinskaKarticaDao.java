@@ -1,5 +1,6 @@
 package daoBean;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -140,4 +141,18 @@ public class MagacinskaKarticaDao extends
 		Query q = em.createNamedQuery("MagacinskaKartica.findMaxRedniBroj");
 		return (int) q.getSingleResult();
 	}
+
+	@Override
+	public List<MagacinskaKartica> findByPG(int i) {
+		List<MagacinskaKartica> aa = new ArrayList<>();
+		List<MagacinskaKartica> m = findAll();
+		for(MagacinskaKartica k: m){
+			if(k.getPoslovnaGodina().getIdPoslovnaGodina() == i){
+				aa.add(k);
+			}
+		}
+		return aa;
+	}
+
+
 }
